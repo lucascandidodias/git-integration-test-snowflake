@@ -1,0 +1,9 @@
+---
+source_name: "TableDeltalakeDefaultScheduledDbNoneLoopBack"
+source_description: "Testing - TableDeltalakeDefaultScheduledDbNoneLoopBack"
+ingestion_parameters:
+  source_query: "SELECT * FROM default.tabledeltalakedefaultdbnone"
+connection_name: "CypressDatabricksHiveMetastore"
+cost_parameters:
+  disable_profiling: false
+schedule_name: "Default"

@@ -1,0 +1,9 @@
+---
+source_name: "FileDelimitedSparkyIngestionSpaceAndSpecialCharters"
+source_description: "Testing - FileDelimitedSparkyIngestionSpaceAndSpecialCharters"
+ingestion_parameters:
+  file_mask: "RTE_Scheduled/RTE_SalesOrderDetail_space_special_characters.csv"
+  delete_file: false
+connection_type: "file"
+connection_name: "SourceFileAmazonS3NoKeysUsesAgentNo"
+schedule_name: "Default"

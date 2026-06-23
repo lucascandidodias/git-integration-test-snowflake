@@ -1,0 +1,17 @@
+---
+source_name: "SourceTableSqlServer - HumanResources.Department"
+source_description: "Auto-created from connection metadata"
+ingestion_parameters:
+  source_query: "select * from HumanResources.Department"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Upcast"
+cdc_refresh_parameters:
+  key_columns:
+  - "DepartmentID"
+refresh_type: "key"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "departmentid"
+  data_type: "int"
+  unique_flag: true

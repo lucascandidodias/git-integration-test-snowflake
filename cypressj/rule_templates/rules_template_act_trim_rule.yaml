@@ -1,0 +1,12 @@
+---
+name: "Rules_Template_ACT_trim_rule"
+datatype: "string"
+cast_datatype: "string"
+attribute_name: "rules_template_act_trim_rule"
+expression: "trim([This].carriertrackingnumber)"
+expression_parsed: "trim(P<1>)"
+test_source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+parameters:
+- id: 1
+  attribute_name: "carriertrackingnumber"
+  datatype: "string"

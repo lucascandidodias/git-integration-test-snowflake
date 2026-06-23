@@ -1,0 +1,12 @@
+---
+source_name: "TableSqlServerTimestampScheduleMixed"
+source_description: "Testing - TableSqlServerTimestampScheduleMixed"
+ingestion_parameters:
+  source_query: "SELECT * FROM Sales.SalesOrderDetail"
+cdc_refresh_parameters:
+  date_column:
+  - "ModifiedDate"
+refresh_type: "timestamp"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+process_configuration_name: "TestingDefaultWithOverrides"

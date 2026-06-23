@@ -1,0 +1,10 @@
+---
+source_name: "TableSqlServerFullScheduleCustomDataRefreshFull"
+source_description: "Testing - TableSqlServerFullScheduleCustomDataRefreshFull"
+ingestion_parameters:
+  source_query: "SELECT * FROM Sales.SalesOrderDetail"
+cdc_refresh_parameters:
+  delete_query: "true"
+refresh_type: "custom_refresh"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"

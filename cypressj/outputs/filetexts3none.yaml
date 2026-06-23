@@ -1,0 +1,16 @@
+---
+output_name: "FileTextS3None"
+output_type: "file"
+output_package_parameters:
+  file_name: "FileTextS3None"
+  file_extension: ".txt"
+output_description: " Testing - FileTextS3None"
+output_sub_type: "text"
+connection_name: "OutputFileAmazonS3NoKeys"
+columns:
+- name: "Auto_Cypress_Testing_FileTextS3None"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+  description: "FileTextS3None Auto_Cypress_Testing_FileTextS3None  Thu Jan 02 2025\
+    \ 18:13:22 GMT+0000 (Coordinated Universal Time)"

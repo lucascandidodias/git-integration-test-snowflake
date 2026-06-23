@@ -1,0 +1,12 @@
+---
+source_name: "TablePostgresSequenceScheduleCustom"
+source_description: "Testing - TablePostgresSequenceScheduleCustom"
+ingestion_parameters:
+  source_query: "SELECT * FROM testing.RTE_AW_SalesOrderDetail"
+cdc_refresh_parameters:
+  range_column:
+  - "row_num"
+refresh_type: "sequence"
+connection_name: "SourceTablePostgres"
+schedule_name: "Default"
+process_configuration_name: "TestingAllDifferentConfig"

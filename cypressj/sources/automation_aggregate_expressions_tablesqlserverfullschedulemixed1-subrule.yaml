@@ -1,0 +1,12 @@
+---
+source_name: "Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1-subRule"
+source_description: "Created from sub-source rule [Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1].subrule"
+ingestion_parameters:
+  select_list:
+  - "*"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Clone"
+connection_type: "sub_source"
+sub_source_rule:
+  source_name: "Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1"
+  attribute_name: "subrule"

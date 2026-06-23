@@ -1,0 +1,22 @@
+---
+name: "Rules_Template_ACT_DENSE_RANK"
+datatype: "int"
+cast_datatype: "int"
+attribute_name: "rules_template_act_dense_rank"
+expression: "DENSE_RANK([This].productid) OVER (PARTITION BY [This].salesorderid =\
+  \ true ORDER BY [This].salesorderid DESC)"
+expression_parsed: "DENSE_RANK(P<1>) OVER (PARTITION BY P<2> = true ORDER BY P<3>\
+  \ DESC)"
+keep_current_flag: true
+window_function_flag: true
+test_source_name: "Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1"
+parameters:
+- id: 1
+  attribute_name: "productid"
+  datatype: "int"
+- id: 2
+  attribute_name: "salesorderid"
+  datatype: "int"
+- id: 3
+  attribute_name: "salesorderid"
+  datatype: "int"

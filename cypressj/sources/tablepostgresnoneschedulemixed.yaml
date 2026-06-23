@@ -1,0 +1,9 @@
+---
+source_name: "TablePostgresNoneScheduleMixed"
+source_description: "Testing - TablePostgresNoneScheduleMixed"
+ingestion_parameters:
+  source_query: "SELECT * FROM testing.RTE_AW_SalesOrderDetail"
+refresh_type: "none"
+connection_name: "SourceTablePostgres"
+schedule_name: "Default"
+process_configuration_name: "TestingDefaultWithOverrides"

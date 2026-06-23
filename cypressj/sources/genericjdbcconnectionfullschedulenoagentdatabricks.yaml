@@ -1,0 +1,7 @@
+---
+source_name: "GenericJdbcConnectionFullScheduleNoAgentDatabricks"
+source_description: "Testing - GenericJdbcConnectionFullScheduleNoAgentDatabricks"
+ingestion_parameters:
+  source_query: "select * from samples.nyctaxi.trips"
+connection_name: "GenericJDBCConnectionDatabricks"
+schedule_name: "Default"

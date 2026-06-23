@@ -1,0 +1,17 @@
+---
+name: "Rules_Template_Validation_Snapshot_Test"
+datatype: "boolean"
+attribute_name: "rules_template_validation_snapshot_test"
+expression: "[This].salesorderid = [This].productid"
+expression_parsed: "P<1> = P<2>"
+rule_type_code: "V"
+validation_action_code: "F"
+unique_flag: true
+test_source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+parameters:
+- id: 1
+  attribute_name: "salesorderid"
+  datatype: "int"
+- id: 2
+  attribute_name: "productid"
+  datatype: "int"

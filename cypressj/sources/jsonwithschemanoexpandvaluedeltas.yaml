@@ -1,0 +1,17 @@
+---
+source_name: "JSONwithSchemaNoExpandValueDeltas"
+source_description: "JSONwithSchemaNoExpandValueDeltas"
+ingestion_parameters:
+  topic_name: "sample_data"
+  value_schema: "STRUCT<`ordertime` LONG, `orderid` INT, `itemid` STRING, `orderunits`\
+    \ DOUBLE, `address` STRUCT<`city` STRING, `state` STRING, `zipcode` INT>>"
+  key_schema_type: "string"
+  value_schema_type: "json"
+  number_of_topic_partitions: 0
+cdc_refresh_parameters:
+  range_column:
+  - "key"
+refresh_type: "sequence"
+connection_type: "event"
+connection_name: "CypressKafkaTesting"
+schedule_name: "Default"

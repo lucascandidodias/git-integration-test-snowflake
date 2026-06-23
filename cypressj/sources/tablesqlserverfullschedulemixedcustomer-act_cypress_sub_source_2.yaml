@@ -1,0 +1,210 @@
+---
+source_name: "TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2"
+source_description: "Created from sub-source rule [TableSqlServerFullScheduleMixedCustomer].act_cypress_sub_source_2"
+ingestion_parameters:
+  select_list:
+  - "*"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Clone"
+connection_type: "sub_source"
+sub_source_rule:
+  source_name: "TableSqlServerFullScheduleMixedCustomer"
+  attribute_name: "act_cypress_sub_source_2"
+raw_attributes:
+- raw_attribute_name: "customerid"
+  data_type: "int"
+- raw_attribute_name: "duedate"
+  data_type: "timestamp"
+- raw_attribute_name: "onlineorderflag"
+  data_type: "boolean"
+- raw_attribute_name: "taxamt"
+  data_type: "decimal"
+dependencies:
+- source_name: "TableSqlServerKeyScheduleDefaultPerson"
+rules:
+- attribute_name: "act_enrichment_1_for_sub_source_2"
+  name: "ACT_enrichment_1_for_sub_source_2"
+  description: "ACT_enrichment_1_for_sub_source_2"
+  datatype: "boolean"
+  expression: "[This].onlineorderflag"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "onlineorderflag"
+- attribute_name: "act_enrichment_2_for_sub_source_2"
+  name: "ACT_enrichment_2_for_sub_source_2"
+  description: "ACT_enrichment_2_for_sub_source_2"
+  datatype: "timestamp"
+  expression: "[This].duedate"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "duedate"
+- attribute_name: "act_enrichment_3_for_sub_source_2"
+  name: "ACT_enrichment_3_for_sub_source_2"
+  description: "ACT_enrichment_3_for_sub_source_2"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "additionalcontactinfo"
+        type: "string"
+        metadata: {}
+        nullable: false
+      - name: "emailpromotion"
+        type: "integer"
+        metadata: {}
+        nullable: false
+      - name: "modifieddate"
+        type: "timestamp"
+        metadata: {}
+        nullable: true
+      - name: "namestyle"
+        type: "boolean"
+        metadata: {}
+        nullable: false
+    containsNull: false
+  expression: "array(struct([TableSqlServerKeyScheduleDefaultPerson].additionalcontactinfo,\
+    \ [TableSqlServerKeyScheduleDefaultPerson].emailpromotion, [TableSqlServerKeyScheduleDefaultPerson].modifieddate,\
+    \ [TableSqlServerKeyScheduleDefaultPerson].namestyle))\n"
+  expression_parsed: "array(struct(P<1>, P<2>, P<3>, P<4>))\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "additionalcontactinfo"
+    source_name: "TableSqlServerKeyScheduleDefaultPerson"
+    relations:
+    - "[TableSqlServerKeyScheduleDefaultPerson]-Relation_person-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2]"
+  - id: 2
+    type: "raw"
+    name: "emailpromotion"
+    source_name: "TableSqlServerKeyScheduleDefaultPerson"
+    relations:
+    - "[TableSqlServerKeyScheduleDefaultPerson]-Relation_person-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2]"
+  - id: 3
+    type: "raw"
+    name: "modifieddate"
+    source_name: "TableSqlServerKeyScheduleDefaultPerson"
+    relations:
+    - "[TableSqlServerKeyScheduleDefaultPerson]-Relation_person-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2]"
+  - id: 4
+    type: "raw"
+    name: "namestyle"
+    source_name: "TableSqlServerKeyScheduleDefaultPerson"
+    relations:
+    - "[TableSqlServerKeyScheduleDefaultPerson]-Relation_person-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2]"
+- attribute_name: "act_enrichment_4_for_sub_source_2"
+  name: "ACT_enrichment_4_for_sub_source_2"
+  description: "ACT_enrichment_4_for_sub_source_2"
+  datatype: "int"
+  expression: "[TableSqlServerKeyScheduleDefaultPerson].emailpromotion + 100\n"
+  expression_parsed: "P<1> + 100\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "emailpromotion"
+    source_name: "TableSqlServerKeyScheduleDefaultPerson"
+    relations:
+    - "[TableSqlServerKeyScheduleDefaultPerson]-Relation_person-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2]"
+- attribute_name: "act_enrichment_5_for_sub_source_2"
+  name: "ACT_enrichment_5_for_sub_source_2"
+  description: "ACT_enrichment_5_for_sub_source_2"
+  datatype: "string"
+  expression: "concat([TableSqlServerKeyScheduleDefaultPerson].persontype,  ' cypress')\n"
+  expression_parsed: "concat(P<1>,  ' cypress')\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "persontype"
+    source_name: "TableSqlServerKeyScheduleDefaultPerson"
+    relations:
+    - "[TableSqlServerKeyScheduleDefaultPerson]-Relation_person-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2]"
+- attribute_name: "act_sub_source_for_sub_source_2"
+  name: "ACT_Sub_Source_for_sub_source_2"
+  description: "ACT_Sub_Source_for_sub_source_2"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "taxamt"
+        type: "decimal(38,12)"
+        metadata: {}
+        nullable: false
+    containsNull: false
+  expression: "array(struct([This].taxamt))\n"
+  expression_parsed: "array(struct(P<1>))\n"
+  rule_type_code: "S"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "taxamt"
+channels:
+- output_name: "TableSqlServerSubSource"
+  output_source_name: "TableSqlServerSubSource - Sub2"
+  output_source_columns:
+  - name: "act_enrichment_1_for_sub_source_2"
+    expression: "[This].act_enrichment_1_for_sub_source_2"
+    datatype: "boolean"
+    parameter:
+      name: "act_enrichment_1_for_sub_source_2"
+      type: "enrichment"
+  - name: "act_enrichment_2_for_sub_source_2"
+    expression: "[This].act_enrichment_2_for_sub_source_2"
+    datatype: "timestamp"
+    parameter:
+      name: "act_enrichment_2_for_sub_source_2"
+      type: "enrichment"
+  - name: "act_enrichment_3_for_sub_source_2"
+    expression: "[This].act_enrichment_3_for_sub_source_2"
+    datatype: "array"
+    parameter:
+      name: "act_enrichment_3_for_sub_source_2"
+      type: "enrichment"
+  - name: "act_enrichment_4_for_sub_source_2"
+    expression: "[This].act_enrichment_4_for_sub_source_2"
+    datatype: "int"
+    parameter:
+      name: "act_enrichment_4_for_sub_source_2"
+      type: "enrichment"
+  - name: "act_enrichment_5_for_sub_source_2"
+    expression: "[This].act_enrichment_5_for_sub_source_2"
+    datatype: "string"
+    parameter:
+      name: "act_enrichment_5_for_sub_source_2"
+      type: "enrichment"
+  - name: "act_sub_source_for_sub_source_2"
+    expression: "[This].act_sub_source_for_sub_source_2"
+    datatype: "array"
+    parameter:
+      name: "act_sub_source_for_sub_source_2"
+      type: "enrichment"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"

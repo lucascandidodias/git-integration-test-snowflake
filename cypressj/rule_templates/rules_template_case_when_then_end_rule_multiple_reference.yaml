@@ -1,0 +1,46 @@
+---
+name: "Rules_Template_Case_When_Then_End_Rule_Multiple_Reference"
+datatype: "string"
+cast_datatype: "string"
+attribute_name: "rules_template_case_when_then_end_rule_multiple_reference"
+expression: "CASE WHEN [This].orderqty < 100 THEN '<100' WHEN [This].orderqty  >=\
+  \ 100 AND [This].orderqty  < 500 THEN '100-500' WHEN [This].orderqty  >= 500 AND\
+  \ [This].orderqty < 1000 THEN '500-1000' WHEN [This].orderqty  >= 1000 AND [This].orderqty\
+  \ < 5000 THEN '1000-5000' WHEN [This].orderqty >= 5000 AND  [This].orderqty < 10000\
+  \ THEN '5000-10000' WHEN [This].orderqty >= 10000 THEN '>10000' ELSE NULL END"
+expression_parsed: "CASE WHEN P<1> < 100 THEN '<100' WHEN P<2>  >= 100 AND P<3>  <\
+  \ 500 THEN '100-500' WHEN P<4>  >= 500 AND P<5> < 1000 THEN '500-1000' WHEN P<6>\
+  \  >= 1000 AND P<7> < 5000 THEN '1000-5000' WHEN P<8> >= 5000 AND  P<9> < 10000\
+  \ THEN '5000-10000' WHEN P<10> >= 10000 THEN '>10000' ELSE NULL END"
+test_source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+parameters:
+- id: 1
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 2
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 3
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 4
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 5
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 6
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 7
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 8
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 9
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 10
+  attribute_name: "orderqty"
+  datatype: "int"

@@ -1,0 +1,13 @@
+---
+name: "Rules_Template_boolean_string"
+datatype: "string"
+cast_datatype: "string"
+attribute_name: "rules_template_boolean_string"
+expression: "[This].onlineorderflag"
+expression_parsed: "P<1>"
+keep_current_flag: true
+test_source_name: "CustomDataRefrashIngestion"
+parameters:
+- id: 1
+  attribute_name: "onlineorderflag"
+  datatype: "boolean"

@@ -1,0 +1,1692 @@
+---
+output_name: "JsonS3OutputSingle"
+output_type: "file"
+output_package_parameters:
+  file_name: "JsonS3OutputSingle"
+output_description: " Testing - JsonS3OutputSingle"
+output_sub_type: "json"
+connection_name: "OutputFileAmazonS3NoKeys"
+columns:
+- name: "approvals"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "reviewedAt"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "reviewedAutomatically"
+        type: "boolean"
+        metadata: {}
+        nullable: true
+      - name: "state"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "submissionDetails"
+        type:
+          type: "struct"
+          fields:
+          - name: "permissionType"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "submissionId"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "submissionObject"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "submissionOutcome"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "submissionOutcomeApplication"
+        type:
+          type: "struct"
+          fields:
+          - name: "failureCount"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "status"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "submittedAt"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "submitter"
+        type:
+          type: "struct"
+          fields:
+          - name: "displayName"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "id"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "targetAudience"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "workflowId"
+        type: "long"
+        metadata: {}
+        nullable: true
+    containsNull: true
+  complex_flag: true
+- name: "assettype"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "attribution"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "averagerating"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "category"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "clientcontext"
+  datatype: "object"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "clientContextVariables"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "columns"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "computationStrategy"
+        type:
+          type: "struct"
+          fields:
+          - name: "parameters"
+            type:
+              type: "struct"
+              fields:
+              - name: "primary_key"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "region"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "source_columns"
+            type:
+              type: "array"
+              elementType: "string"
+              containsNull: true
+            metadata: {}
+            nullable: true
+          - name: "type"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "dataTypeName"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "description"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "fieldName"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "flags"
+        type:
+          type: "array"
+          elementType: "string"
+          containsNull: true
+        metadata: {}
+        nullable: true
+      - name: "format"
+        type:
+          type: "struct"
+          fields:
+          - name: "align"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "id"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "name"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "position"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "renderTypeName"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "tableColumnId"
+        type: "long"
+        metadata: {}
+        nullable: true
+    containsNull: true
+  complex_flag: true
+- name: "createdat"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "description"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "displaytype"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "downloadcount"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "flags"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType: "string"
+    containsNull: true
+  complex_flag: true
+- name: "grants"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "flags"
+        type:
+          type: "array"
+          elementType: "string"
+          containsNull: true
+        metadata: {}
+        nullable: true
+      - name: "inherited"
+        type: "boolean"
+        metadata: {}
+        nullable: true
+      - name: "type"
+        type: "string"
+        metadata: {}
+        nullable: true
+    containsNull: true
+  complex_flag: true
+- name: "hidefromcatalog"
+  datatype: "boolean"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "hidefromdatajson"
+  datatype: "boolean"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "id"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "json_concat_rule"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "json_rule_uniqueness"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "json_rule_uniqueness_uv_flag"
+  datatype: "boolean"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "json_struct_rule"
+  datatype: "object"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "columns"
+      type:
+        type: "array"
+        elementType:
+          type: "struct"
+          fields:
+          - name: "computationStrategy"
+            type:
+              type: "struct"
+              fields:
+              - name: "parameters"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "primary_key"
+                    type: "string"
+                    metadata: {}
+                    nullable: false
+                  - name: "region"
+                    type: "string"
+                    metadata: {}
+                    nullable: false
+                metadata: {}
+                nullable: false
+              - name: "source_columns"
+                type:
+                  type: "array"
+                  elementType: "string"
+                  containsNull: false
+                metadata: {}
+                nullable: false
+              - name: "type"
+                type: "string"
+                metadata: {}
+                nullable: false
+            metadata: {}
+            nullable: false
+          - name: "dataTypeName"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "description"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "fieldName"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "flags"
+            type:
+              type: "array"
+              elementType: "string"
+              containsNull: false
+            metadata: {}
+            nullable: false
+          - name: "format"
+            type:
+              type: "struct"
+              fields:
+              - name: "align"
+                type: "string"
+                metadata: {}
+                nullable: false
+            metadata: {}
+            nullable: false
+          - name: "id"
+            type: "long"
+            metadata: {}
+            nullable: false
+          - name: "name"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "position"
+            type: "long"
+            metadata: {}
+            nullable: false
+          - name: "renderTypeName"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "tableColumnId"
+            type: "long"
+            metadata: {}
+            nullable: false
+        containsNull: false
+      metadata: {}
+      nullable: false
+    - name: "flags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: false
+      metadata: {}
+      nullable: false
+  complex_flag: true
+- name: "license"
+  datatype: "object"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "name"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "termsLink"
+      type: "string"
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "licenseid"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "locked"
+  datatype: "boolean"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "meta"
+  datatype: "object"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "view"
+      type:
+        type: "struct"
+        fields:
+        - name: "approvals"
+          type:
+            type: "array"
+            elementType:
+              type: "struct"
+              fields:
+              - name: "reviewedAt"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "reviewedAutomatically"
+                type: "boolean"
+                metadata: {}
+                nullable: true
+              - name: "state"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "submissionDetails"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "permissionType"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "submissionId"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "submissionObject"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "submissionOutcome"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "submissionOutcomeApplication"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "failureCount"
+                    type: "long"
+                    metadata: {}
+                    nullable: true
+                  - name: "status"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "submittedAt"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "submitter"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "displayName"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                  - name: "id"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "targetAudience"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "workflowId"
+                type: "long"
+                metadata: {}
+                nullable: true
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "assetType"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "attribution"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "averageRating"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "category"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "clientContext"
+          type:
+            type: "struct"
+            fields:
+            - name: "clientContextVariables"
+              type:
+                type: "array"
+                elementType: "string"
+                containsNull: true
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "columns"
+          type:
+            type: "array"
+            elementType:
+              type: "struct"
+              fields:
+              - name: "computationStrategy"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "parameters"
+                    type:
+                      type: "struct"
+                      fields:
+                      - name: "primary_key"
+                        type: "string"
+                        metadata: {}
+                        nullable: true
+                      - name: "region"
+                        type: "string"
+                        metadata: {}
+                        nullable: true
+                    metadata: {}
+                    nullable: true
+                  - name: "source_columns"
+                    type:
+                      type: "array"
+                      elementType: "string"
+                      containsNull: true
+                    metadata: {}
+                    nullable: true
+                  - name: "type"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "dataTypeName"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "description"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "fieldName"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "flags"
+                type:
+                  type: "array"
+                  elementType: "string"
+                  containsNull: true
+                metadata: {}
+                nullable: true
+              - name: "format"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "align"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "id"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "name"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "position"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "renderTypeName"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "tableColumnId"
+                type: "long"
+                metadata: {}
+                nullable: true
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "createdAt"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "description"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "displayType"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "downloadCount"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "flags"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "grants"
+          type:
+            type: "array"
+            elementType:
+              type: "struct"
+              fields:
+              - name: "flags"
+                type:
+                  type: "array"
+                  elementType: "string"
+                  containsNull: true
+                metadata: {}
+                nullable: true
+              - name: "inherited"
+                type: "boolean"
+                metadata: {}
+                nullable: true
+              - name: "type"
+                type: "string"
+                metadata: {}
+                nullable: true
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "hideFromCatalog"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "hideFromDataJson"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "id"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "license"
+          type:
+            type: "struct"
+            fields:
+            - name: "name"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "termsLink"
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "licenseId"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "locked"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "metadata"
+          type:
+            type: "struct"
+            fields:
+            - name: "availableDisplayTypes"
+              type:
+                type: "array"
+                elementType: "string"
+                containsNull: true
+              metadata: {}
+              nullable: true
+            - name: "custom_fields"
+              type:
+                type: "struct"
+                fields:
+                - name: "Identification"
+                  type:
+                    type: "struct"
+                    fields:
+                    - name: "Metadata Language"
+                      type: "string"
+                      metadata: {}
+                      nullable: true
+                    - name: "Originator"
+                      type: "string"
+                      metadata: {}
+                      nullable: true
+                  metadata: {}
+                  nullable: true
+                - name: "Notes"
+                  type:
+                    type: "struct"
+                    fields:
+                    - name: "1. "
+                      type: "string"
+                      metadata: {}
+                      nullable: true
+                    - name: "2. "
+                      type: "string"
+                      metadata: {}
+                      nullable: true
+                    - name: "3. "
+                      type: "string"
+                      metadata: {}
+                      nullable: true
+                    - name: "4. "
+                      type: "string"
+                      metadata: {}
+                      nullable: true
+                  metadata: {}
+                  nullable: true
+                - name: "Temporal"
+                  type:
+                    type: "struct"
+                    fields:
+                    - name: "Period of Time"
+                      type: "string"
+                      metadata: {}
+                      nullable: true
+                    - name: "Posting Frequency"
+                      type: "string"
+                      metadata: {}
+                      nullable: true
+                  metadata: {}
+                  nullable: true
+              metadata: {}
+              nullable: true
+            - name: "rowLabel"
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "name"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "newBackend"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "numberOfComments"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "oid"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "owner"
+          type:
+            type: "struct"
+            fields:
+            - name: "displayName"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "flags"
+              type:
+                type: "array"
+                elementType: "string"
+                containsNull: true
+              metadata: {}
+              nullable: true
+            - name: "id"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlLarge"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlMedium"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlSmall"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "screenName"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "type"
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "provenance"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "publicationAppendEnabled"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "publicationDate"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "publicationGroup"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "publicationStage"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "rights"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "rowsUpdatedAt"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "rowsUpdatedBy"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "tableAuthor"
+          type:
+            type: "struct"
+            fields:
+            - name: "displayName"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "flags"
+              type:
+                type: "array"
+                elementType: "string"
+                containsNull: true
+              metadata: {}
+              nullable: true
+            - name: "id"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlLarge"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlMedium"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlSmall"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "screenName"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "type"
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "tableId"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "tags"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "totalTimesRated"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "viewCount"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "viewLastModified"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "viewType"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "metadata"
+  datatype: "object"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "availableDisplayTypes"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "custom_fields"
+      type:
+        type: "struct"
+        fields:
+        - name: "Identification"
+          type:
+            type: "struct"
+            fields:
+            - name: "Metadata Language"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "Originator"
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "Notes"
+          type:
+            type: "struct"
+            fields:
+            - name: "1. "
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "2. "
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "3. "
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "4. "
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "Temporal"
+          type:
+            type: "struct"
+            fields:
+            - name: "Period of Time"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "Posting Frequency"
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "rowLabel"
+      type: "string"
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "name"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "newbackend"
+  datatype: "boolean"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "numberofcomments"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "oid"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "owner"
+  datatype: "object"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "displayName"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "flags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "id"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlLarge"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlMedium"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlSmall"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "screenName"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "type"
+      type: "string"
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "provenance"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "publicationappendenabled"
+  datatype: "boolean"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "publicationdate"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "publicationgroup"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "publicationstage"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "rights"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType: "string"
+    containsNull: true
+  complex_flag: true
+- name: "rowsupdatedat"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "rowsupdatedby"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "tableauthor"
+  datatype: "object"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "displayName"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "flags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "id"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlLarge"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlMedium"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlSmall"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "screenName"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "type"
+      type: "string"
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "tableid"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "tags"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType: "string"
+    containsNull: true
+  complex_flag: true
+- name: "totaltimesrated"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "view"
+  datatype: "object"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "approvals"
+      type:
+        type: "array"
+        elementType:
+          type: "struct"
+          fields:
+          - name: "reviewedAt"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "reviewedAutomatically"
+            type: "boolean"
+            metadata: {}
+            nullable: true
+          - name: "state"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "submissionDetails"
+            type:
+              type: "struct"
+              fields:
+              - name: "permissionType"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "submissionId"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "submissionObject"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "submissionOutcome"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "submissionOutcomeApplication"
+            type:
+              type: "struct"
+              fields:
+              - name: "failureCount"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "status"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "submittedAt"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "submitter"
+            type:
+              type: "struct"
+              fields:
+              - name: "displayName"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "id"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "targetAudience"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "workflowId"
+            type: "long"
+            metadata: {}
+            nullable: true
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "assetType"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "attribution"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "averageRating"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "category"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "clientContext"
+      type:
+        type: "struct"
+        fields:
+        - name: "clientContextVariables"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "columns"
+      type:
+        type: "array"
+        elementType:
+          type: "struct"
+          fields:
+          - name: "computationStrategy"
+            type:
+              type: "struct"
+              fields:
+              - name: "parameters"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "primary_key"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                  - name: "region"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "source_columns"
+                type:
+                  type: "array"
+                  elementType: "string"
+                  containsNull: true
+                metadata: {}
+                nullable: true
+              - name: "type"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "dataTypeName"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "description"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "fieldName"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "flags"
+            type:
+              type: "array"
+              elementType: "string"
+              containsNull: true
+            metadata: {}
+            nullable: true
+          - name: "format"
+            type:
+              type: "struct"
+              fields:
+              - name: "align"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "id"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "name"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "position"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "renderTypeName"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "tableColumnId"
+            type: "long"
+            metadata: {}
+            nullable: true
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "createdAt"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "description"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "displayType"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "downloadCount"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "flags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "grants"
+      type:
+        type: "array"
+        elementType:
+          type: "struct"
+          fields:
+          - name: "flags"
+            type:
+              type: "array"
+              elementType: "string"
+              containsNull: true
+            metadata: {}
+            nullable: true
+          - name: "inherited"
+            type: "boolean"
+            metadata: {}
+            nullable: true
+          - name: "type"
+            type: "string"
+            metadata: {}
+            nullable: true
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "hideFromCatalog"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "hideFromDataJson"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "id"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "license"
+      type:
+        type: "struct"
+        fields:
+        - name: "name"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "termsLink"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "licenseId"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "locked"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "metadata"
+      type:
+        type: "struct"
+        fields:
+        - name: "availableDisplayTypes"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "custom_fields"
+          type:
+            type: "struct"
+            fields:
+            - name: "Identification"
+              type:
+                type: "struct"
+                fields:
+                - name: "Metadata Language"
+                  type: "string"
+                  metadata: {}
+                  nullable: true
+                - name: "Originator"
+                  type: "string"
+                  metadata: {}
+                  nullable: true
+              metadata: {}
+              nullable: true
+            - name: "Notes"
+              type:
+                type: "struct"
+                fields:
+                - name: "1. "
+                  type: "string"
+                  metadata: {}
+                  nullable: true
+                - name: "2. "
+                  type: "string"
+                  metadata: {}
+                  nullable: true
+                - name: "3. "
+                  type: "string"
+                  metadata: {}
+                  nullable: true
+                - name: "4. "
+                  type: "string"
+                  metadata: {}
+                  nullable: true
+              metadata: {}
+              nullable: true
+            - name: "Temporal"
+              type:
+                type: "struct"
+                fields:
+                - name: "Period of Time"
+                  type: "string"
+                  metadata: {}
+                  nullable: true
+                - name: "Posting Frequency"
+                  type: "string"
+                  metadata: {}
+                  nullable: true
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "rowLabel"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "name"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "newBackend"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "numberOfComments"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "oid"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "owner"
+      type:
+        type: "struct"
+        fields:
+        - name: "displayName"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "flags"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "id"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlLarge"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlMedium"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlSmall"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "screenName"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "type"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "provenance"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "publicationAppendEnabled"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "publicationDate"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "publicationGroup"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "publicationStage"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "rights"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "rowsUpdatedAt"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "rowsUpdatedBy"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "tableAuthor"
+      type:
+        type: "struct"
+        fields:
+        - name: "displayName"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "flags"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "id"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlLarge"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlMedium"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlSmall"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "screenName"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "type"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "tableId"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "tags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "totalTimesRated"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "viewCount"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "viewLastModified"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "viewType"
+      type: "string"
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "viewcount"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "viewlastmodified"
+  datatype: "number"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "viewtype"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "Auto_Cypress_Testing_JsonS3OutputSingle"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+  description: "JsonS3OutputSingle Auto_Cypress_Testing_JsonS3OutputSingle  Thu Jan\
+    \ 02 2025 18:14:06 GMT+0000 (Coordinated Universal Time)"

@@ -1,0 +1,15 @@
+---
+source_name: "Automation_Unmanaged_External_Source"
+source_description: "Automation_Unmanaged_External_Source"
+ingestion_parameters:
+  table_name: "hive_metastore.meta.input"
+refresh_type: "unmanaged"
+connection_type: "unmanaged_external"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "input_id"
+  data_type: "int"
+- raw_attribute_name: "source_file_name"
+  data_type: "string"
+dependencies:
+- source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"

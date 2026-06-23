@@ -1,0 +1,15 @@
+---
+name: "Rules_Template_Coalesce_rule_double"
+datatype: "double"
+cast_datatype: "double"
+attribute_name: "rules_template_coalesce_rule_double"
+expression: "coalesce(double([This].unitprice), [This].unitpricediscount)"
+expression_parsed: "coalesce(double(P<1>), P<2>)"
+test_source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+parameters:
+- id: 1
+  attribute_name: "unitprice"
+  datatype: "decimal"
+- id: 2
+  attribute_name: "unitpricediscount"
+  datatype: "decimal"

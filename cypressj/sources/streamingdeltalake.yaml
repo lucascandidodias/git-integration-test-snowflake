@@ -1,0 +1,11 @@
+---
+source_name: "StreamingDeltaLake"
+source_description: "StreamingDeltaLake"
+ingestion_parameters:
+  source_query: "default.streamtabledeltalakecustomdbnone"
+  disable_initiation: true
+refresh_type: "none"
+processing_type: "stream"
+connection_name: "CypressDatabricksHiveMetastore"
+schedule_name: "Default"
+process_configuration_name: "TestingStream"

@@ -1,0 +1,13 @@
+---
+name: "Rules_Template_Case_When_Then_End_Rule_Single_Reference"
+datatype: "boolean"
+cast_datatype: "boolean"
+attribute_name: "rules_template_case_when_then_end_rule_single_reference"
+expression: "CASE WHEN [This].salesorderdetailid IS NOT NULL THEN false ELSE true\
+  \ END"
+expression_parsed: "CASE WHEN P<1> IS NOT NULL THEN false ELSE true END"
+test_source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+parameters:
+- id: 1
+  attribute_name: "salesorderdetailid"
+  datatype: "int"

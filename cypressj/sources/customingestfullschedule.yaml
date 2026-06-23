@@ -1,0 +1,7 @@
+---
+source_name: "CustomIngestFullSchedule"
+source_description: "Testing - CustomIngestFullSchedule"
+connection_type: "custom_ingestion"
+connection_name: "SourceCustom"
+schedule_name: "Default"
+custom_ingest_cluster_configuration_name: "PoolFixedCustomNotebookforCustomIngest"

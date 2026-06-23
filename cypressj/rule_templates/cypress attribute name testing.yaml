@@ -1,0 +1,13 @@
+---
+tokens:
+- "CypressAttributeName"
+name: "Cypress Attribute Name Testing"
+datatype: "int"
+attribute_name: "cypress_attribute_name_testing"
+expression: "[This].${CypressAttributeName}"
+expression_parsed: "P<1>"
+test_source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+parameters:
+- id: 1
+  attribute_name: "${CypressAttributeName}"
+  datatype: "int"

@@ -1,0 +1,59 @@
+---
+output_name: "Schema_Evolution_Output"
+output_package_parameters:
+  table_name: "outputschemavalidationgitgitCypress"
+  table_schema: "default"
+output_description: "Cypress Testing - Schema_Evolution_Output"
+output_sub_type: "delta_lake"
+connection_name: "OutputTableDeltaLakeCustomDb"
+columns:
+- name: "id"
+  datatype: "long"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "id2"
+  datatype: "long"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "id3"
+  datatype: "integer"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "schema_evolution_regular_rule1"
+  datatype: "long"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "schema_evolution_regular_rule2"
+  datatype: "long"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "schema_evolution_struct_rule1"
+  datatype: "long"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "schema_evolution_struct_rule2"
+  datatype: "decimal"
+  datatype_schema: "decimal(38,12)"
+  complex_flag: false
+- name: "str"
+  datatype: "struct"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "col_a"
+      type: "long"
+      metadata: {}
+      nullable: false
+    - name: "col_b"
+      type: "string"
+      metadata: {}
+      nullable: false
+    - name: "col_c"
+      type: "decimal(38,12)"
+      metadata: {}
+      nullable: false
+    - name: "col_d"
+      type: "boolean"
+      metadata: {}
+      nullable: false
+  complex_flag: true

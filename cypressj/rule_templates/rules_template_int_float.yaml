@@ -1,0 +1,13 @@
+---
+name: "Rules_Template_int_float"
+datatype: "float"
+cast_datatype: "float"
+attribute_name: "rules_template_int_float"
+expression: "[This].orderqty"
+expression_parsed: "P<1>"
+keep_current_flag: true
+test_source_name: "Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1"
+parameters:
+- id: 1
+  attribute_name: "orderqty"
+  datatype: "int"

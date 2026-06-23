@@ -1,0 +1,16 @@
+---
+output_name: "kafka output"
+output_type: "event"
+output_package_parameters:
+  topic_name: "test"
+output_description: "x"
+connection_name: "CypressKafkaTestingOutput"
+columns:
+- name: "key"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "value"
+  datatype: "string"
+  datatype_schema: "string"
+  complex_flag: false

@@ -1,0 +1,8 @@
+---
+source_name: "TablePostgresFullScheduleCustom"
+source_description: "Testing - TablePostgresFullScheduleCustom"
+ingestion_parameters:
+  source_query: "SELECT * FROM testing.RTE_AW_SalesOrderDetail"
+connection_name: "SourceTablePostgres"
+schedule_name: "Default"
+process_configuration_name: "TestingAllDifferentConfig"

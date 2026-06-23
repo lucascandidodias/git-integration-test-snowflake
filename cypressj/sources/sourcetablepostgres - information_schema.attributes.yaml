@@ -1,0 +1,9 @@
+---
+source_name: "SourceTablePostgres - information_schema.attributes"
+source_description: "Auto-created from connection metadata"
+ingestion_parameters:
+  source_query: "select * from information_schema.attributes"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Upcast"
+connection_name: "SourceTablePostgres"
+schedule_name: "Default"
