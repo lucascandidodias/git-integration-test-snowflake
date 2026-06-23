@@ -1,0 +1,21 @@
+---
+name: "Rules_Template_ACT_IF_instr"
+datatype: "string"
+cast_datatype: "string"
+attribute_name: "rules_template_act_if_instr"
+expression: "IF(instr([This].orderqty, \"OID::\")>0,left([This].orderqty,length([This].orderqty)-27),[This].orderqty)"
+expression_parsed: "IF(instr(P<1>, \"OID::\")>0,left(P<2>,length(P<3>)-27),P<4>)"
+test_source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+parameters:
+- id: 1
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 2
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 3
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 4
+  attribute_name: "orderqty"
+  datatype: "int"

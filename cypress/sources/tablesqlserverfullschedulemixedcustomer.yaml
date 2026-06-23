@@ -1,0 +1,215 @@
+---
+source_name: "TableSqlServerFullScheduleMixedCustomer"
+source_description: "Testing - TableSqlServerFullScheduleMixedCustomer"
+ingestion_parameters:
+  source_query: "select * from Sales.Customer"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+process_configuration_name: "TestingDefaultWithOverrides"
+raw_attributes:
+- raw_attribute_name: "accountnumber"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "string"
+- raw_attribute_name: "customerid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "modifieddate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: false
+  data_type: "timestamp"
+- raw_attribute_name: "personid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+- raw_attribute_name: "rowguid"
+  raw_metadata:
+    scale: 0
+    precision: 36
+    nullable_flag: false
+  data_type: "string"
+- raw_attribute_name: "storeid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+- raw_attribute_name: "territoryid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+dependencies:
+- source_name: "TableSqlServerKeyScheduleCustomHeader"
+rules:
+- attribute_name: "act_cypress_sub_source_1"
+  name: "ACT_cypress_sub_source_1"
+  description: "cypress_sub_source_1"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "status"
+        type: "integer"
+        metadata: {}
+        nullable: false
+    containsNull: false
+  expression: "array_agg(struct([TableSqlServerKeyScheduleCustomHeader].status))\n"
+  expression_parsed: "A<1>\n"
+  rule_type_code: "S"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "status"
+    source_name: "TableSqlServerKeyScheduleCustomHeader"
+    relations:
+    - "[TableSqlServerFullScheduleMixedCustomer]-Relation_sales_order_header-[TableSqlServerKeyScheduleCustomHeader]"
+    aggregation_id: 1
+  aggregations:
+  - id: 1
+    expression: "array_agg(struct(P<1>))"
+    function: "array_agg"
+    relations:
+    - "[TableSqlServerFullScheduleMixedCustomer]-Relation_sales_order_header-[TableSqlServerKeyScheduleCustomHeader]"
+- attribute_name: "act_cypress_sub_source_2"
+  name: "ACT_cypress_sub_source_2"
+  description: "cypress_sub_source_2"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "customerid"
+        type: "integer"
+        metadata: {}
+        nullable: false
+      - name: "duedate"
+        type: "timestamp"
+        metadata: {}
+        nullable: true
+      - name: "onlineorderflag"
+        type: "boolean"
+        metadata: {}
+        nullable: false
+      - name: "taxamt"
+        type: "decimal(38,12)"
+        metadata: {}
+        nullable: false
+    containsNull: false
+  expression: "array_agg(struct([TableSqlServerKeyScheduleCustomHeader].customerid,\
+    \ [TableSqlServerKeyScheduleCustomHeader].duedate, [TableSqlServerKeyScheduleCustomHeader].onlineorderflag,\
+    \ [TableSqlServerKeyScheduleCustomHeader].taxamt))\n"
+  expression_parsed: "A<1>\n"
+  rule_type_code: "S"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "customerid"
+    source_name: "TableSqlServerKeyScheduleCustomHeader"
+    relations:
+    - "[TableSqlServerFullScheduleMixedCustomer]-Relation_sales_order_header-[TableSqlServerKeyScheduleCustomHeader]"
+    aggregation_id: 1
+  - id: 2
+    type: "raw"
+    name: "duedate"
+    source_name: "TableSqlServerKeyScheduleCustomHeader"
+    relations:
+    - "[TableSqlServerFullScheduleMixedCustomer]-Relation_sales_order_header-[TableSqlServerKeyScheduleCustomHeader]"
+    aggregation_id: 1
+  - id: 3
+    type: "raw"
+    name: "onlineorderflag"
+    source_name: "TableSqlServerKeyScheduleCustomHeader"
+    relations:
+    - "[TableSqlServerFullScheduleMixedCustomer]-Relation_sales_order_header-[TableSqlServerKeyScheduleCustomHeader]"
+    aggregation_id: 1
+  - id: 4
+    type: "raw"
+    name: "taxamt"
+    source_name: "TableSqlServerKeyScheduleCustomHeader"
+    relations:
+    - "[TableSqlServerFullScheduleMixedCustomer]-Relation_sales_order_header-[TableSqlServerKeyScheduleCustomHeader]"
+    aggregation_id: 1
+  aggregations:
+  - id: 1
+    expression: "array_agg(struct(P<1>, P<2>, P<3>, P<4>))"
+    function: "array_agg"
+    relations:
+    - "[TableSqlServerFullScheduleMixedCustomer]-Relation_sales_order_header-[TableSqlServerKeyScheduleCustomHeader]"
+channels:
+- output_name: "TableSqlServerSubSource"
+  output_source_name: "TableSqlServerSubSource - ParentSource"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_cypress_sub_source_1"
+    expression: "[This].act_cypress_sub_source_1"
+    datatype: "array"
+    parameter:
+      name: "act_cypress_sub_source_1"
+      type: "enrichment"
+  - name: "act_cypress_sub_source_2"
+    expression: "[This].act_cypress_sub_source_2"
+    datatype: "array"
+    parameter:
+      name: "act_cypress_sub_source_2"
+      type: "enrichment"
+  - name: "Auto_Cypress_Testing_SubSource"
+    expression: "[This].personid"
+    datatype: "int"
+    parameter:
+      name: "personid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "personid"
+    expression: "[This].personid"
+    datatype: "int"
+    parameter:
+      name: "personid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "storeid"
+    expression: "[This].storeid"
+    datatype: "int"
+    parameter:
+      name: "storeid"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"

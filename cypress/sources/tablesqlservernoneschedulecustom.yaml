@@ -1,0 +1,9 @@
+---
+source_name: "TableSqlServerNoneScheduleCustom"
+source_description: "Testing - TableSqlServerNoneScheduleCustom"
+ingestion_parameters:
+  source_query: "SELECT * FROM Sales.SalesOrderDetail"
+refresh_type: "none"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+process_configuration_name: "TestingAllDifferentConfig"

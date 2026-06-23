@@ -1,0 +1,374 @@
+---
+source_name: "TableSqlServerKeyScheduleCustomHeader"
+source_description: "Testing - TableSqlServerKeyScheduleCustomHeader"
+ingestion_parameters:
+  source_query: "SELECT * FROM Sales.SalesOrderHeader"
+cdc_refresh_parameters:
+  key_columns:
+  - "SalesOrderId"
+refresh_type: "key"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+process_configuration_name: "TestingAllDifferentConfig"
+raw_attributes:
+- raw_attribute_name: "accountnumber"
+  raw_metadata:
+    scale: 0
+    precision: 15
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "billtoaddressid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "comment"
+  raw_metadata:
+    scale: 0
+    precision: 128
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "creditcardapprovalcode"
+  raw_metadata:
+    scale: 0
+    precision: 15
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "creditcardid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+- raw_attribute_name: "currencyrateid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+- raw_attribute_name: "customerid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "duedate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: false
+  data_type: "timestamp"
+- raw_attribute_name: "freight"
+  raw_metadata:
+    scale: 4
+    precision: 19
+    nullable_flag: false
+  data_type: "decimal"
+- raw_attribute_name: "modifieddate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: false
+  data_type: "timestamp"
+- raw_attribute_name: "onlineorderflag"
+  raw_metadata:
+    scale: 0
+    precision: 1
+    nullable_flag: false
+  data_type: "boolean"
+- raw_attribute_name: "orderdate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: false
+  data_type: "timestamp"
+- raw_attribute_name: "purchaseordernumber"
+  raw_metadata:
+    scale: 0
+    precision: 25
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "revisionnumber"
+  raw_metadata:
+    scale: 0
+    precision: 3
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "rowguid"
+  raw_metadata:
+    scale: 0
+    precision: 36
+    nullable_flag: false
+  data_type: "string"
+- raw_attribute_name: "salesorderid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+  unique_flag: true
+- raw_attribute_name: "salesordernumber"
+  raw_metadata:
+    scale: 0
+    precision: 25
+    nullable_flag: false
+  data_type: "string"
+- raw_attribute_name: "salespersonid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+- raw_attribute_name: "shipdate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: true
+  data_type: "timestamp"
+- raw_attribute_name: "shipmethodid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "shiptoaddressid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "status"
+  raw_metadata:
+    scale: 0
+    precision: 3
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "subtotal"
+  raw_metadata:
+    scale: 4
+    precision: 19
+    nullable_flag: false
+  data_type: "decimal"
+- raw_attribute_name: "taxamt"
+  raw_metadata:
+    scale: 4
+    precision: 19
+    nullable_flag: false
+  data_type: "decimal"
+- raw_attribute_name: "territoryid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+- raw_attribute_name: "totaldue"
+  raw_metadata:
+    scale: 4
+    precision: 19
+    nullable_flag: false
+  data_type: "decimal"
+dependencies:
+- source_name: "TableSqlServerFullScheduleMixedCustomer"
+rules:
+- attribute_name: "act_sub_source_tablesqlserver"
+  name: "ACT_Sub_Source_TableSqlServer"
+  description: "ACT_Sub_Source_TableSqlServer"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "creditcardid"
+        type: "integer"
+        metadata: {}
+        nullable: false
+      - name: "duedate"
+        type: "timestamp"
+        metadata: {}
+        nullable: true
+      - name: "shipmethodid"
+        type: "integer"
+        metadata: {}
+        nullable: false
+    containsNull: false
+  expression: "array(struct([This].creditcardid, [This].duedate, [This].shipmethodid))\n"
+  expression_parsed: "array(struct(P<1>, P<2>, P<3>))\n"
+  rule_type_code: "S"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "creditcardid"
+  - id: 2
+    type: "raw"
+    name: "duedate"
+  - id: 3
+    type: "raw"
+    name: "shipmethodid"
+channels:
+- output_name: "TableSqlServerSubSource"
+  output_source_name: "TableSqlServerSubSource - OtherSource"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_sub_source_tablesqlserver"
+    expression: "[This].act_sub_source_tablesqlserver"
+    datatype: "array"
+    parameter:
+      name: "act_sub_source_tablesqlserver"
+      type: "enrichment"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"

@@ -1,0 +1,134 @@
+---
+source_name: "AutomationDeltaSchemaEvolutionRulesValidation"
+source_description: "Schema evolution test rules validation"
+ingestion_parameters:
+  source_query: "SELECT cast(10 as decimal) id, cast(20 as bigint) id2, struct(cast(25\
+    \ as bigint) col_a, 'b' as col_b, cast(15 as decimal) col_c, 'false' as col_d)\
+    \ str"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Upcast, Extend All"
+connection_name: "CypressDatabricksHiveMetastore"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "id"
+  data_type: "long"
+- raw_attribute_name: "id2"
+  data_type: "long"
+- raw_attribute_name: "id3"
+  data_type: "int"
+- raw_attribute_name: "str"
+  data_type: "struct"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "col_a"
+      type: "long"
+      metadata: {}
+      nullable: false
+    - name: "col_b"
+      type: "string"
+      metadata: {}
+      nullable: false
+    - name: "col_c"
+      type: "decimal(38,12)"
+      metadata: {}
+      nullable: false
+    - name: "col_d"
+      type: "boolean"
+      metadata: {}
+      nullable: false
+dependencies:
+- source_name: "AutomationDeltaSchemaEvolution"
+rules:
+- attribute_name: "schema_evolution_regular_rule1"
+  name: "Schema_Evolution_Regular_Rule1"
+  description: "Schema_Evolution_Regular_Rule1"
+  datatype: "long"
+  expression: "[This].id * 100\n"
+  expression_parsed: "P<1> * 100\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "id"
+- attribute_name: "schema_evolution_regular_rule2"
+  name: "Schema_Evolution_Regular_Rule2"
+  description: "Schema_Evolution_Regular_Rule2"
+  datatype: "long"
+  expression: "[This].id2"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "id2"
+- attribute_name: "schema_evolution_struct_rule1"
+  name: "Schema_Evolution_Struct_Rule1"
+  description: "Schema_Evolution_Struct_Rule1"
+  datatype: "long"
+  expression: "[This].str.col_a * 100\n"
+  expression_parsed: "P<1>.col_a * 100\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "str"
+- attribute_name: "schema_evolution_struct_rule2"
+  name: "Schema_Evolution_Struct_Rule2"
+  description: "Schema_Evolution_Struct_Rule2"
+  datatype: "decimal"
+  expression: "[This].str.col_c"
+  expression_parsed: "P<1>.col_c"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "str"
+channels:
+- output_name: "Schema_Evolution_Output"
+  output_source_name: "Schema_Evolution_Testing"
+  output_source_columns:
+  - name: "id"
+    expression: "[This].id"
+    datatype: "long"
+    parameter:
+      name: "id"
+      type: "raw"
+  - name: "id2"
+    expression: "[This].id2"
+    datatype: "long"
+    parameter:
+      name: "id2"
+      type: "raw"
+  - name: "id3"
+    expression: "[This].id3"
+    datatype: "int"
+    parameter:
+      name: "id3"
+      type: "raw"
+  - name: "schema_evolution_regular_rule1"
+    expression: "[This].schema_evolution_regular_rule1"
+    datatype: "long"
+    parameter:
+      name: "schema_evolution_regular_rule1"
+      type: "enrichment"
+  - name: "schema_evolution_regular_rule2"
+    expression: "[This].schema_evolution_regular_rule2"
+    datatype: "long"
+    parameter:
+      name: "schema_evolution_regular_rule2"
+      type: "enrichment"
+  - name: "schema_evolution_struct_rule1"
+    expression: "[This].schema_evolution_struct_rule1"
+    datatype: "long"
+    parameter:
+      name: "schema_evolution_struct_rule1"
+      type: "enrichment"
+  - name: "schema_evolution_struct_rule2"
+    expression: "[This].schema_evolution_struct_rule2"
+    datatype: "decimal"
+    parameter:
+      name: "schema_evolution_struct_rule2"
+      type: "enrichment"
+  - name: "str"
+    expression: "[This].str"
+    datatype: "struct"
+    parameter:
+      name: "str"
+      type: "raw"

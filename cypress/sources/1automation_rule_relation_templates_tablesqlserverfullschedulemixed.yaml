@@ -1,0 +1,5595 @@
+---
+source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+source_description: "cypress TEST 2 TEST 3"
+ingestion_parameters:
+  source_query: "SELECT * FROM Sales.SalesOrderDetail"
+  spark_jdbc_parameters: "{}"
+cdc_refresh_parameters:
+  key_columns:
+  - "SalesOrderId"
+refresh_type: "key"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "carriertrackingnumber"
+  raw_metadata:
+    scale: 0
+    precision: 25
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "linetotal"
+  raw_metadata:
+    scale: 6
+    precision: 38
+    nullable_flag: false
+  data_type: "decimal"
+- raw_attribute_name: "modifieddate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: false
+  data_type: "timestamp"
+- raw_attribute_name: "orderqty"
+  raw_metadata:
+    scale: 0
+    precision: 5
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "productid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "rowguid"
+  raw_metadata:
+    scale: 0
+    precision: 36
+    nullable_flag: false
+  data_type: "string"
+- raw_attribute_name: "salesorderdetailid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "salesorderid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+  unique_flag: true
+- raw_attribute_name: "specialofferid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "unitprice"
+  raw_metadata:
+    scale: 4
+    precision: 19
+    nullable_flag: false
+  data_type: "decimal"
+- raw_attribute_name: "unitpricediscount"
+  raw_metadata:
+    scale: 4
+    precision: 19
+    nullable_flag: false
+  data_type: "decimal"
+rules:
+- attribute_name: "act_case_when_substring"
+  name: "ACT_Case_When_Substring"
+  description: "ACT_Case_When_Substring"
+  datatype: "string"
+  expression: "case when [This].carriertrackingnumber like '%-%' and  [This].carriertrackingnumber\
+    \ not like 'FX%' then substring_index( [This].carriertrackingnumber, \"-\", 1)\
+    \ else '' end\n"
+  expression_parsed: "case when P<1> like '%-%' and  P<2> not like 'FX%' then substring_index(\
+    \ P<3>, \"-\", 1) else '' end\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "carriertrackingnumber"
+  - id: 2
+    type: "raw"
+    name: "carriertrackingnumber"
+  - id: 3
+    type: "raw"
+    name: "carriertrackingnumber"
+- attribute_name: "act_concat_ws_rule"
+  name: "ACT_concat_ws_rule"
+  description: "ACT_concat_ws_rule"
+  datatype: "string"
+  expression: "concat_ws(\", \",collect_list(distinct([TablePostgresFullScheduleMixed].carriertrackingnumber)))\n"
+  expression_parsed: "concat_ws(\", \",A<1>)\n"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "carriertrackingnumber"
+    source_name: "TablePostgresFullScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-ManyToManyRelation-[TablePostgresFullScheduleMixed]"
+    aggregation_id: 1
+  aggregations:
+  - id: 1
+    expression: "collect_list(distinct(P<1>))"
+    function: "collect_list"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-ManyToManyRelation-[TablePostgresFullScheduleMixed]"
+- attribute_name: "act_date_add_rule"
+  name: "ACT_date_add_rule"
+  description: "ACT_date_add_rule"
+  datatype: "date"
+  cast_datatype: "date"
+  expression: "date_add([This].modifieddate, 1)\n"
+  expression_parsed: "date_add(P<1>, 1)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "modifieddate"
+- attribute_name: "act_date_sub_rule"
+  name: "ACT_date_sub_rule"
+  description: "ACT_date_sub_rule"
+  datatype: "date"
+  cast_datatype: "date"
+  expression: "date_add([This].modifieddate, -1)\n"
+  expression_parsed: "date_add(P<1>, -1)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "modifieddate"
+- attribute_name: "act_dense_rank_rule"
+  name: "ACT_DENSE_RANK_rule"
+  description: "ACT_DENSE_RANK_rule"
+  datatype: "double"
+  cast_datatype: "double"
+  expression: "DENSE_RANK([This].productid) OVER (PARTITION BY [This].salesorderid\
+    \ = true ORDER BY [This].salesorderid DESC)\n"
+  expression_parsed: "DENSE_RANK(P<1>) OVER (PARTITION BY P<2> = true ORDER BY P<3>\
+    \ DESC)\n"
+  keep_current_flag: true
+  window_function_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "productid"
+  - id: 2
+    type: "raw"
+    name: "salesorderid"
+  - id: 3
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_if_instr"
+  name: "ACT_IF_instr"
+  description: "ACT_IF_instr"
+  datatype: "string"
+  expression: "IF(instr([This].orderqty, \"OID::\")>0,left([This].orderqty,length([This].orderqty)-27),[This].orderqty)\n"
+  expression_parsed: "IF(instr(P<1>, \"OID::\")>0,left(P<2>,length(P<3>)-27),P<4>)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "orderqty"
+  - id: 2
+    type: "raw"
+    name: "orderqty"
+  - id: 3
+    type: "raw"
+    name: "orderqty"
+  - id: 4
+    type: "raw"
+    name: "orderqty"
+- attribute_name: "act_now_timestamp"
+  name: "ACT_now_timestamp"
+  description: "ACT_now_timestamp"
+  datatype: "timestamp"
+  expression: "now()\n"
+  expression_parsed: "now()\n"
+- attribute_name: "act_nullif_rule"
+  name: "ACT_NULLIF_rule"
+  description: "ACT_NULLIF_rule"
+  datatype: "double"
+  cast_datatype: "double"
+  expression: "nullif(COALESCE([This].orderqty, 0) + COALESCE([This].orderqty, 0)\
+    \ + COALESCE([This].orderqty, 0) + COALESCE([This].orderqty,0) + COALESCE([This].orderqty,\
+    \ 0) + COALESCE([This].orderqty, 0) + COALESCE([This].orderqty,0) + COALESCE([This].orderqty,\
+    \ 0), 0)\n"
+  expression_parsed: "nullif(COALESCE(P<1>, 0) + COALESCE(P<2>, 0) + COALESCE(P<3>,\
+    \ 0) + COALESCE(P<4>,0) + COALESCE(P<5>, 0) + COALESCE(P<6>, 0) + COALESCE(P<7>,0)\
+    \ + COALESCE(P<8>, 0), 0)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "orderqty"
+  - id: 2
+    type: "raw"
+    name: "orderqty"
+  - id: 3
+    type: "raw"
+    name: "orderqty"
+  - id: 4
+    type: "raw"
+    name: "orderqty"
+  - id: 5
+    type: "raw"
+    name: "orderqty"
+  - id: 6
+    type: "raw"
+    name: "orderqty"
+  - id: 7
+    type: "raw"
+    name: "orderqty"
+  - id: 8
+    type: "raw"
+    name: "orderqty"
+- attribute_name: "act_onetomanyrelation_rule"
+  name: "ACT_OnetoManyRelation_rule"
+  description: "ACT_OnetoManyRelation_rule"
+  datatype: "string"
+  cast_datatype: "string"
+  expression: "First([TableSqlServerFullScheduleDefault].salesorderid)\n"
+  expression_parsed: "A<1>\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+    source_name: "TableSqlServerFullScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToManyRelation-[TableSqlServerFullScheduleDefault]"
+    aggregation_id: 1
+  aggregations:
+  - id: 1
+    expression: "first(P<1>)"
+    function: "first"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToManyRelation-[TableSqlServerFullScheduleDefault]"
+- attribute_name: "act_onetoonerelation_rule"
+  name: "ACT_OnetoOneRelation_rule"
+  description: "ACT_OnetoOneRelation_rule"
+  datatype: "int"
+  expression: "[TableSqlServerKeyScheduleDefault].act_hash_times_dup\n"
+  expression_parsed: "P<1>\n"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "act_hash_times_dup"
+    source_name: "TableSqlServerKeyScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+- attribute_name: "act_percentile_rule"
+  name: "ACT_percentile_rule"
+  description: "ACT_percentile_rule"
+  datatype: "float"
+  cast_datatype: "float"
+  expression: "percentile([This].unitprice,.98) OVER (PARTITION BY [This].modifieddate)\n"
+  expression_parsed: "percentile(P<1>,.98) OVER (PARTITION BY P<2>)\n"
+  keep_current_flag: true
+  window_function_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "unitprice"
+  - id: 2
+    type: "raw"
+    name: "modifieddate"
+- attribute_name: "act_regexp_extract"
+  name: "ACT_regexp_extract"
+  description: "ACT_regexp_extract"
+  datatype: "timestamp"
+  expression: "now()\n"
+  expression_parsed: "now()\n"
+- attribute_name: "act_replace_rule"
+  name: "ACT_replace_rule"
+  description: "ACT_replace_rule"
+  datatype: "string"
+  expression: "REPLACE(REPLACE([This].carriertrackingnumber, '$', ''), ',', '')\n"
+  expression_parsed: "REPLACE(REPLACE(P<1>, '$', ''), ',', '')\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "carriertrackingnumber"
+- attribute_name: "act_testrule1_spanshot"
+  name: "ACT_TestRule1_Spanshot"
+  description: "TestRule1-Spanshot"
+  datatype: "int"
+  expression: "int([This].salesorderid)\n"
+  expression_parsed: "int(P<1>)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule2_keep_current"
+  name: "ACT_TestRule2_Keep_Current"
+  description: "TestRule2-Keep Current"
+  datatype: "long"
+  cast_datatype: "long"
+  expression: "[This].salesorderid"
+  expression_parsed: "P<1>"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule3_data_type"
+  name: "ACT_TestRule3_Data_Type"
+  description: "ACT_TestRule3_Data_Type"
+  datatype: "double"
+  cast_datatype: "double"
+  expression: "[This].salesorderid"
+  expression_parsed: "P<1>"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule4_calculation"
+  name: "ACT_TestRule4_calculation"
+  description: "ACT_TestRule4_calculation"
+  datatype: "float"
+  cast_datatype: "float"
+  expression: "[This].salesorderid + 1\n"
+  expression_parsed: "P<1> + 1\n"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule5_window_function"
+  name: "ACT_TestRule5_window_function"
+  description: "ACT_TestRule5_window_function"
+  datatype: "long"
+  cast_datatype: "long"
+  expression: "MAX([This].orderqty)OVER (PARTITION BY [This].productid)\n"
+  expression_parsed: "MAX(P<1>)OVER (PARTITION BY P<2>)\n"
+  keep_current_flag: true
+  window_function_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "orderqty"
+  - id: 2
+    type: "raw"
+    name: "productid"
+- attribute_name: "act_testrule6_window_function"
+  name: "ACT_TestRule6_window_function"
+  description: "ACT_TestRule6_window_function"
+  datatype: "long"
+  expression: "[This].act_testrule5_window_function + 1\n"
+  expression_parsed: "P<1> + 1\n"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "act_testrule5_window_function"
+- attribute_name: "act_testrule8_boolean"
+  name: "ACT_TestRule8_boolean"
+  description: "ACT_TestRule8_boolean"
+  datatype: "boolean"
+  expression: "[This].orderqty  IS NOT NULL\n"
+  expression_parsed: "P<1>  IS NOT NULL\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "orderqty"
+- attribute_name: "act_testrule_keep_current_unique"
+  name: "ACT_TestRule_Keep_Current_Unique"
+  description: "TestRule Keep Current Unique"
+  datatype: "long"
+  cast_datatype: "long"
+  expression: "[This].salesorderid"
+  expression_parsed: "P<1>"
+  keep_current_flag: true
+  unique_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule_keep_current_unique_uv_flag"
+  name: "ACT_TestRule_Keep_Current_Unique uniqueness validation"
+  parent_attribute_name: "act_testrule_keep_current_unique"
+  description: "Auto-generated rule to validate uniqueness of act_testrule_keep_current_unique"
+  datatype: "boolean"
+  expression: "COUNT(1) OVER (PARTITION BY [This].act_testrule_keep_current_unique)\
+    \ = 1"
+  expression_parsed: "COUNT(1) OVER (PARTITION BY P<1>) = 1"
+  rule_type_code: "V"
+  validation_action_code: "F"
+  validation_type_code: "U"
+  keep_current_flag: true
+  window_function_flag: true
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "act_testrule_keep_current_unique"
+- attribute_name: "act_trim_rule"
+  name: "ACT_trim_rule"
+  description: "ACT_trim_rule"
+  datatype: "string"
+  expression: "trim([This].carriertrackingnumber)\n"
+  expression_parsed: "trim(P<1>)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "carriertrackingnumber"
+- attribute_name: "case_when_then_end_related_one_on_one_source"
+  name: "Case_when_then_end_related_one_on_one_source"
+  description: "Case_when_then_end_related_one_on_one_source"
+  datatype: "string"
+  expression: "CASE WHEN [TableSqlServerKeyScheduleDefault].totaldue < 100 THEN '<100'\
+    \ WHEN  [TableSqlServerKeyScheduleDefault].totaldue  >= 100 AND  [TableSqlServerKeyScheduleDefault].totaldue\
+    \  < 500 THEN '100-500' WHEN  [TableSqlServerKeyScheduleDefault].totaldue  >=\
+    \ 500 AND  [TableSqlServerKeyScheduleDefault].totaldue < 1000 THEN '500-1000'\
+    \ WHEN  [TableSqlServerKeyScheduleDefault].totaldue  >= 1000 AND  [TableSqlServerKeyScheduleDefault].totaldue\
+    \ < 5000 THEN '1000-5000' WHEN  [TableSqlServerKeyScheduleDefault].totaldue >=\
+    \ 5000 AND   [TableSqlServerKeyScheduleDefault].totaldue < 10000 THEN '5000-10000'\
+    \ WHEN  [TableSqlServerKeyScheduleDefault].totaldue >= 10000 THEN '>10000' ELSE\
+    \ NULL END\n"
+  expression_parsed: "CASE WHEN P<1> < 100 THEN '<100' WHEN  P<2>  >= 100 AND  P<3>\
+    \  < 500 THEN '100-500' WHEN  P<4>  >= 500 AND  P<5> < 1000 THEN '500-1000' WHEN\
+    \  P<6>  >= 1000 AND  P<7> < 5000 THEN '1000-5000' WHEN  P<8> >= 5000 AND   P<9>\
+    \ < 10000 THEN '5000-10000' WHEN  P<10> >= 10000 THEN '>10000' ELSE NULL END\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+  - id: 2
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+  - id: 3
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+  - id: 4
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+  - id: 5
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+  - id: 6
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+  - id: 7
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+  - id: 8
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+  - id: 9
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+  - id: 10
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+- attribute_name: "case_when_then_end_related_one_on_one_source_to_related_source"
+  name: "Case_when_then_end_related_one_on_one_source_to_related_source"
+  description: "Case_when_then_end_related_one_on_one_source_to_related_source"
+  datatype: "string"
+  expression: "CASE WHEN [TableSqlServerKeyScheduleMixed].totaldue < 100 THEN '<100'\
+    \ WHEN  [TableSqlServerKeyScheduleMixed].totaldue  >= 100 AND  [TableSqlServerKeyScheduleMixed].totaldue\
+    \  < 500 THEN '100-500' WHEN  [TableSqlServerKeyScheduleMixed].totaldue  >= 500\
+    \ AND  [TableSqlServerKeyScheduleMixed].totaldue < 1000 THEN '500-1000' WHEN \
+    \ [TableSqlServerKeyScheduleMixed].totaldue  >= 1000 AND  [TableSqlServerKeyScheduleMixed].totaldue\
+    \ < 5000 THEN '1000-5000' WHEN  [TableSqlServerKeyScheduleMixed].totaldue >= 5000\
+    \ AND   [TableSqlServerKeyScheduleMixed].totaldue < 10000 THEN '5000-10000' WHEN\
+    \  [TableSqlServerKeyScheduleMixed].totaldue >= 10000 THEN '>10000' ELSE NULL\
+    \ END\n"
+  expression_parsed: "CASE WHEN P<1> < 100 THEN '<100' WHEN  P<2>  >= 100 AND  P<3>\
+    \  < 500 THEN '100-500' WHEN  P<4>  >= 500 AND  P<5> < 1000 THEN '500-1000' WHEN\
+    \  P<6>  >= 1000 AND  P<7> < 5000 THEN '1000-5000' WHEN  P<8> >= 5000 AND   P<9>\
+    \ < 10000 THEN '5000-10000' WHEN  P<10> >= 10000 THEN '>10000' ELSE NULL END\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+    - "[TableSqlServerKeyScheduleDefault]-TestOneToOneRelation-[TableSqlServerKeyScheduleMixed]"
+  - id: 2
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+    - "[TableSqlServerKeyScheduleDefault]-TestOneToOneRelation-[TableSqlServerKeyScheduleMixed]"
+  - id: 3
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+    - "[TableSqlServerKeyScheduleDefault]-TestOneToOneRelation-[TableSqlServerKeyScheduleMixed]"
+  - id: 4
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+    - "[TableSqlServerKeyScheduleDefault]-TestOneToOneRelation-[TableSqlServerKeyScheduleMixed]"
+  - id: 5
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+    - "[TableSqlServerKeyScheduleDefault]-TestOneToOneRelation-[TableSqlServerKeyScheduleMixed]"
+  - id: 6
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+    - "[TableSqlServerKeyScheduleDefault]-TestOneToOneRelation-[TableSqlServerKeyScheduleMixed]"
+  - id: 7
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+    - "[TableSqlServerKeyScheduleDefault]-TestOneToOneRelation-[TableSqlServerKeyScheduleMixed]"
+  - id: 8
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+    - "[TableSqlServerKeyScheduleDefault]-TestOneToOneRelation-[TableSqlServerKeyScheduleMixed]"
+  - id: 9
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+    - "[TableSqlServerKeyScheduleDefault]-TestOneToOneRelation-[TableSqlServerKeyScheduleMixed]"
+  - id: 10
+    type: "raw"
+    name: "totaldue"
+    source_name: "TableSqlServerKeyScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+    - "[TableSqlServerKeyScheduleDefault]-TestOneToOneRelation-[TableSqlServerKeyScheduleMixed]"
+- attribute_name: "case_when_then_end_related_source_agg"
+  name: "Case_when_then_end_related_source_agg"
+  description: "Case_when_then_end_related_source_agg"
+  datatype: "string"
+  expression: "CASE WHEN min([TablePostgresFullScheduleMixed].unitprice) < 100 THEN\
+    \ '<100' WHEN min( [TablePostgresFullScheduleMixed].unitprice)  >= 100 AND  min(\
+    \ [TablePostgresFullScheduleMixed].unitprice) < 500 THEN '100-500' ELSE NULL END\n"
+  expression_parsed: "CASE WHEN A<1> < 100 THEN '<100' WHEN A<2>  >= 100 AND  A<3>\
+    \ < 500 THEN '100-500' ELSE NULL END\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "unitprice"
+    source_name: "TablePostgresFullScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-ManyToManyRelation-[TablePostgresFullScheduleMixed]"
+    aggregation_id: 1
+  - id: 2
+    type: "raw"
+    name: "unitprice"
+    source_name: "TablePostgresFullScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-ManyToManyRelation-[TablePostgresFullScheduleMixed]"
+    aggregation_id: 2
+  - id: 3
+    type: "raw"
+    name: "unitprice"
+    source_name: "TablePostgresFullScheduleMixed"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-ManyToManyRelation-[TablePostgresFullScheduleMixed]"
+    aggregation_id: 3
+  aggregations:
+  - id: 1
+    expression: "min(P<1>)"
+    function: "min"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-ManyToManyRelation-[TablePostgresFullScheduleMixed]"
+  - id: 2
+    expression: "min( P<2>)"
+    function: "min"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-ManyToManyRelation-[TablePostgresFullScheduleMixed]"
+  - id: 3
+    expression: "min( P<3>)"
+    function: "min"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-ManyToManyRelation-[TablePostgresFullScheduleMixed]"
+- attribute_name: "case_when_then_end_rule"
+  name: "Case_When_Then_End_Rule"
+  description: "case_when_then_end_rule"
+  datatype: "string"
+  expression: "CASE WHEN [This].carriertrackingnumber = 'DO NOT USE' THEN 'DO NOT\
+    \ USE-DO NOT USE' WHEN [This].carriertrackingnumber IS NULL THEN 'n/a-n/a' ELSE\
+    \ [This].carriertrackingnumber END\n"
+  expression_parsed: "CASE WHEN P<1> = 'DO NOT USE' THEN 'DO NOT USE-DO NOT USE' WHEN\
+    \ P<2> IS NULL THEN 'n/a-n/a' ELSE P<3> END\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "carriertrackingnumber"
+  - id: 2
+    type: "raw"
+    name: "carriertrackingnumber"
+  - id: 3
+    type: "raw"
+    name: "carriertrackingnumber"
+- attribute_name: "case_when_then_end_rule_multiple_reference"
+  name: "Case_When_Then_End_Rule_Multiple_Reference"
+  description: "Case_When_Then_End_Rule_Multiple_Reference"
+  datatype: "string"
+  expression: "CASE WHEN [This].orderqty < 100 THEN '<100' WHEN [This].orderqty  >=\
+    \ 100 AND [This].orderqty  < 500 THEN '100-500' WHEN [This].orderqty  >= 500 AND\
+    \ [This].orderqty < 1000 THEN '500-1000' WHEN [This].orderqty  >= 1000 AND [This].orderqty\
+    \ < 5000 THEN '1000-5000' WHEN [This].orderqty >= 5000 AND  [This].orderqty <\
+    \ 10000 THEN '5000-10000' WHEN [This].orderqty >= 10000 THEN '>10000' ELSE NULL\
+    \ END\n"
+  expression_parsed: "CASE WHEN P<1> < 100 THEN '<100' WHEN P<2>  >= 100 AND P<3>\
+    \  < 500 THEN '100-500' WHEN P<4>  >= 500 AND P<5> < 1000 THEN '500-1000' WHEN\
+    \ P<6>  >= 1000 AND P<7> < 5000 THEN '1000-5000' WHEN P<8> >= 5000 AND  P<9> <\
+    \ 10000 THEN '5000-10000' WHEN P<10> >= 10000 THEN '>10000' ELSE NULL END\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "orderqty"
+  - id: 2
+    type: "raw"
+    name: "orderqty"
+  - id: 3
+    type: "raw"
+    name: "orderqty"
+  - id: 4
+    type: "raw"
+    name: "orderqty"
+  - id: 5
+    type: "raw"
+    name: "orderqty"
+  - id: 6
+    type: "raw"
+    name: "orderqty"
+  - id: 7
+    type: "raw"
+    name: "orderqty"
+  - id: 8
+    type: "raw"
+    name: "orderqty"
+  - id: 9
+    type: "raw"
+    name: "orderqty"
+  - id: 10
+    type: "raw"
+    name: "orderqty"
+- attribute_name: "case_when_then_end_rule_single_reference"
+  name: "Case_When_Then_End_Rule_Single_Reference"
+  description: "Case_When_Then_End_Rule_Single_Reference"
+  datatype: "boolean"
+  expression: "CASE WHEN [This].salesorderdetailid IS NOT NULL THEN false ELSE true\
+    \ END\n"
+  expression_parsed: "CASE WHEN P<1> IS NOT NULL THEN false ELSE true END\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderdetailid"
+- attribute_name: "coalesce_rule"
+  name: "Coalesce_rule"
+  description: "Coalesce_rule"
+  datatype: "decimal"
+  expression: "coalesce([This].unitprice, [This].unitpricediscount)\n"
+  expression_parsed: "coalesce(P<1>, P<2>)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "unitprice"
+  - id: 2
+    type: "raw"
+    name: "unitpricediscount"
+- attribute_name: "coalesce_rule_double"
+  name: "Coalesce_rule_double"
+  description: "Coalesce_rule_double"
+  datatype: "double"
+  expression: "coalesce(double([This].unitprice), [This].unitpricediscount)\n"
+  expression_parsed: "coalesce(double(P<1>), P<2>)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "unitprice"
+  - id: 2
+    type: "raw"
+    name: "unitpricediscount"
+- attribute_name: "cypress_attribute_name_testing"
+  rule_template_name: "Cypress Attribute Name Testing"
+  name: "Cypress Attribute Name Testing"
+  datatype: "int"
+  expression: "[This].orderqty"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "orderqty"
+- attribute_name: "lucasa"
+  name: "lucasA"
+  datatype: "string"
+  expression: "''"
+  expression_parsed: "''"
+- attribute_name: "lucasb"
+  name: "lucasb"
+  datatype: "string"
+  expression: "coalesce([This].lucasa)"
+  expression_parsed: "coalesce(P<1>)"
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "lucasa"
+- attribute_name: "rleaaa"
+  name: "rleaaa"
+  datatype: "int"
+  expression: "[This].salesorderdetailid"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderdetailid"
+- attribute_name: "rules_template_act_if_instr"
+  rule_template_name: "Rules_Template_ACT_IF_instr"
+  name: "Rules_Template_ACT_IF_instr"
+  datatype: "string"
+  cast_datatype: "string"
+  expression: "IF(instr([This].orderqty, \"OID::\")>0,left([This].orderqty,length([This].orderqty)-27),[This].orderqty)"
+  expression_parsed: "IF(instr(P<1>, \"OID::\")>0,left(P<2>,length(P<3>)-27),P<4>)"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "orderqty"
+  - id: 2
+    type: "raw"
+    name: "orderqty"
+  - id: 3
+    type: "raw"
+    name: "orderqty"
+  - id: 4
+    type: "raw"
+    name: "orderqty"
+- attribute_name: "rules_template_act_nullif_rule"
+  rule_template_name: "Rules_Template_ACT_NULLIF_rule"
+  name: "Rules_Template_ACT_NULLIF_rule"
+  datatype: "double"
+  cast_datatype: "double"
+  expression: "nullif(COALESCE([This].orderqty, 0) + COALESCE([This].orderqty, 0)\
+    \ + COALESCE([This].orderqty, 0) + COALESCE([This].orderqty,0) + COALESCE([This].orderqty,\
+    \ 0) + COALESCE([This].orderqty, 0) + COALESCE([This].orderqty,0) + COALESCE([This].orderqty,\
+    \ 0), 0)"
+  expression_parsed: "nullif(COALESCE(P<1>, 0) + COALESCE(P<2>, 0) + COALESCE(P<3>,\
+    \ 0) + COALESCE(P<4>,0) + COALESCE(P<5>, 0) + COALESCE(P<6>, 0) + COALESCE(P<7>,0)\
+    \ + COALESCE(P<8>, 0), 0)"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "orderqty"
+  - id: 2
+    type: "raw"
+    name: "orderqty"
+  - id: 3
+    type: "raw"
+    name: "orderqty"
+  - id: 4
+    type: "raw"
+    name: "orderqty"
+  - id: 5
+    type: "raw"
+    name: "orderqty"
+  - id: 6
+    type: "raw"
+    name: "orderqty"
+  - id: 7
+    type: "raw"
+    name: "orderqty"
+  - id: 8
+    type: "raw"
+    name: "orderqty"
+- attribute_name: "rules_template_act_trim_rule"
+  rule_template_name: "Rules_Template_ACT_trim_rule"
+  name: "Rules_Template_ACT_trim_rule"
+  datatype: "string"
+  cast_datatype: "string"
+  expression: "trim([This].carriertrackingnumber)"
+  expression_parsed: "trim(P<1>)"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "carriertrackingnumber"
+- attribute_name: "rules_template_case_when_then_end_rule"
+  rule_template_name: "Rules_Template_Case_When_Then_End_Rule"
+  name: "Rules_Template_Case_When_Then_End_Rule"
+  datatype: "string"
+  cast_datatype: "string"
+  expression: "CASE WHEN [This].carriertrackingnumber = 'DO NOT USE' THEN 'DO NOT\
+    \ USE-DO NOT USE' WHEN [This].carriertrackingnumber IS NULL THEN 'n/a-n/a' ELSE\
+    \ [This].carriertrackingnumber END"
+  expression_parsed: "CASE WHEN P<1> = 'DO NOT USE' THEN 'DO NOT USE-DO NOT USE' WHEN\
+    \ P<2> IS NULL THEN 'n/a-n/a' ELSE P<3> END"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "carriertrackingnumber"
+  - id: 2
+    type: "raw"
+    name: "carriertrackingnumber"
+  - id: 3
+    type: "raw"
+    name: "carriertrackingnumber"
+- attribute_name: "rules_template_case_when_then_end_rule_multiple_reference"
+  rule_template_name: "Rules_Template_Case_When_Then_End_Rule_Multiple_Reference"
+  name: "Rules_Template_Case_When_Then_End_Rule_Multiple_Reference"
+  datatype: "string"
+  cast_datatype: "string"
+  expression: "CASE WHEN [This].orderqty < 100 THEN '<100' WHEN [This].orderqty  >=\
+    \ 100 AND [This].orderqty  < 500 THEN '100-500' WHEN [This].orderqty  >= 500 AND\
+    \ [This].orderqty < 1000 THEN '500-1000' WHEN [This].orderqty  >= 1000 AND [This].orderqty\
+    \ < 5000 THEN '1000-5000' WHEN [This].orderqty >= 5000 AND  [This].orderqty <\
+    \ 10000 THEN '5000-10000' WHEN [This].orderqty >= 10000 THEN '>10000' ELSE NULL\
+    \ END"
+  expression_parsed: "CASE WHEN P<1> < 100 THEN '<100' WHEN P<2>  >= 100 AND P<3>\
+    \  < 500 THEN '100-500' WHEN P<4>  >= 500 AND P<5> < 1000 THEN '500-1000' WHEN\
+    \ P<6>  >= 1000 AND P<7> < 5000 THEN '1000-5000' WHEN P<8> >= 5000 AND  P<9> <\
+    \ 10000 THEN '5000-10000' WHEN P<10> >= 10000 THEN '>10000' ELSE NULL END"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "orderqty"
+  - id: 2
+    type: "raw"
+    name: "orderqty"
+  - id: 3
+    type: "raw"
+    name: "orderqty"
+  - id: 4
+    type: "raw"
+    name: "orderqty"
+  - id: 5
+    type: "raw"
+    name: "orderqty"
+  - id: 6
+    type: "raw"
+    name: "orderqty"
+  - id: 7
+    type: "raw"
+    name: "orderqty"
+  - id: 8
+    type: "raw"
+    name: "orderqty"
+  - id: 9
+    type: "raw"
+    name: "orderqty"
+  - id: 10
+    type: "raw"
+    name: "orderqty"
+- attribute_name: "rules_template_case_when_then_end_rule_single_reference"
+  rule_template_name: "Rules_Template_Case_When_Then_End_Rule_Single_Reference"
+  name: "Rules_Template_Case_When_Then_End_Rule_Single_Reference"
+  datatype: "boolean"
+  cast_datatype: "boolean"
+  expression: "CASE WHEN [This].salesorderdetailid IS NOT NULL THEN false ELSE true\
+    \ END"
+  expression_parsed: "CASE WHEN P<1> IS NOT NULL THEN false ELSE true END"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderdetailid"
+- attribute_name: "rules_template_coalesce_rule_double"
+  rule_template_name: "Rules_Template_Coalesce_rule_double"
+  name: "Rules_Template_Coalesce_rule_double"
+  datatype: "double"
+  cast_datatype: "double"
+  expression: "coalesce(double([This].unitprice), [This].unitpricediscount)"
+  expression_parsed: "coalesce(double(P<1>), P<2>)"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "unitprice"
+  - id: 2
+    type: "raw"
+    name: "unitpricediscount"
+- attribute_name: "rules_template_enrichment_keepcurrent_test"
+  rule_template_name: "Rules_Template_Enrichment_KeepCurrent_Test"
+  name: "Rules_Template_Enrichment_KeepCurrent_Test"
+  datatype: "string"
+  expression: "MAX('AVG([This].orderqty)' || 1) OVER (PARTITION BY  [This].productid)"
+  expression_parsed: "MAX('AVG([This].orderqty)' || 1) OVER (PARTITION BY  P<1>)"
+  keep_current_flag: true
+  window_function_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "productid"
+- attribute_name: "rules_template_enrichment_snapshot_test"
+  rule_template_name: "Rules_Template_Enrichment_Snapshot_Test"
+  name: "Rules_Template_Enrichment_Snapshot_Test"
+  datatype: "string"
+  expression: "CONCAT([This].carriertrackingnumber, '_blue')"
+  expression_parsed: "CONCAT(P<1>, '_blue')"
+  unique_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "carriertrackingnumber"
+- attribute_name: "rules_template_enrichment_snapshot_test_uv_flag"
+  name: "Rules_Template_Enrichment_Snapshot_Test uniqueness validation"
+  parent_attribute_name: "rules_template_enrichment_snapshot_test"
+  description: "Auto-generated rule to validate uniqueness of rules_template_enrichment_snapshot_test"
+  datatype: "boolean"
+  expression: "COUNT(1) OVER (PARTITION BY [This].rules_template_enrichment_snapshot_test)\
+    \ = 1"
+  expression_parsed: "COUNT(1) OVER (PARTITION BY P<1>) = 1"
+  rule_type_code: "V"
+  validation_action_code: "F"
+  validation_type_code: "U"
+  keep_current_flag: true
+  window_function_flag: true
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "rules_template_enrichment_snapshot_test"
+- attribute_name: "rules_template_validation_keepcurrent_test"
+  rule_template_name: "Rules_Template_Validation_KeepCurrent_Test"
+  name: "Rules_Template_Validation_KeepCurrent_Test"
+  datatype: "boolean"
+  expression: "[This].orderqty > 10"
+  expression_parsed: "P<1> > 10"
+  rule_type_code: "V"
+  validation_action_code: "W"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "orderqty"
+- attribute_name: "rules_template_validation_snapshot_test"
+  rule_template_name: "Rules_Template_Validation_Snapshot_Test"
+  name: "Rules_Template_Validation_Snapshot_Test"
+  datatype: "boolean"
+  expression: "[This].salesorderid = [This].productid"
+  expression_parsed: "P<1> = P<2>"
+  rule_type_code: "V"
+  validation_action_code: "F"
+  unique_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+  - id: 2
+    type: "raw"
+    name: "productid"
+- attribute_name: "rules_template_validation_snapshot_test_uv_flag"
+  name: "Rules_Template_Validation_Snapshot_Test uniqueness validation"
+  parent_attribute_name: "rules_template_validation_snapshot_test"
+  description: "Auto-generated rule to validate uniqueness of rules_template_validation_snapshot_test"
+  datatype: "boolean"
+  expression: "COUNT(1) OVER (PARTITION BY [This].rules_template_validation_snapshot_test)\
+    \ = 1"
+  expression_parsed: "COUNT(1) OVER (PARTITION BY P<1>) = 1"
+  rule_type_code: "V"
+  validation_action_code: "F"
+  validation_type_code: "U"
+  keep_current_flag: true
+  window_function_flag: true
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "rules_template_validation_snapshot_test"
+- attribute_name: "test"
+  name: "test"
+  datatype: "string"
+  expression: "[This].act_case_when_substring"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "act_case_when_substring"
+- attribute_name: "unmanaged_external_rule"
+  name: "Unmanaged_External_Rule"
+  description: "Unmanaged_External_Rule"
+  datatype: "string"
+  expression: "MAX([Automation_Unmanaged_External_Source].source_file_name)\n"
+  expression_parsed: "A<1>\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "source_file_name"
+    source_name: "Automation_Unmanaged_External_Source"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-UnmanagedExternalRelation-[Automation_Unmanaged_External_Source]"
+    aggregation_id: 1
+  aggregations:
+  - id: 1
+    expression: "max(P<1>)"
+    function: "max"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-UnmanagedExternalRelation-[Automation_Unmanaged_External_Source]"
+channels:
+- output_name: "CustomNotebook"
+  output_source_name: "ExpressionValidationCustomNotebook"
+  filter: "[This].act_testrule5_window_function = 25 AND NOT [This].salesorderid =\
+    \ 43661"
+  include_fail_flag: true
+  include_warn_flag: true
+  description: "ExpressionValidationCustomNotebook"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "float"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "cypress_attribute_name_testing"
+    expression: "[This].cypress_attribute_name_testing"
+    datatype: "int"
+    parameter:
+      name: "cypress_attribute_name_testing"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "lucasa"
+    expression: "[This].lucasa"
+    datatype: "string"
+    parameter:
+      name: "lucasa"
+      type: "enrichment"
+  - name: "lucasb"
+    expression: "[This].lucasb"
+    datatype: "string"
+    parameter:
+      name: "lucasb"
+      type: "enrichment"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "test"
+    expression: "[This].test"
+    datatype: "string"
+    parameter:
+      name: "test"
+      type: "enrichment"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "FileAvroS3None"
+  output_source_name: "FileAvroS3None - 1Automation_Rule_Relation"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "float"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "FileCSVS3None"
+  output_source_name: "FileCSVS3None - 1Automation_Rule_Relation"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "long"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "double"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "float"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule5_window_function"
+    expression: "[This].act_testrule5_window_function"
+    datatype: "long"
+    parameter:
+      name: "act_testrule5_window_function"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "long"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "FileJsonS3None"
+  output_source_name: "FileJsonS3None - 1Automation_Rule_Relation"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "long"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "double"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "float"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule5_window_function"
+    expression: "[This].act_testrule5_window_function"
+    datatype: "long"
+    parameter:
+      name: "act_testrule5_window_function"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "long"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "FileParquetS3None"
+  output_source_name: "FileParquetS3None - 1Automation_Rule_Relation"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "float"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "FileTextS3None"
+  output_source_name: "FileTextS3None - 1Automation_Rule_Relation"
+- output_name: "kafka output"
+  output_source_columns:
+  - name: "key"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "value"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+- output_name: "Streaming_TableDeltaLake"
+  output_source_name: "Streaming_TableDeltaLake - 1Automation_Rule_Relation"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "long"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "long"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "Streaming_UnityDeltaLake"
+  output_source_name: "Streaming_UnityDeltaLake - 1Automation_Rule_Relation"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "long"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "long"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "Syntax_TableSnowflake"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "long"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "double"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "float"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule5_window_function"
+    expression: "[This].act_testrule5_window_function"
+    datatype: "long"
+    parameter:
+      name: "act_testrule5_window_function"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "long"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "Auto_Cypress_Testing_NonPrimarySource"
+    expression: "[TableSqlServerKeyScheduleDefault].accountnumber\n"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+      source_name: "TableSqlServerKeyScheduleDefault"
+    relations:
+    - "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "TableDeltaLakeCustomDbNone"
+  output_source_name: "TableDeltaLakeCustomDbNone - 1Automation_Rule_Relation"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "long"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "long"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "TableDeltaLakeDefaultDbNone"
+  output_source_name: "TableDeltaLakeDefaultDbNone - 1Automation_Rule_Relation"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "float"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "TableDeltaLakeDefaultDbNone"
+  output_source_name: "TableDeltaLakeDefaultDbNone - TableSqlServer_Rule_Relation"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "float"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "TableSnowflakeNone"
+  output_source_name: "TableSnowflakeNone - 1Automation_Rule_Relation"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "float"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "TableSqlServerNone"
+  output_source_name: "TableSqlServerNone - 1Automation_Rule_Relation"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "float"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+- output_name: "VirtualNone"
+  output_source_name: "VirtualNone - 1Automation_Rule_Relation"
+  output_source_columns:
+  - name: "act_case_when_substring"
+    expression: "[This].act_case_when_substring"
+    datatype: "string"
+    parameter:
+      name: "act_case_when_substring"
+      type: "enrichment"
+  - name: "act_concat_ws_rule"
+    expression: "[This].act_concat_ws_rule"
+    datatype: "string"
+    parameter:
+      name: "act_concat_ws_rule"
+      type: "enrichment"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_dense_rank_rule"
+    expression: "[This].act_dense_rank_rule"
+    datatype: "double"
+    parameter:
+      name: "act_dense_rank_rule"
+      type: "enrichment"
+  - name: "act_if_instr"
+    expression: "[This].act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "act_if_instr"
+      type: "enrichment"
+  - name: "act_now_timestamp"
+    expression: "[This].act_now_timestamp"
+    datatype: "timestamp"
+    parameter:
+      name: "act_now_timestamp"
+      type: "enrichment"
+  - name: "act_nullif_rule"
+    expression: "[This].act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "act_nullif_rule"
+      type: "enrichment"
+  - name: "act_onetomanyrelation_rule"
+    expression: "[This].act_onetomanyrelation_rule"
+    datatype: "string"
+    parameter:
+      name: "act_onetomanyrelation_rule"
+      type: "enrichment"
+  - name: "act_onetoonerelation_rule"
+    expression: "[This].act_onetoonerelation_rule"
+    datatype: "int"
+    parameter:
+      name: "act_onetoonerelation_rule"
+      type: "enrichment"
+  - name: "act_percentile_rule"
+    expression: "[This].act_percentile_rule"
+    datatype: "float"
+    parameter:
+      name: "act_percentile_rule"
+      type: "enrichment"
+  - name: "act_regexp_extract"
+    expression: "[This].act_regexp_extract"
+    datatype: "timestamp"
+    parameter:
+      name: "act_regexp_extract"
+      type: "enrichment"
+  - name: "act_replace_rule"
+    expression: "[This].act_replace_rule"
+    datatype: "string"
+    parameter:
+      name: "act_replace_rule"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "int"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "float"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule8_boolean"
+    expression: "[This].act_testrule8_boolean"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule8_boolean"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique"
+    expression: "[This].act_testrule_keep_current_unique"
+    datatype: "long"
+    parameter:
+      name: "act_testrule_keep_current_unique"
+      type: "enrichment"
+  - name: "act_testrule_keep_current_unique_uv_flag"
+    expression: "[This].act_testrule_keep_current_unique_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "act_testrule_keep_current_unique_uv_flag"
+      type: "enrichment"
+  - name: "act_trim_rule"
+    expression: "[This].act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "act_trim_rule"
+      type: "enrichment"
+  - name: "carriertrackingnumber"
+    expression: "[This].carriertrackingnumber"
+    datatype: "string"
+    parameter:
+      name: "carriertrackingnumber"
+      type: "raw"
+  - name: "case_when_then_end_related_one_on_one_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_one_on_one_source_to_related_source"
+    expression: "[This].case_when_then_end_related_one_on_one_source_to_related_source"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_one_on_one_source_to_related_source"
+      type: "enrichment"
+  - name: "case_when_then_end_related_source_agg"
+    expression: "[This].case_when_then_end_related_source_agg"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_related_source_agg"
+      type: "enrichment"
+  - name: "case_when_then_end_rule"
+    expression: "[This].case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_multiple_reference"
+    expression: "[This].case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "case_when_then_end_rule_single_reference"
+    expression: "[This].case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "coalesce_rule"
+    expression: "[This].coalesce_rule"
+    datatype: "decimal"
+    parameter:
+      name: "coalesce_rule"
+      type: "enrichment"
+  - name: "coalesce_rule_double"
+    expression: "[This].coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "coalesce_rule_double"
+      type: "enrichment"
+  - name: "linetotal"
+    expression: "[This].linetotal"
+    datatype: "decimal"
+    parameter:
+      name: "linetotal"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "orderqty"
+    expression: "[This].orderqty"
+    datatype: "int"
+    parameter:
+      name: "orderqty"
+      type: "raw"
+  - name: "productid"
+    expression: "[This].productid"
+    datatype: "int"
+    parameter:
+      name: "productid"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "rules_template_act_if_instr"
+    expression: "[This].rules_template_act_if_instr"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_if_instr"
+      type: "enrichment"
+  - name: "rules_template_act_nullif_rule"
+    expression: "[This].rules_template_act_nullif_rule"
+    datatype: "double"
+    parameter:
+      name: "rules_template_act_nullif_rule"
+      type: "enrichment"
+  - name: "rules_template_act_trim_rule"
+    expression: "[This].rules_template_act_trim_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_act_trim_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule"
+    expression: "[This].rules_template_case_when_then_end_rule"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_multiple_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_multiple_reference"
+    datatype: "string"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_multiple_reference"
+      type: "enrichment"
+  - name: "rules_template_case_when_then_end_rule_single_reference"
+    expression: "[This].rules_template_case_when_then_end_rule_single_reference"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_case_when_then_end_rule_single_reference"
+      type: "enrichment"
+  - name: "rules_template_coalesce_rule_double"
+    expression: "[This].rules_template_coalesce_rule_double"
+    datatype: "double"
+    parameter:
+      name: "rules_template_coalesce_rule_double"
+      type: "enrichment"
+  - name: "rules_template_enrichment_keepcurrent_test"
+    expression: "[This].rules_template_enrichment_keepcurrent_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test"
+    expression: "[This].rules_template_enrichment_snapshot_test"
+    datatype: "string"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_enrichment_snapshot_test_uv_flag"
+    expression: "[This].rules_template_enrichment_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_enrichment_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "rules_template_validation_keepcurrent_test"
+    expression: "[This].rules_template_validation_keepcurrent_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_keepcurrent_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test"
+    expression: "[This].rules_template_validation_snapshot_test"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test"
+      type: "enrichment"
+  - name: "rules_template_validation_snapshot_test_uv_flag"
+    expression: "[This].rules_template_validation_snapshot_test_uv_flag"
+    datatype: "boolean"
+    parameter:
+      name: "rules_template_validation_snapshot_test_uv_flag"
+      type: "enrichment"
+  - name: "salesorderdetailid"
+    expression: "[This].salesorderdetailid"
+    datatype: "int"
+    parameter:
+      name: "salesorderdetailid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "specialofferid"
+    expression: "[This].specialofferid"
+    datatype: "int"
+    parameter:
+      name: "specialofferid"
+      type: "raw"
+  - name: "unitprice"
+    expression: "[This].unitprice"
+    datatype: "decimal"
+    parameter:
+      name: "unitprice"
+      type: "raw"
+  - name: "unitpricediscount"
+    expression: "[This].unitpricediscount"
+    datatype: "decimal"
+    parameter:
+      name: "unitpricediscount"
+      type: "raw"
+  - name: "unmanaged_external_rule"
+    expression: "[This].unmanaged_external_rule"
+    datatype: "string"
+    parameter:
+      name: "unmanaged_external_rule"
+      type: "enrichment"
+tokens:
+- name: "CypressAttributeName"
+  value: "orderqty"

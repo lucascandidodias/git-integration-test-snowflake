@@ -1,0 +1,19 @@
+---
+source_name: "StreamingSourceAvailableNowTrigger"
+source_description: "StreamingSourceAvailableNowTrigger"
+ingestion_parameters:
+  topic_name: "datagen-orders"
+  value_subject: "datagen-orders-value"
+  disable_initiation: true
+  number_of_topic_partitions: 0
+refresh_type: "none"
+connection_type: "event"
+processing_type: "stream"
+connection_name: "CypressKafkaTesting"
+schedule_name: "Default"
+process_configuration_name: "TestingStream"
+channels:
+- output_name: "Streaming_TableDeltaLake"
+  output_source_name: "Streaming_TableDeltaLake - StreamingSourceAvailableNowTrigger"
+- output_name: "Streaming_UnityDeltaLake"
+  output_source_name: "Streaming_UnityDeltaLake - StreamingSourceAvailableNowTrigger"

@@ -1,0 +1,27 @@
+---
+source_name: "AdventureWorks2019 - dbo.Product"
+source_description: "Auto-created from connection metadata"
+ingestion_parameters:
+  source_query: "select * from dbo.Product"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Upcast"
+cdc_refresh_parameters:
+  key_columns:
+  - "ProductID"
+refresh_type: "key"
+connection_name: "AdventureWorks2019"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "productid"
+  data_type: "int"
+  unique_flag: true
+rules:
+- attribute_name: "testrule"
+  name: "TestRule"
+  datatype: "long"
+  expression: "[This].s_row_id"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "system"
+    name: "s_row_id"

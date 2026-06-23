@@ -1,0 +1,28 @@
+---
+source_name: "TablePostgresFullScheduleDefault"
+source_description: "Testing - TablePostgresFullScheduleDefault"
+ingestion_parameters:
+  source_query: "SELECT * FROM testing.RTE_AW_SalesOrderDetail"
+cdc_refresh_parameters:
+  delete_query: "[This].salesorderid >= (SELECT max(salesorderid) from [Input])"
+refresh_type: "custom_refresh"
+connection_name: "SourceTablePostgres"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "salesorderid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+rules:
+- attribute_name: "fulltocustomrule"
+  name: "FullToCustomRule"
+  description: "FulltoCustomRule"
+  datatype: "int"
+  expression: "[This].salesorderid"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"

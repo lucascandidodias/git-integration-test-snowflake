@@ -1,0 +1,8 @@
+---
+source_name: "TableSnowflakeFullScheduleCustom"
+source_description: "Testing - TableSnowflakeFullScheduleCustom"
+ingestion_parameters:
+  source_query: "SELECT * FROM RTE_RAP.PUBLIC.\"RTE_AW_SalesOrderDetail\""
+connection_name: "Abdur SourceTableSnowflake"
+schedule_name: "Default"
+process_configuration_name: "TestingAllDifferentConfig"

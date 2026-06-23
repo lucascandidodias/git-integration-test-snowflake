@@ -1,0 +1,15 @@
+---
+source_name: "FileXMLFullSparkyComplexDataType"
+source_description: "Testing - FileXMLFullSparkyComplexDataType"
+ingestion_parameters:
+  file_mask: "RTE_Scheduled/test_xml_data_conplex.xml"
+  delete_file: false
+  select_list:
+  - "*"
+  - "complexentry.order.*"
+parsing_parameters:
+  rowTag: "test"
+file_type: "xml"
+connection_type: "file"
+connection_name: "SourceFileAmazonS3NoKeysUsesAgentNo"
+schedule_name: "Default"

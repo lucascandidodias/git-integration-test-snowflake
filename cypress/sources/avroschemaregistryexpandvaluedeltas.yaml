@@ -1,0 +1,11 @@
+---
+source_name: "AvroSchemaRegistryExpandValueDeltas"
+source_description: "AvroSchemaRegistryExpandValueDeltas"
+ingestion_parameters:
+  topic_name: "datagen-orders"
+  value_subject: "datagen-orders-value"
+  key_schema_type: "string"
+  number_of_topic_partitions: 0
+connection_type: "event"
+connection_name: "CypressKafkaTesting"
+schedule_name: "Default"

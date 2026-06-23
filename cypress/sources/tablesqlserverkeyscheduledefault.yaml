@@ -1,0 +1,2806 @@
+---
+source_name: "TableSqlServerKeyScheduleDefault"
+source_description: "Testing - TableSqlServerKeyScheduleDefault"
+ingestion_parameters:
+  source_query: "SELECT * FROM Sales.SalesOrderHeader"
+cdc_refresh_parameters:
+  key_columns:
+  - "SalesOrderId"
+refresh_type: "key"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "accountnumber"
+  raw_metadata:
+    scale: 0
+    precision: 15
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "billtoaddressid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "comment"
+  raw_metadata:
+    scale: 0
+    precision: 128
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "creditcardapprovalcode"
+  raw_metadata:
+    scale: 0
+    precision: 15
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "creditcardid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+- raw_attribute_name: "currencyrateid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+- raw_attribute_name: "customerid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "duedate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: false
+  data_type: "timestamp"
+- raw_attribute_name: "freight"
+  raw_metadata:
+    scale: 4
+    precision: 19
+    nullable_flag: false
+  data_type: "decimal"
+- raw_attribute_name: "modifieddate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: false
+  data_type: "timestamp"
+- raw_attribute_name: "onlineorderflag"
+  raw_metadata:
+    scale: 0
+    precision: 1
+    nullable_flag: false
+  data_type: "boolean"
+- raw_attribute_name: "orderdate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: false
+  data_type: "timestamp"
+- raw_attribute_name: "purchaseordernumber"
+  raw_metadata:
+    scale: 0
+    precision: 25
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "revisionnumber"
+  raw_metadata:
+    scale: 0
+    precision: 3
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "rowguid"
+  raw_metadata:
+    scale: 0
+    precision: 36
+    nullable_flag: false
+  data_type: "string"
+- raw_attribute_name: "salesorderid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+  unique_flag: true
+- raw_attribute_name: "salesordernumber"
+  raw_metadata:
+    scale: 0
+    precision: 25
+    nullable_flag: false
+  data_type: "string"
+- raw_attribute_name: "salespersonid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+- raw_attribute_name: "shipdate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: true
+  data_type: "timestamp"
+- raw_attribute_name: "shipmethodid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "shiptoaddressid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "status"
+  raw_metadata:
+    scale: 0
+    precision: 3
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "subtotal"
+  raw_metadata:
+    scale: 4
+    precision: 19
+    nullable_flag: false
+  data_type: "decimal"
+- raw_attribute_name: "taxamt"
+  raw_metadata:
+    scale: 4
+    precision: 19
+    nullable_flag: false
+  data_type: "decimal"
+- raw_attribute_name: "territoryid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+- raw_attribute_name: "totaldue"
+  raw_metadata:
+    scale: 4
+    precision: 19
+    nullable_flag: false
+  data_type: "decimal"
+dependencies:
+- source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+- source_name: "TableSqlServerKeyScheduleMixed"
+rules:
+- attribute_name: "act_date_add_rule"
+  name: "ACT_date_add_rule"
+  description: "ACT_date_add_rule"
+  datatype: "date"
+  cast_datatype: "date"
+  expression: "date_add([This].modifieddate, -1)\n"
+  expression_parsed: "date_add(P<1>, -1)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "modifieddate"
+- attribute_name: "act_date_sub_rule"
+  name: "ACT_date_sub_rule"
+  description: "ACT_date_sub_rule"
+  datatype: "date"
+  cast_datatype: "date"
+  expression: "date_add([This].modifieddate, 1)\n"
+  expression_parsed: "date_add(P<1>, 1)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "modifieddate"
+- attribute_name: "act_hash_times_dup"
+  name: "ACT_hash_times_dup"
+  description: "Rule for Auto_Cypress_Testing__hash_times_dup"
+  datatype: "int"
+  expression: "[This].s_hash * [This].s_duplicate_rank"
+  expression_parsed: "P<1> * P<2>"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "system"
+    name: "s_hash"
+  - id: 2
+    type: "system"
+    name: "s_duplicate_rank"
+- attribute_name: "act_testrule1_spanshot"
+  name: "ACT_TestRule1_Spanshot"
+  description: "TestRule1-Spanshot"
+  datatype: "decimal"
+  cast_datatype: "decimal"
+  expression: "[This].salesorderid"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule2_keep_current"
+  name: "ACT_TestRule2_Keep_Current"
+  description: "TestRule2-Keep Current"
+  datatype: "int"
+  expression: "[This].salesorderid"
+  expression_parsed: "P<1>"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule3_data_type"
+  name: "ACT_TestRule3_Data_Type"
+  description: "ACT_TestRule3_Data_Type"
+  datatype: "int"
+  cast_datatype: "int"
+  expression: "[This].salesorderid"
+  expression_parsed: "P<1>"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule4_calculation"
+  name: "ACT_TestRule4_calculation"
+  description: "ACT_TestRule4_calculation"
+  datatype: "double"
+  cast_datatype: "double"
+  expression: "[This].salesorderid + 1\n"
+  expression_parsed: "P<1> + 1\n"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule5_window_function"
+  name: "ACT_TestRule5_window_function"
+  description: "ACT_TestRule5_window_function"
+  datatype: "float"
+  cast_datatype: "float"
+  expression: "MAX([This].salesorderid)OVER (PARTITION BY [This].customerid)\n"
+  expression_parsed: "MAX(P<1>)OVER (PARTITION BY P<2>)\n"
+  keep_current_flag: true
+  window_function_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+  - id: 2
+    type: "raw"
+    name: "customerid"
+- attribute_name: "act_testrule6_window_function"
+  name: "ACT_TestRule6_window_function"
+  description: "ACT_TestRule6_window_function"
+  datatype: "float"
+  expression: "[This].act_testrule5_window_function + 1\n"
+  expression_parsed: "P<1> + 1\n"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "act_testrule5_window_function"
+channels:
+- output_name: "CustomNotebook"
+  output_source_name: "CustomNotebook - Keyed"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_hash_times_dup"
+    expression: "[This].act_hash_times_dup"
+    datatype: "int"
+    parameter:
+      name: "act_hash_times_dup"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "decimal"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "int"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "int"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "double"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule5_window_function"
+    expression: "[This].act_testrule5_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule5_window_function"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"
+- output_name: "FileAvroS3None"
+  output_source_name: "FileAvroS3None - Keyed"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_hash_times_dup"
+    expression: "[This].act_hash_times_dup"
+    datatype: "int"
+    parameter:
+      name: "act_hash_times_dup"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "decimal"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "int"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "int"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "double"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule5_window_function"
+    expression: "[This].act_testrule5_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule5_window_function"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "Auto_Cypress_Testing_FileAvroS3None"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"
+- output_name: "FileCSVS3None"
+  output_source_name: "FileCSVS3None - Keyed"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_hash_times_dup"
+    expression: "[This].act_hash_times_dup"
+    datatype: "int"
+    parameter:
+      name: "act_hash_times_dup"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "decimal"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "int"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "int"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "double"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule5_window_function"
+    expression: "[This].act_testrule5_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule5_window_function"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"
+- output_name: "FileJsonS3None"
+  output_source_name: "FileJsonS3None - Keyed"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_hash_times_dup"
+    expression: "[This].act_hash_times_dup"
+    datatype: "int"
+    parameter:
+      name: "act_hash_times_dup"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "decimal"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "int"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "int"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "double"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule5_window_function"
+    expression: "[This].act_testrule5_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule5_window_function"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"
+- output_name: "FileParquetS3None"
+  output_source_name: "FileParquetS3None - Keyed"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_hash_times_dup"
+    expression: "[This].act_hash_times_dup"
+    datatype: "int"
+    parameter:
+      name: "act_hash_times_dup"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "decimal"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "int"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "int"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "double"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule5_window_function"
+    expression: "[This].act_testrule5_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule5_window_function"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"
+- output_name: "FileTextS3None"
+  output_source_name: "FileTextS3None - Keyed"
+  output_source_columns:
+  - name: "Auto_Cypress_Testing_FileTextS3None"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+- output_name: "Streaming_TableDeltaLake"
+  output_source_name: "Streaming_TableDeltaLake - Keyed"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_hash_times_dup"
+    expression: "[This].act_hash_times_dup"
+    datatype: "int"
+    parameter:
+      name: "act_hash_times_dup"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "int"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "int"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"
+- output_name: "Streaming_UnityDeltaLake"
+  output_source_name: "Streaming_UnityDeltaLake - Keyed"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_hash_times_dup"
+    expression: "[This].act_hash_times_dup"
+    datatype: "int"
+    parameter:
+      name: "act_hash_times_dup"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "int"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "int"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"
+- output_name: "TableDeltaLakeCustomDbNone"
+  output_source_name: "TableDeltaLakeCustomDbNone - Keyed"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_hash_times_dup"
+    expression: "[This].act_hash_times_dup"
+    datatype: "int"
+    parameter:
+      name: "act_hash_times_dup"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "int"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "int"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"
+- output_name: "TableDeltaLakeDefaultDbNone"
+  output_source_name: "TableDeltaLakeDefaultDbNone - Keyed"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_hash_times_dup"
+    expression: "[This].act_hash_times_dup"
+    datatype: "int"
+    parameter:
+      name: "act_hash_times_dup"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "decimal"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "int"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "int"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "double"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule5_window_function"
+    expression: "[This].act_testrule5_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule5_window_function"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"
+- output_name: "TableSnowflakeNone"
+  output_source_name: "TableSnowflakeNone - Keyed"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_hash_times_dup"
+    expression: "[This].act_hash_times_dup"
+    datatype: "int"
+    parameter:
+      name: "act_hash_times_dup"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "decimal"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "int"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "int"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "double"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule5_window_function"
+    expression: "[This].act_testrule5_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule5_window_function"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"
+- output_name: "TableSqlServerNone"
+  output_source_name: "TableSqlServerNone - Keyed"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_hash_times_dup"
+    expression: "[This].act_hash_times_dup"
+    datatype: "int"
+    parameter:
+      name: "act_hash_times_dup"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "decimal"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "int"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "int"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "double"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule5_window_function"
+    expression: "[This].act_testrule5_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule5_window_function"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "Auto_Cypress_Testing_TableSqlServerNone"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"
+- output_name: "VirtualNone"
+  output_source_name: "VirtualNone - Keyed"
+  output_source_columns:
+  - name: "accountnumber"
+    expression: "[This].accountnumber"
+    datatype: "string"
+    parameter:
+      name: "accountnumber"
+      type: "raw"
+  - name: "act_date_add_rule"
+    expression: "[This].act_date_add_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_add_rule"
+      type: "enrichment"
+  - name: "act_date_sub_rule"
+    expression: "[This].act_date_sub_rule"
+    datatype: "date"
+    parameter:
+      name: "act_date_sub_rule"
+      type: "enrichment"
+  - name: "act_hash_times_dup"
+    expression: "[This].act_hash_times_dup"
+    datatype: "int"
+    parameter:
+      name: "act_hash_times_dup"
+      type: "enrichment"
+  - name: "act_testrule1_spanshot"
+    expression: "[This].act_testrule1_spanshot"
+    datatype: "decimal"
+    parameter:
+      name: "act_testrule1_spanshot"
+      type: "enrichment"
+  - name: "act_testrule2_keep_current"
+    expression: "[This].act_testrule2_keep_current"
+    datatype: "int"
+    parameter:
+      name: "act_testrule2_keep_current"
+      type: "enrichment"
+  - name: "act_testrule3_data_type"
+    expression: "[This].act_testrule3_data_type"
+    datatype: "int"
+    parameter:
+      name: "act_testrule3_data_type"
+      type: "enrichment"
+  - name: "act_testrule4_calculation"
+    expression: "[This].act_testrule4_calculation"
+    datatype: "double"
+    parameter:
+      name: "act_testrule4_calculation"
+      type: "enrichment"
+  - name: "act_testrule5_window_function"
+    expression: "[This].act_testrule5_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule5_window_function"
+      type: "enrichment"
+  - name: "act_testrule6_window_function"
+    expression: "[This].act_testrule6_window_function"
+    datatype: "float"
+    parameter:
+      name: "act_testrule6_window_function"
+      type: "enrichment"
+  - name: "billtoaddressid"
+    expression: "[This].billtoaddressid"
+    datatype: "int"
+    parameter:
+      name: "billtoaddressid"
+      type: "raw"
+  - name: "comment"
+    expression: "[This].comment"
+    datatype: "string"
+    parameter:
+      name: "comment"
+      type: "raw"
+  - name: "creditcardapprovalcode"
+    expression: "[This].creditcardapprovalcode"
+    datatype: "string"
+    parameter:
+      name: "creditcardapprovalcode"
+      type: "raw"
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "currencyrateid"
+    expression: "[This].currencyrateid"
+    datatype: "int"
+    parameter:
+      name: "currencyrateid"
+      type: "raw"
+  - name: "customerid"
+    expression: "[This].customerid"
+    datatype: "int"
+    parameter:
+      name: "customerid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "freight"
+    expression: "[This].freight"
+    datatype: "decimal"
+    parameter:
+      name: "freight"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "onlineorderflag"
+    expression: "[This].onlineorderflag"
+    datatype: "boolean"
+    parameter:
+      name: "onlineorderflag"
+      type: "raw"
+  - name: "orderdate"
+    expression: "[This].orderdate"
+    datatype: "timestamp"
+    parameter:
+      name: "orderdate"
+      type: "raw"
+  - name: "purchaseordernumber"
+    expression: "[This].purchaseordernumber"
+    datatype: "string"
+    parameter:
+      name: "purchaseordernumber"
+      type: "raw"
+  - name: "revisionnumber"
+    expression: "[This].revisionnumber"
+    datatype: "int"
+    parameter:
+      name: "revisionnumber"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "salesorderid"
+    expression: "[This].salesorderid"
+    datatype: "int"
+    parameter:
+      name: "salesorderid"
+      type: "raw"
+  - name: "salesordernumber"
+    expression: "[This].salesordernumber"
+    datatype: "string"
+    parameter:
+      name: "salesordernumber"
+      type: "raw"
+  - name: "salespersonid"
+    expression: "[This].salespersonid"
+    datatype: "int"
+    parameter:
+      name: "salespersonid"
+      type: "raw"
+  - name: "shipdate"
+    expression: "[This].shipdate"
+    datatype: "timestamp"
+    parameter:
+      name: "shipdate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"
+  - name: "shiptoaddressid"
+    expression: "[This].shiptoaddressid"
+    datatype: "int"
+    parameter:
+      name: "shiptoaddressid"
+      type: "raw"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"
+  - name: "subtotal"
+    expression: "[This].subtotal"
+    datatype: "decimal"
+    parameter:
+      name: "subtotal"
+      type: "raw"
+  - name: "taxamt"
+    expression: "[This].taxamt"
+    datatype: "decimal"
+    parameter:
+      name: "taxamt"
+      type: "raw"
+  - name: "territoryid"
+    expression: "[This].territoryid"
+    datatype: "int"
+    parameter:
+      name: "territoryid"
+      type: "raw"
+  - name: "totaldue"
+    expression: "[This].totaldue"
+    datatype: "decimal"
+    parameter:
+      name: "totaldue"
+      type: "raw"

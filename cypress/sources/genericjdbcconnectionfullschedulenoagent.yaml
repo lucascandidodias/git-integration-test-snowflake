@@ -1,0 +1,7 @@
+---
+source_name: "GenericJdbcConnectionFullScheduleNoAgent"
+source_description: "Testing - GenericJdbcConnectionFullScheduleNoAgent"
+ingestion_parameters:
+  source_query: "SELECT * FROM meta.source"
+connection_name: "GenericJDBCConnection"
+schedule_name: "Default"

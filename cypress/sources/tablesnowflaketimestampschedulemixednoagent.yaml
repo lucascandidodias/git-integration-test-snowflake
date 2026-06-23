@@ -1,0 +1,11 @@
+---
+source_name: "TableSnowflakeTimestampScheduleMixedNoAgent"
+source_description: "Testing - TableSnowflakeTimestampScheduleMixedNoAgent"
+ingestion_parameters:
+  source_query: "SELECT * FROM RTE_RAP.PUBLIC.\"RTE_AW_SalesOrderDetail\""
+cdc_refresh_parameters:
+  date_column:
+  - "ModifiedDate"
+refresh_type: "timestamp"
+connection_name: "SourceTableSnowflakeUsesAgentNo"
+schedule_name: "Default"

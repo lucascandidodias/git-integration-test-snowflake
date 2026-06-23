@@ -1,0 +1,129 @@
+---
+source_name: "TableSqlServerNoneScheduleMixedNoAgent"
+source_description: "Testing - TableSqlServerNoneScheduleMixedNoAgent"
+ingestion_parameters:
+  source_query: "SELECT * FROM Sales.SalesOrderDetail"
+refresh_type: "none"
+connection_name: "SourceTableSqlServerUsesAgentNo"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "modifieddate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: false
+  data_type: "timestamp"
+- raw_attribute_name: "orderqty"
+  raw_metadata:
+    scale: 0
+    precision: 5
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "productid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "salesorderid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+rules:
+- attribute_name: "act_date_add_rule"
+  name: "ACT_date_add_rule"
+  description: "ACT_date_add_rule"
+  datatype: "date"
+  cast_datatype: "date"
+  expression: "date_add([This].modifieddate, -1)\n"
+  expression_parsed: "date_add(P<1>, -1)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "modifieddate"
+- attribute_name: "act_date_sub_rule"
+  name: "ACT_date_sub_rule"
+  description: "ACT_date_sub_rule"
+  datatype: "date"
+  cast_datatype: "date"
+  expression: "date_add([This].modifieddate, 1)\n"
+  expression_parsed: "date_add(P<1>, 1)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "modifieddate"
+- attribute_name: "act_testrule1_spanshot"
+  name: "ACT_TestRule1_Spanshot"
+  description: "TestRule1-Spanshot"
+  datatype: "long"
+  cast_datatype: "long"
+  expression: "[This].salesorderid"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule2_keep_current"
+  name: "ACT_TestRule2_Keep_Current"
+  description: "TestRule2-Keep Current"
+  datatype: "int"
+  expression: "[This].salesorderid"
+  expression_parsed: "P<1>"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule3_data_type"
+  name: "ACT_TestRule3_Data_Type"
+  description: "ACT_TestRule3_Data_Type"
+  datatype: "float"
+  cast_datatype: "float"
+  expression: "[This].salesorderid"
+  expression_parsed: "P<1>"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule4_calculation"
+  name: "ACT_TestRule4_calculation"
+  description: "ACT_TestRule4_calculation"
+  datatype: "int"
+  expression: "[This].salesorderid + 1\n"
+  expression_parsed: "P<1> + 1\n"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+- attribute_name: "act_testrule5_window_function"
+  name: "ACT_TestRule5_window_function"
+  description: "ACT_TestRule5_window_function"
+  datatype: "float"
+  cast_datatype: "float"
+  expression: "MAX([This].orderqty)OVER (PARTITION BY [This].productid)\n"
+  expression_parsed: "MAX(P<1>)OVER (PARTITION BY P<2>)\n"
+  keep_current_flag: true
+  window_function_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "orderqty"
+  - id: 2
+    type: "raw"
+    name: "productid"
+- attribute_name: "act_testrule6_window_function"
+  name: "ACT_TestRule6_window_function"
+  description: "ACT_TestRule6_window_function"
+  datatype: "decimal"
+  cast_datatype: "decimal"
+  expression: "[This].act_testrule5_window_function + 1\n"
+  expression_parsed: "P<1> + 1\n"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "act_testrule5_window_function"

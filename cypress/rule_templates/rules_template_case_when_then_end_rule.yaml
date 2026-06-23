@@ -1,0 +1,21 @@
+---
+name: "Rules_Template_Case_When_Then_End_Rule"
+datatype: "string"
+cast_datatype: "string"
+attribute_name: "rules_template_case_when_then_end_rule"
+expression: "CASE WHEN [This].carriertrackingnumber = 'DO NOT USE' THEN 'DO NOT USE-DO\
+  \ NOT USE' WHEN [This].carriertrackingnumber IS NULL THEN 'n/a-n/a' ELSE [This].carriertrackingnumber\
+  \ END"
+expression_parsed: "CASE WHEN P<1> = 'DO NOT USE' THEN 'DO NOT USE-DO NOT USE' WHEN\
+  \ P<2> IS NULL THEN 'n/a-n/a' ELSE P<3> END"
+test_source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+parameters:
+- id: 1
+  attribute_name: "carriertrackingnumber"
+  datatype: "string"
+- id: 2
+  attribute_name: "carriertrackingnumber"
+  datatype: "string"
+- id: 3
+  attribute_name: "carriertrackingnumber"
+  datatype: "string"

@@ -1,0 +1,23 @@
+---
+source_name: "FileXMLTimestampSparkScheduled"
+source_description: "Testing - FileXMLTimestampSparkScheduled"
+ingestion_parameters:
+  file_mask: "RTE_Scheduled/airquality.xml"
+  delete_file: false
+parsing_parameters:
+  rowTag: "row"
+cdc_refresh_parameters:
+  date_column:
+  - "start_date"
+file_type: "xml"
+refresh_type: "timestamp"
+connection_type: "file"
+connection_name: "SourceFileAmazonS3NoKeys-Source"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "measure"
+  data_type: "string"
+- raw_attribute_name: "unique_id"
+  data_type: "string"
+dependencies:
+- source_name: "FileXMLKeySparkScheduled"

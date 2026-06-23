@@ -1,0 +1,41 @@
+---
+source_name: "TableSqlServerKeyScheduleDefaultPerson-ACT_Sub_Source_TableSqlServerKey"
+source_description: "Created from sub-source rule [TableSqlServerKeyScheduleDefaultPerson].act_sub_source_tablesqlserverkey"
+ingestion_parameters:
+  select_list:
+  - "*"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Clone"
+connection_type: "sub_source"
+sub_source_rule:
+  source_name: "TableSqlServerKeyScheduleDefaultPerson"
+  attribute_name: "act_sub_source_tablesqlserverkey"
+raw_attributes:
+- raw_attribute_name: "demographics"
+  data_type: "string"
+- raw_attribute_name: "emailpromotion"
+  data_type: "int"
+- raw_attribute_name: "suffix"
+  data_type: "string"
+channels:
+- output_name: "TableSqlServerSubSource"
+  output_source_name: "TableSqlServerSubSource - SubTableSqlServerKey"
+  output_source_columns:
+  - name: "demographics"
+    expression: "[This].demographics"
+    datatype: "string"
+    parameter:
+      name: "demographics"
+      type: "raw"
+  - name: "emailpromotion"
+    expression: "[This].emailpromotion"
+    datatype: "int"
+    parameter:
+      name: "emailpromotion"
+      type: "raw"
+  - name: "suffix"
+    expression: "[This].suffix"
+    datatype: "string"
+    parameter:
+      name: "suffix"
+      type: "raw"

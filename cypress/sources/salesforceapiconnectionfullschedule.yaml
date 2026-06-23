@@ -1,0 +1,8 @@
+---
+source_name: "SalesforceAPIConnectionFullSchedule"
+source_description: "Testing - SalesforceAPIConnectionFullSchedule"
+ingestion_parameters:
+  source_query: "SELECT * FROM account"
+connection_type: "api"
+connection_name: "SalesforceAPIConnection"
+schedule_name: "Default"

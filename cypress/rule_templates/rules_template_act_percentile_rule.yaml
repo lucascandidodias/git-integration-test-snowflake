@@ -1,0 +1,17 @@
+---
+name: "Rules_Template_ACT_percentile_rule"
+datatype: "double"
+cast_datatype: "double"
+attribute_name: "rules_template_act_percentile_rule"
+expression: "percentile([This].unitprice,.98) OVER (PARTITION BY [This].modifieddate)"
+expression_parsed: "percentile(P<1>,.98) OVER (PARTITION BY P<2>)"
+keep_current_flag: true
+window_function_flag: true
+test_source_name: "Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1"
+parameters:
+- id: 1
+  attribute_name: "unitprice"
+  datatype: "decimal"
+- id: 2
+  attribute_name: "modifieddate"
+  datatype: "timestamp"

@@ -1,0 +1,8 @@
+---
+source_name: "TablePostgresNoneScheduleDefault"
+source_description: "Testing - TablePostgresNoneScheduleDefault"
+ingestion_parameters:
+  source_query: "SELECT * FROM testing.RTE_AW_SalesOrderDetail"
+refresh_type: "none"
+connection_name: "SourceTablePostgres"
+schedule_name: "Default"

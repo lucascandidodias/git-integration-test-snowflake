@@ -1,0 +1,38 @@
+---
+name: "Rules_Template_ACT_NULLIF_rule"
+datatype: "double"
+cast_datatype: "double"
+attribute_name: "rules_template_act_nullif_rule"
+expression: "nullif(COALESCE([This].orderqty, 0) + COALESCE([This].orderqty, 0) +\
+  \ COALESCE([This].orderqty, 0) + COALESCE([This].orderqty,0) + COALESCE([This].orderqty,\
+  \ 0) + COALESCE([This].orderqty, 0) + COALESCE([This].orderqty,0) + COALESCE([This].orderqty,\
+  \ 0), 0)"
+expression_parsed: "nullif(COALESCE(P<1>, 0) + COALESCE(P<2>, 0) + COALESCE(P<3>,\
+  \ 0) + COALESCE(P<4>,0) + COALESCE(P<5>, 0) + COALESCE(P<6>, 0) + COALESCE(P<7>,0)\
+  \ + COALESCE(P<8>, 0), 0)"
+test_source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+parameters:
+- id: 1
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 2
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 3
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 4
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 5
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 6
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 7
+  attribute_name: "orderqty"
+  datatype: "int"
+- id: 8
+  attribute_name: "orderqty"
+  datatype: "int"

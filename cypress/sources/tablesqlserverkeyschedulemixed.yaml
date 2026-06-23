@@ -1,0 +1,39 @@
+---
+source_name: "TableSqlServerKeyScheduleMixed"
+source_description: "Testing - TableSqlServerKeyScheduleMixed"
+ingestion_parameters:
+  source_query: "SELECT * FROM Sales.SalesOrderHeader"
+cdc_refresh_parameters:
+  key_columns:
+  - "SalesOrderId"
+refresh_type: "key"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "salesorderid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+  unique_flag: true
+- raw_attribute_name: "totaldue"
+  raw_metadata:
+    scale: 4
+    precision: 19
+    nullable_flag: false
+  data_type: "decimal"
+dependencies:
+- source_name: "TableSqlServerKeyScheduleDefault"
+rules:
+- attribute_name: "act_status_code_blue"
+  name: "ACT_status_code_blue"
+  description: "Rule for Auto_Cypress_Testing__status_code_blue"
+  datatype: "string"
+  expression: "CONCAT([This].s_record_status_code, '_blue')\n"
+  expression_parsed: "CONCAT(P<1>, '_blue')\n"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "system"
+    name: "s_record_status_code"

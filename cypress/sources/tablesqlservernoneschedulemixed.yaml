@@ -1,0 +1,9 @@
+---
+source_name: "TableSqlServerNoneScheduleMixed"
+source_description: "Testing - TableSqlServerNoneScheduleMixed"
+ingestion_parameters:
+  source_query: "SELECT * FROM Sales.SalesOrderDetail"
+refresh_type: "none"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+process_configuration_name: "TestingDefaultWithOverrides"

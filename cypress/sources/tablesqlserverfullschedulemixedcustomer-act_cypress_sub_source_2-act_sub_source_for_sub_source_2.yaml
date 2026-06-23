@@ -1,0 +1,12 @@
+---
+source_name: "TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2-ACT_Sub_Source_for_sub_source_2"
+source_description: "Created from sub-source rule [TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2].act_sub_source_for_sub_source_2"
+ingestion_parameters:
+  select_list:
+  - "*"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Clone"
+connection_type: "sub_source"
+sub_source_rule:
+  source_name: "TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2"
+  attribute_name: "act_sub_source_for_sub_source_2"

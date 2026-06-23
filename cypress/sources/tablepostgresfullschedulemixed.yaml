@@ -1,0 +1,29 @@
+---
+source_name: "TablePostgresFullScheduleMixed"
+source_description: "Testing - TablePostgresFullScheduleMixed"
+ingestion_parameters:
+  source_query: "SELECT * FROM testing.RTE_AW_SalesOrderDetail"
+connection_name: "SourceTablePostgres"
+schedule_name: "Default"
+process_configuration_name: "TestingDefaultWithOverrides"
+raw_attributes:
+- raw_attribute_name: "carriertrackingnumber"
+  raw_metadata:
+    scale: 0
+    precision: 2147483647
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "salesorderid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+- raw_attribute_name: "unitprice"
+  raw_metadata:
+    scale: 12
+    precision: 38
+    nullable_flag: true
+  data_type: "decimal"
+dependencies:
+- source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"

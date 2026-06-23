@@ -1,0 +1,13 @@
+---
+name: "Rules_Template_Enrichment_KeepCurrent_Test"
+datatype: "string"
+attribute_name: "rules_template_enrichment_keepcurrent_test"
+expression: "MAX('AVG([This].orderqty)' || 1) OVER (PARTITION BY  [This].productid)"
+expression_parsed: "MAX('AVG([This].orderqty)' || 1) OVER (PARTITION BY  P<1>)"
+keep_current_flag: true
+window_function_flag: true
+test_source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+parameters:
+- id: 1
+  attribute_name: "productid"
+  datatype: "int"
