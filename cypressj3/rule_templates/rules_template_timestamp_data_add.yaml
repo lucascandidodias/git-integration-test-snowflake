@@ -1,0 +1,13 @@
+---
+name: "Rules_Template_timestamp_data_add"
+datatype: "date"
+cast_datatype: "date"
+attribute_name: "rules_template_timestamp_data_add"
+expression: "date_add([This].modifieddate, 1)"
+expression_parsed: "date_add(P<1>, 1)"
+keep_current_flag: true
+test_source_name: "Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1"
+parameters:
+- id: 1
+  attribute_name: "modifieddate"
+  datatype: "timestamp"

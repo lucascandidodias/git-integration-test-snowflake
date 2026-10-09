@@ -1,0 +1,12 @@
+---
+source_name: "TableSqlServerSequenceScheduleCustom"
+source_description: "Testing - TableSqlServerSequenceScheduleCustom"
+ingestion_parameters:
+  source_query: "SELECT *, row_number() OVER (order by rowguid) row_num FROM Sales.SalesOrderDetail"
+cdc_refresh_parameters:
+  range_column:
+  - "row_num"
+refresh_type: "sequence"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+process_configuration_name: "TestingAllDifferentConfig"

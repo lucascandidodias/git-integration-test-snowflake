@@ -1,0 +1,3628 @@
+---
+source_name: "JSONCustomIngestFullSchedule"
+source_description: "Testing - JSONCustomIngestFullSchedule"
+ingestion_parameters:
+  select_list:
+  - "*"
+  - "meta.*"
+  - "meta.view.*"
+connection_type: "custom_ingestion"
+connection_name: "SourceCustom"
+schedule_name: "Default"
+custom_ingest_cluster_configuration_name: "JSONCustomNotebookforCustomIngest"
+raw_attributes:
+- raw_attribute_name: "approvals"
+  data_type: "array"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "reviewedAt"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "reviewedAutomatically"
+        type: "boolean"
+        metadata: {}
+        nullable: true
+      - name: "state"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "submissionDetails"
+        type:
+          type: "struct"
+          fields:
+          - name: "permissionType"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "submissionId"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "submissionObject"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "submissionOutcome"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "submissionOutcomeApplication"
+        type:
+          type: "struct"
+          fields:
+          - name: "failureCount"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "status"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "submittedAt"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "submitter"
+        type:
+          type: "struct"
+          fields:
+          - name: "displayName"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "id"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "targetAudience"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "workflowId"
+        type: "long"
+        metadata: {}
+        nullable: true
+    containsNull: true
+- raw_attribute_name: "assettype"
+  data_type: "string"
+- raw_attribute_name: "attribution"
+  data_type: "string"
+- raw_attribute_name: "averagerating"
+  data_type: "long"
+- raw_attribute_name: "category"
+  data_type: "string"
+- raw_attribute_name: "clientcontext"
+  data_type: "struct"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "clientContextVariables"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+- raw_attribute_name: "columns"
+  data_type: "array"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "computationStrategy"
+        type:
+          type: "struct"
+          fields:
+          - name: "parameters"
+            type:
+              type: "struct"
+              fields:
+              - name: "primary_key"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "region"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "source_columns"
+            type:
+              type: "array"
+              elementType: "string"
+              containsNull: true
+            metadata: {}
+            nullable: true
+          - name: "type"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "dataTypeName"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "description"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "fieldName"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "flags"
+        type:
+          type: "array"
+          elementType: "string"
+          containsNull: true
+        metadata: {}
+        nullable: true
+      - name: "format"
+        type:
+          type: "struct"
+          fields:
+          - name: "align"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "id"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "name"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "position"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "renderTypeName"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "tableColumnId"
+        type: "long"
+        metadata: {}
+        nullable: true
+    containsNull: true
+- raw_attribute_name: "createdat"
+  data_type: "long"
+- raw_attribute_name: "description"
+  data_type: "string"
+- raw_attribute_name: "displaytype"
+  data_type: "string"
+- raw_attribute_name: "downloadcount"
+  data_type: "long"
+- raw_attribute_name: "flags"
+  data_type: "array"
+  datatype_schema:
+    type: "array"
+    elementType: "string"
+    containsNull: true
+- raw_attribute_name: "grants"
+  data_type: "array"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "flags"
+        type:
+          type: "array"
+          elementType: "string"
+          containsNull: true
+        metadata: {}
+        nullable: true
+      - name: "inherited"
+        type: "boolean"
+        metadata: {}
+        nullable: true
+      - name: "type"
+        type: "string"
+        metadata: {}
+        nullable: true
+    containsNull: true
+- raw_attribute_name: "hidefromcatalog"
+  data_type: "boolean"
+- raw_attribute_name: "hidefromdatajson"
+  data_type: "boolean"
+- raw_attribute_name: "id"
+  data_type: "string"
+- raw_attribute_name: "license"
+  data_type: "struct"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "name"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "termsLink"
+      type: "string"
+      metadata: {}
+      nullable: true
+- raw_attribute_name: "licenseid"
+  data_type: "string"
+- raw_attribute_name: "locked"
+  data_type: "boolean"
+- raw_attribute_name: "meta"
+  data_type: "struct"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "view"
+      type:
+        type: "struct"
+        fields:
+        - name: "approvals"
+          type:
+            type: "array"
+            elementType:
+              type: "struct"
+              fields:
+              - name: "reviewedAt"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "reviewedAutomatically"
+                type: "boolean"
+                metadata: {}
+                nullable: true
+              - name: "state"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "submissionDetails"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "permissionType"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "submissionId"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "submissionObject"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "submissionOutcome"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "submissionOutcomeApplication"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "failureCount"
+                    type: "long"
+                    metadata: {}
+                    nullable: true
+                  - name: "status"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "submittedAt"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "submitter"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "displayName"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                  - name: "id"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "targetAudience"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "workflowId"
+                type: "long"
+                metadata: {}
+                nullable: true
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "assetType"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "attribution"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "averageRating"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "category"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "clientContext"
+          type:
+            type: "struct"
+            fields:
+            - name: "clientContextVariables"
+              type:
+                type: "array"
+                elementType: "string"
+                containsNull: true
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "columns"
+          type:
+            type: "array"
+            elementType:
+              type: "struct"
+              fields:
+              - name: "computationStrategy"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "parameters"
+                    type:
+                      type: "struct"
+                      fields:
+                      - name: "primary_key"
+                        type: "string"
+                        metadata: {}
+                        nullable: true
+                      - name: "region"
+                        type: "string"
+                        metadata: {}
+                        nullable: true
+                    metadata: {}
+                    nullable: true
+                  - name: "source_columns"
+                    type:
+                      type: "array"
+                      elementType: "string"
+                      containsNull: true
+                    metadata: {}
+                    nullable: true
+                  - name: "type"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "dataTypeName"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "description"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "fieldName"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "flags"
+                type:
+                  type: "array"
+                  elementType: "string"
+                  containsNull: true
+                metadata: {}
+                nullable: true
+              - name: "format"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "align"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "id"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "name"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "position"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "renderTypeName"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "tableColumnId"
+                type: "long"
+                metadata: {}
+                nullable: true
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "createdAt"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "description"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "displayType"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "downloadCount"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "flags"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "grants"
+          type:
+            type: "array"
+            elementType:
+              type: "struct"
+              fields:
+              - name: "flags"
+                type:
+                  type: "array"
+                  elementType: "string"
+                  containsNull: true
+                metadata: {}
+                nullable: true
+              - name: "inherited"
+                type: "boolean"
+                metadata: {}
+                nullable: true
+              - name: "type"
+                type: "string"
+                metadata: {}
+                nullable: true
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "hideFromCatalog"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "hideFromDataJson"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "id"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "license"
+          type:
+            type: "struct"
+            fields:
+            - name: "name"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "termsLink"
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "licenseId"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "locked"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "name"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "newBackend"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "numberOfComments"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "oid"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "owner"
+          type:
+            type: "struct"
+            fields:
+            - name: "displayName"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "flags"
+              type:
+                type: "array"
+                elementType: "string"
+                containsNull: true
+              metadata: {}
+              nullable: true
+            - name: "id"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlLarge"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlMedium"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlSmall"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "screenName"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "type"
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "provenance"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "publicationAppendEnabled"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "publicationDate"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "publicationGroup"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "publicationStage"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "rights"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "rowsUpdatedAt"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "rowsUpdatedBy"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "tableAuthor"
+          type:
+            type: "struct"
+            fields:
+            - name: "displayName"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "flags"
+              type:
+                type: "array"
+                elementType: "string"
+                containsNull: true
+              metadata: {}
+              nullable: true
+            - name: "id"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlLarge"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlMedium"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlSmall"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "screenName"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "type"
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "tableId"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "tags"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "totalTimesRated"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "viewCount"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "viewLastModified"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "viewType"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+- raw_attribute_name: "name"
+  data_type: "string"
+- raw_attribute_name: "newbackend"
+  data_type: "boolean"
+- raw_attribute_name: "numberofcomments"
+  data_type: "long"
+- raw_attribute_name: "oid"
+  data_type: "long"
+- raw_attribute_name: "owner"
+  data_type: "struct"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "displayName"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "flags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "id"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlLarge"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlMedium"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlSmall"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "screenName"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "type"
+      type: "string"
+      metadata: {}
+      nullable: true
+- raw_attribute_name: "provenance"
+  data_type: "string"
+- raw_attribute_name: "publicationappendenabled"
+  data_type: "boolean"
+- raw_attribute_name: "publicationdate"
+  data_type: "long"
+- raw_attribute_name: "publicationgroup"
+  data_type: "long"
+- raw_attribute_name: "publicationstage"
+  data_type: "string"
+- raw_attribute_name: "rights"
+  data_type: "array"
+  datatype_schema:
+    type: "array"
+    elementType: "string"
+    containsNull: true
+- raw_attribute_name: "rowsupdatedat"
+  data_type: "long"
+- raw_attribute_name: "rowsupdatedby"
+  data_type: "string"
+- raw_attribute_name: "tableauthor"
+  data_type: "struct"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "displayName"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "flags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "id"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlLarge"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlMedium"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlSmall"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "screenName"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "type"
+      type: "string"
+      metadata: {}
+      nullable: true
+- raw_attribute_name: "tableid"
+  data_type: "long"
+- raw_attribute_name: "tags"
+  data_type: "array"
+  datatype_schema:
+    type: "array"
+    elementType: "string"
+    containsNull: true
+- raw_attribute_name: "totaltimesrated"
+  data_type: "long"
+- raw_attribute_name: "view"
+  data_type: "struct"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "approvals"
+      type:
+        type: "array"
+        elementType:
+          type: "struct"
+          fields:
+          - name: "reviewedAt"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "reviewedAutomatically"
+            type: "boolean"
+            metadata: {}
+            nullable: true
+          - name: "state"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "submissionDetails"
+            type:
+              type: "struct"
+              fields:
+              - name: "permissionType"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "submissionId"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "submissionObject"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "submissionOutcome"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "submissionOutcomeApplication"
+            type:
+              type: "struct"
+              fields:
+              - name: "failureCount"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "status"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "submittedAt"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "submitter"
+            type:
+              type: "struct"
+              fields:
+              - name: "displayName"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "id"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "targetAudience"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "workflowId"
+            type: "long"
+            metadata: {}
+            nullable: true
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "assetType"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "attribution"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "averageRating"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "category"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "clientContext"
+      type:
+        type: "struct"
+        fields:
+        - name: "clientContextVariables"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "columns"
+      type:
+        type: "array"
+        elementType:
+          type: "struct"
+          fields:
+          - name: "computationStrategy"
+            type:
+              type: "struct"
+              fields:
+              - name: "parameters"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "primary_key"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                  - name: "region"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "source_columns"
+                type:
+                  type: "array"
+                  elementType: "string"
+                  containsNull: true
+                metadata: {}
+                nullable: true
+              - name: "type"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "dataTypeName"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "description"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "fieldName"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "flags"
+            type:
+              type: "array"
+              elementType: "string"
+              containsNull: true
+            metadata: {}
+            nullable: true
+          - name: "format"
+            type:
+              type: "struct"
+              fields:
+              - name: "align"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "id"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "name"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "position"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "renderTypeName"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "tableColumnId"
+            type: "long"
+            metadata: {}
+            nullable: true
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "createdAt"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "description"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "displayType"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "downloadCount"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "flags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "grants"
+      type:
+        type: "array"
+        elementType:
+          type: "struct"
+          fields:
+          - name: "flags"
+            type:
+              type: "array"
+              elementType: "string"
+              containsNull: true
+            metadata: {}
+            nullable: true
+          - name: "inherited"
+            type: "boolean"
+            metadata: {}
+            nullable: true
+          - name: "type"
+            type: "string"
+            metadata: {}
+            nullable: true
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "hideFromCatalog"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "hideFromDataJson"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "id"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "license"
+      type:
+        type: "struct"
+        fields:
+        - name: "name"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "termsLink"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "licenseId"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "locked"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "name"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "newBackend"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "numberOfComments"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "oid"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "owner"
+      type:
+        type: "struct"
+        fields:
+        - name: "displayName"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "flags"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "id"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlLarge"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlMedium"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlSmall"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "screenName"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "type"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "provenance"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "publicationAppendEnabled"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "publicationDate"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "publicationGroup"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "publicationStage"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "rights"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "rowsUpdatedAt"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "rowsUpdatedBy"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "tableAuthor"
+      type:
+        type: "struct"
+        fields:
+        - name: "displayName"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "flags"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "id"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlLarge"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlMedium"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlSmall"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "screenName"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "type"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "tableId"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "tags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "totalTimesRated"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "viewCount"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "viewLastModified"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "viewType"
+      type: "string"
+      metadata: {}
+      nullable: true
+- raw_attribute_name: "viewcount"
+  data_type: "long"
+- raw_attribute_name: "viewlastmodified"
+  data_type: "long"
+- raw_attribute_name: "viewtype"
+  data_type: "string"
+rules:
+- attribute_name: "josn_concat_rule"
+  name: "JOSN_concat_rule"
+  description: "JOSN_concat_rule"
+  datatype: "string"
+  expression: "concat([This].assettype, [This].attribution)\n"
+  expression_parsed: "concat(P<1>, P<2>)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "assettype"
+  - id: 2
+    type: "raw"
+    name: "attribution"
+- attribute_name: "json_rule_long"
+  name: "JSON_Rule_Long"
+  description: "JSON_Rule_Long"
+  datatype: "long"
+  expression: "[This].tableid"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "tableid"
+- attribute_name: "json_struct_rule1"
+  name: "JSON_struct_rule1"
+  description: "JSON_struct_rule1"
+  datatype: "struct"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "columns"
+      type:
+        type: "array"
+        elementType:
+          type: "struct"
+          fields:
+          - name: "computationStrategy"
+            type:
+              type: "struct"
+              fields:
+              - name: "parameters"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "primary_key"
+                    type: "string"
+                    metadata: {}
+                    nullable: false
+                  - name: "region"
+                    type: "string"
+                    metadata: {}
+                    nullable: false
+                metadata: {}
+                nullable: false
+              - name: "source_columns"
+                type:
+                  type: "array"
+                  elementType: "string"
+                  containsNull: false
+                metadata: {}
+                nullable: false
+              - name: "type"
+                type: "string"
+                metadata: {}
+                nullable: false
+            metadata: {}
+            nullable: false
+          - name: "dataTypeName"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "description"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "fieldName"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "flags"
+            type:
+              type: "array"
+              elementType: "string"
+              containsNull: false
+            metadata: {}
+            nullable: false
+          - name: "format"
+            type:
+              type: "struct"
+              fields:
+              - name: "align"
+                type: "string"
+                metadata: {}
+                nullable: false
+            metadata: {}
+            nullable: false
+          - name: "id"
+            type: "long"
+            metadata: {}
+            nullable: false
+          - name: "name"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "position"
+            type: "long"
+            metadata: {}
+            nullable: false
+          - name: "renderTypeName"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "tableColumnId"
+            type: "long"
+            metadata: {}
+            nullable: false
+        containsNull: false
+      metadata: {}
+      nullable: false
+    - name: "flags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: false
+      metadata: {}
+      nullable: false
+    - name: "description"
+      type: "string"
+      metadata: {}
+      nullable: false
+  expression: "struct([This].columns,[This].flags,[This].description)\n"
+  expression_parsed: "struct(P<1>,P<2>,P<3>)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "columns"
+  - id: 2
+    type: "raw"
+    name: "flags"
+  - id: 3
+    type: "raw"
+    name: "description"
+channels:
+- output_name: "CustomNotebook"
+  output_source_name: "AddChannelForCustomNotebook"
+  filter: "[This].hidefromcatalog"
+  operation_type: "Aggregate"
+  include_fail_flag: true
+  include_warn_flag: true
+  description: "AddChannelForCustomNotebook"
+  output_source_columns:
+  - name: "approvals"
+    expression: "[This].approvals"
+    datatype: "array"
+    parameter:
+      name: "approvals"
+      type: "raw"
+  - name: "assettype"
+    expression: "[This].assettype"
+    datatype: "string"
+    parameter:
+      name: "assettype"
+      type: "raw"
+  - name: "attribution"
+    expression: "[This].attribution"
+    datatype: "string"
+    parameter:
+      name: "attribution"
+      type: "raw"
+  - name: "Auto_Cypress_Testing_CustomNotebook"
+    expression: "[This].clientcontext.clientContextVariables"
+    datatype: "array"
+    parameter:
+      name: "clientcontext"
+      type: "raw"
+  - name: "averagerating"
+    expression: "[This].averagerating"
+    datatype: "long"
+    parameter:
+      name: "averagerating"
+      type: "raw"
+  - name: "category"
+    expression: "[This].category"
+    datatype: "string"
+    parameter:
+      name: "category"
+      type: "raw"
+  - name: "clientcontext"
+    expression: "[This].clientcontext"
+    datatype: "struct"
+    parameter:
+      name: "clientcontext"
+      type: "raw"
+  - name: "columns"
+    expression: "[This].columns"
+    datatype: "array"
+    parameter:
+      name: "columns"
+      type: "raw"
+  - name: "createdat"
+    expression: "[This].createdat"
+    datatype: "long"
+    parameter:
+      name: "createdat"
+      type: "raw"
+  - name: "description"
+    expression: "[This].description"
+    datatype: "string"
+    parameter:
+      name: "description"
+      type: "raw"
+  - name: "displaytype"
+    expression: "[This].displaytype"
+    datatype: "string"
+    parameter:
+      name: "displaytype"
+      type: "raw"
+  - name: "downloadcount"
+    expression: "[This].downloadcount"
+    datatype: "long"
+    parameter:
+      name: "downloadcount"
+      type: "raw"
+  - name: "flags"
+    expression: "[This].flags"
+    datatype: "array"
+    parameter:
+      name: "flags"
+      type: "raw"
+  - name: "grants"
+    expression: "[This].grants"
+    datatype: "array"
+    parameter:
+      name: "grants"
+      type: "raw"
+  - name: "hidefromcatalog"
+    expression: "[This].hidefromcatalog"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromcatalog"
+      type: "raw"
+  - name: "hidefromdatajson"
+    expression: "[This].hidefromdatajson"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromdatajson"
+      type: "raw"
+  - name: "id"
+    expression: "[This].id"
+    datatype: "string"
+    parameter:
+      name: "id"
+      type: "raw"
+  - name: "__id"
+    expression: "[This].id"
+    datatype: "string"
+    parameter:
+      name: "id"
+      type: "raw"
+  - name: "josn_concat_rule"
+    expression: "[This].josn_concat_rule"
+    datatype: "string"
+    parameter:
+      name: "josn_concat_rule"
+      type: "enrichment"
+  - name: "json_rule_long"
+    expression: "[This].json_rule_long"
+    datatype: "long"
+    parameter:
+      name: "json_rule_long"
+      type: "enrichment"
+  - name: "json_struct_rule1"
+    expression: "[This].json_struct_rule1"
+    datatype: "struct"
+    parameter:
+      name: "json_struct_rule1"
+      type: "enrichment"
+  - name: "license"
+    expression: "[This].license"
+    datatype: "struct"
+    parameter:
+      name: "license"
+      type: "raw"
+  - name: "licenseid"
+    expression: "[This].licenseid"
+    datatype: "string"
+    parameter:
+      name: "licenseid"
+      type: "raw"
+  - name: "locked"
+    expression: "[This].locked"
+    datatype: "boolean"
+    parameter:
+      name: "locked"
+      type: "raw"
+  - name: "meta"
+    expression: "[This].meta"
+    datatype: "struct"
+    parameter:
+      name: "meta"
+      type: "raw"
+  - name: "name"
+    expression: "[This].name"
+    datatype: "string"
+    parameter:
+      name: "name"
+      type: "raw"
+  - name: "newbackend"
+    expression: "[This].newbackend"
+    datatype: "boolean"
+    parameter:
+      name: "newbackend"
+      type: "raw"
+  - name: "numberofcomments"
+    expression: "[This].numberofcomments"
+    datatype: "long"
+    parameter:
+      name: "numberofcomments"
+      type: "raw"
+  - name: "oid"
+    expression: "[This].oid"
+    datatype: "long"
+    parameter:
+      name: "oid"
+      type: "raw"
+  - name: "owner"
+    expression: "[This].owner"
+    datatype: "struct"
+    parameter:
+      name: "owner"
+      type: "raw"
+  - name: "provenance"
+    expression: "[This].provenance"
+    datatype: "string"
+    parameter:
+      name: "provenance"
+      type: "raw"
+  - name: "publicationappendenabled"
+    expression: "[This].publicationappendenabled"
+    datatype: "boolean"
+    parameter:
+      name: "publicationappendenabled"
+      type: "raw"
+  - name: "publicationdate"
+    expression: "[This].publicationdate"
+    datatype: "long"
+    parameter:
+      name: "publicationdate"
+      type: "raw"
+  - name: "publicationgroup"
+    expression: "[This].publicationgroup"
+    datatype: "long"
+    parameter:
+      name: "publicationgroup"
+      type: "raw"
+  - name: "publicationstage"
+    expression: "[This].publicationstage"
+    datatype: "string"
+    parameter:
+      name: "publicationstage"
+      type: "raw"
+  - name: "rights"
+    expression: "[This].rights"
+    datatype: "array"
+    parameter:
+      name: "rights"
+      type: "raw"
+  - name: "rowsupdatedat"
+    expression: "[This].rowsupdatedat"
+    datatype: "long"
+    parameter:
+      name: "rowsupdatedat"
+      type: "raw"
+  - name: "rowsupdatedby"
+    expression: "[This].rowsupdatedby"
+    datatype: "string"
+    parameter:
+      name: "rowsupdatedby"
+      type: "raw"
+  - name: "tableauthor"
+    expression: "[This].tableauthor"
+    datatype: "struct"
+    parameter:
+      name: "tableauthor"
+      type: "raw"
+  - name: "tableid"
+    expression: "[This].tableid"
+    datatype: "long"
+    parameter:
+      name: "tableid"
+      type: "raw"
+  - name: "tags"
+    expression: "[This].tags"
+    datatype: "array"
+    parameter:
+      name: "tags"
+      type: "raw"
+  - name: "totaltimesrated"
+    expression: "[This].totaltimesrated"
+    datatype: "long"
+    parameter:
+      name: "totaltimesrated"
+      type: "raw"
+  - name: "view"
+    expression: "[This].view"
+    datatype: "struct"
+    parameter:
+      name: "view"
+      type: "raw"
+  - name: "viewcount"
+    expression: "[This].viewcount"
+    datatype: "long"
+    parameter:
+      name: "viewcount"
+      type: "raw"
+  - name: "viewlastmodified"
+    expression: "[This].viewlastmodified"
+    datatype: "long"
+    parameter:
+      name: "viewlastmodified"
+      type: "raw"
+  - name: "viewtype"
+    expression: "[This].viewtype"
+    datatype: "string"
+    parameter:
+      name: "viewtype"
+      type: "raw"
+- output_name: "CustomNotebook"
+  output_source_name: "CustomNotebook - Json"
+  output_source_columns:
+  - name: "approvals"
+    expression: "[This].approvals"
+    datatype: "array"
+    parameter:
+      name: "approvals"
+      type: "raw"
+  - name: "assettype"
+    expression: "[This].assettype"
+    datatype: "string"
+    parameter:
+      name: "assettype"
+      type: "raw"
+  - name: "attribution"
+    expression: "[This].attribution"
+    datatype: "string"
+    parameter:
+      name: "attribution"
+      type: "raw"
+  - name: "Auto_Cypress_Testing_CustomNotebook"
+    expression: "[This].clientcontext.clientContextVariables"
+    datatype: "array"
+    parameter:
+      name: "clientcontext"
+      type: "raw"
+  - name: "averagerating"
+    expression: "[This].averagerating"
+    datatype: "long"
+    parameter:
+      name: "averagerating"
+      type: "raw"
+  - name: "category"
+    expression: "[This].category"
+    datatype: "string"
+    parameter:
+      name: "category"
+      type: "raw"
+  - name: "clientcontext"
+    expression: "[This].clientcontext"
+    datatype: "struct"
+    parameter:
+      name: "clientcontext"
+      type: "raw"
+  - name: "columns"
+    expression: "[This].columns"
+    datatype: "array"
+    parameter:
+      name: "columns"
+      type: "raw"
+  - name: "createdat"
+    expression: "[This].createdat"
+    datatype: "long"
+    parameter:
+      name: "createdat"
+      type: "raw"
+  - name: "description"
+    expression: "[This].description"
+    datatype: "string"
+    parameter:
+      name: "description"
+      type: "raw"
+  - name: "displaytype"
+    expression: "[This].displaytype"
+    datatype: "string"
+    parameter:
+      name: "displaytype"
+      type: "raw"
+  - name: "downloadcount"
+    expression: "[This].downloadcount"
+    datatype: "long"
+    parameter:
+      name: "downloadcount"
+      type: "raw"
+  - name: "flags"
+    expression: "[This].flags"
+    datatype: "array"
+    parameter:
+      name: "flags"
+      type: "raw"
+  - name: "grants"
+    expression: "[This].grants"
+    datatype: "array"
+    parameter:
+      name: "grants"
+      type: "raw"
+  - name: "hidefromcatalog"
+    expression: "[This].hidefromcatalog"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromcatalog"
+      type: "raw"
+  - name: "hidefromdatajson"
+    expression: "[This].hidefromdatajson"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromdatajson"
+      type: "raw"
+  - name: "id"
+    expression: "[This].id"
+    datatype: "string"
+    parameter:
+      name: "id"
+      type: "raw"
+  - name: "josn_concat_rule"
+    expression: "[This].josn_concat_rule"
+    datatype: "string"
+    parameter:
+      name: "josn_concat_rule"
+      type: "enrichment"
+  - name: "json_rule_long"
+    expression: "[This].json_rule_long"
+    datatype: "long"
+    parameter:
+      name: "json_rule_long"
+      type: "enrichment"
+  - name: "json_struct_rule1"
+    expression: "[This].json_struct_rule1"
+    datatype: "struct"
+    parameter:
+      name: "json_struct_rule1"
+      type: "enrichment"
+  - name: "license"
+    expression: "[This].license"
+    datatype: "struct"
+    parameter:
+      name: "license"
+      type: "raw"
+  - name: "licenseid"
+    expression: "[This].licenseid"
+    datatype: "string"
+    parameter:
+      name: "licenseid"
+      type: "raw"
+  - name: "locked"
+    expression: "[This].locked"
+    datatype: "boolean"
+    parameter:
+      name: "locked"
+      type: "raw"
+  - name: "meta"
+    expression: "[This].meta"
+    datatype: "struct"
+    parameter:
+      name: "meta"
+      type: "raw"
+  - name: "name"
+    expression: "[This].name"
+    datatype: "string"
+    parameter:
+      name: "name"
+      type: "raw"
+  - name: "newbackend"
+    expression: "[This].newbackend"
+    datatype: "boolean"
+    parameter:
+      name: "newbackend"
+      type: "raw"
+  - name: "numberofcomments"
+    expression: "[This].numberofcomments"
+    datatype: "long"
+    parameter:
+      name: "numberofcomments"
+      type: "raw"
+  - name: "oid"
+    expression: "[This].oid"
+    datatype: "long"
+    parameter:
+      name: "oid"
+      type: "raw"
+  - name: "owner"
+    expression: "[This].owner"
+    datatype: "struct"
+    parameter:
+      name: "owner"
+      type: "raw"
+  - name: "provenance"
+    expression: "[This].provenance"
+    datatype: "string"
+    parameter:
+      name: "provenance"
+      type: "raw"
+  - name: "publicationappendenabled"
+    expression: "[This].publicationappendenabled"
+    datatype: "boolean"
+    parameter:
+      name: "publicationappendenabled"
+      type: "raw"
+  - name: "publicationdate"
+    expression: "[This].publicationdate"
+    datatype: "long"
+    parameter:
+      name: "publicationdate"
+      type: "raw"
+  - name: "publicationgroup"
+    expression: "[This].publicationgroup"
+    datatype: "long"
+    parameter:
+      name: "publicationgroup"
+      type: "raw"
+  - name: "publicationstage"
+    expression: "[This].publicationstage"
+    datatype: "string"
+    parameter:
+      name: "publicationstage"
+      type: "raw"
+  - name: "rights"
+    expression: "[This].rights"
+    datatype: "array"
+    parameter:
+      name: "rights"
+      type: "raw"
+  - name: "rowsupdatedat"
+    expression: "[This].rowsupdatedat"
+    datatype: "long"
+    parameter:
+      name: "rowsupdatedat"
+      type: "raw"
+  - name: "rowsupdatedby"
+    expression: "[This].rowsupdatedby"
+    datatype: "string"
+    parameter:
+      name: "rowsupdatedby"
+      type: "raw"
+  - name: "tableauthor"
+    expression: "[This].tableauthor"
+    datatype: "struct"
+    parameter:
+      name: "tableauthor"
+      type: "raw"
+  - name: "tableid"
+    expression: "[This].tableid"
+    datatype: "long"
+    parameter:
+      name: "tableid"
+      type: "raw"
+  - name: "tags"
+    expression: "[This].tags"
+    datatype: "array"
+    parameter:
+      name: "tags"
+      type: "raw"
+  - name: "totaltimesrated"
+    expression: "[This].totaltimesrated"
+    datatype: "long"
+    parameter:
+      name: "totaltimesrated"
+      type: "raw"
+  - name: "view"
+    expression: "[This].view"
+    datatype: "struct"
+    parameter:
+      name: "view"
+      type: "raw"
+  - name: "viewcount"
+    expression: "[This].viewcount"
+    datatype: "long"
+    parameter:
+      name: "viewcount"
+      type: "raw"
+  - name: "viewlastmodified"
+    expression: "[This].viewlastmodified"
+    datatype: "long"
+    parameter:
+      name: "viewlastmodified"
+      type: "raw"
+  - name: "viewtype"
+    expression: "[This].viewtype"
+    datatype: "string"
+    parameter:
+      name: "viewtype"
+      type: "raw"
+- output_name: "FileCSVS3None"
+  output_source_name: "FileCSVS3None - Json"
+  output_source_columns:
+  - name: "approvals"
+    expression: "[This].approvals"
+    datatype: "array"
+    parameter:
+      name: "approvals"
+      type: "raw"
+  - name: "assettype"
+    expression: "[This].assettype"
+    datatype: "string"
+    parameter:
+      name: "assettype"
+      type: "raw"
+  - name: "attribution"
+    expression: "[This].attribution"
+    datatype: "string"
+    parameter:
+      name: "attribution"
+      type: "raw"
+  - name: "Auto_Cypress_Testing_FileCSVS3None"
+    expression: "[This].s_validation_status_code"
+    datatype: "string"
+    parameter:
+      name: "s_validation_status_code"
+      type: "system"
+  - name: "averagerating"
+    expression: "[This].averagerating"
+    datatype: "long"
+    parameter:
+      name: "averagerating"
+      type: "raw"
+  - name: "category"
+    expression: "[This].category"
+    datatype: "string"
+    parameter:
+      name: "category"
+      type: "raw"
+  - name: "clientcontext"
+    expression: "[This].clientcontext"
+    datatype: "struct"
+    parameter:
+      name: "clientcontext"
+      type: "raw"
+  - name: "columns"
+    expression: "[This].columns"
+    datatype: "array"
+    parameter:
+      name: "columns"
+      type: "raw"
+  - name: "createdat"
+    expression: "[This].createdat"
+    datatype: "long"
+    parameter:
+      name: "createdat"
+      type: "raw"
+  - name: "description"
+    expression: "[This].description"
+    datatype: "string"
+    parameter:
+      name: "description"
+      type: "raw"
+  - name: "displaytype"
+    expression: "[This].displaytype"
+    datatype: "string"
+    parameter:
+      name: "displaytype"
+      type: "raw"
+  - name: "downloadcount"
+    expression: "[This].downloadcount"
+    datatype: "long"
+    parameter:
+      name: "downloadcount"
+      type: "raw"
+  - name: "flags"
+    expression: "[This].flags"
+    datatype: "array"
+    parameter:
+      name: "flags"
+      type: "raw"
+  - name: "grants"
+    expression: "[This].grants"
+    datatype: "array"
+    parameter:
+      name: "grants"
+      type: "raw"
+  - name: "hidefromcatalog"
+    expression: "[This].hidefromcatalog"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromcatalog"
+      type: "raw"
+  - name: "hidefromdatajson"
+    expression: "[This].hidefromdatajson"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromdatajson"
+      type: "raw"
+  - name: "id"
+    expression: "[This].id"
+    datatype: "string"
+    parameter:
+      name: "id"
+      type: "raw"
+  - name: "josn_concat_rule"
+    expression: "[This].josn_concat_rule"
+    datatype: "string"
+    parameter:
+      name: "josn_concat_rule"
+      type: "enrichment"
+  - name: "json_rule_long"
+    expression: "[This].json_rule_long"
+    datatype: "long"
+    parameter:
+      name: "json_rule_long"
+      type: "enrichment"
+  - name: "json_struct_rule1"
+    expression: "[This].json_struct_rule1"
+    datatype: "struct"
+    parameter:
+      name: "json_struct_rule1"
+      type: "enrichment"
+  - name: "license"
+    expression: "[This].license"
+    datatype: "struct"
+    parameter:
+      name: "license"
+      type: "raw"
+  - name: "licenseid"
+    expression: "[This].licenseid"
+    datatype: "string"
+    parameter:
+      name: "licenseid"
+      type: "raw"
+  - name: "locked"
+    expression: "[This].locked"
+    datatype: "boolean"
+    parameter:
+      name: "locked"
+      type: "raw"
+  - name: "meta"
+    expression: "[This].meta"
+    datatype: "struct"
+    parameter:
+      name: "meta"
+      type: "raw"
+  - name: "name"
+    expression: "[This].name"
+    datatype: "string"
+    parameter:
+      name: "name"
+      type: "raw"
+  - name: "newbackend"
+    expression: "[This].newbackend"
+    datatype: "boolean"
+    parameter:
+      name: "newbackend"
+      type: "raw"
+  - name: "numberofcomments"
+    expression: "[This].numberofcomments"
+    datatype: "long"
+    parameter:
+      name: "numberofcomments"
+      type: "raw"
+  - name: "oid"
+    expression: "[This].oid"
+    datatype: "long"
+    parameter:
+      name: "oid"
+      type: "raw"
+  - name: "owner"
+    expression: "[This].owner"
+    datatype: "struct"
+    parameter:
+      name: "owner"
+      type: "raw"
+  - name: "provenance"
+    expression: "[This].provenance"
+    datatype: "string"
+    parameter:
+      name: "provenance"
+      type: "raw"
+  - name: "publicationappendenabled"
+    expression: "[This].publicationappendenabled"
+    datatype: "boolean"
+    parameter:
+      name: "publicationappendenabled"
+      type: "raw"
+  - name: "publicationdate"
+    expression: "[This].publicationdate"
+    datatype: "long"
+    parameter:
+      name: "publicationdate"
+      type: "raw"
+  - name: "publicationgroup"
+    expression: "[This].publicationgroup"
+    datatype: "long"
+    parameter:
+      name: "publicationgroup"
+      type: "raw"
+  - name: "publicationstage"
+    expression: "[This].publicationstage"
+    datatype: "string"
+    parameter:
+      name: "publicationstage"
+      type: "raw"
+  - name: "rights"
+    expression: "[This].rights"
+    datatype: "array"
+    parameter:
+      name: "rights"
+      type: "raw"
+  - name: "rowsupdatedat"
+    expression: "[This].rowsupdatedat"
+    datatype: "long"
+    parameter:
+      name: "rowsupdatedat"
+      type: "raw"
+  - name: "rowsupdatedby"
+    expression: "[This].rowsupdatedby"
+    datatype: "string"
+    parameter:
+      name: "rowsupdatedby"
+      type: "raw"
+  - name: "tableauthor"
+    expression: "[This].tableauthor"
+    datatype: "struct"
+    parameter:
+      name: "tableauthor"
+      type: "raw"
+  - name: "tableid"
+    expression: "[This].tableid"
+    datatype: "long"
+    parameter:
+      name: "tableid"
+      type: "raw"
+  - name: "tags"
+    expression: "[This].tags"
+    datatype: "array"
+    parameter:
+      name: "tags"
+      type: "raw"
+  - name: "totaltimesrated"
+    expression: "[This].totaltimesrated"
+    datatype: "long"
+    parameter:
+      name: "totaltimesrated"
+      type: "raw"
+  - name: "view"
+    expression: "[This].view"
+    datatype: "struct"
+    parameter:
+      name: "view"
+      type: "raw"
+  - name: "viewcount"
+    expression: "[This].viewcount"
+    datatype: "long"
+    parameter:
+      name: "viewcount"
+      type: "raw"
+  - name: "viewlastmodified"
+    expression: "[This].viewlastmodified"
+    datatype: "long"
+    parameter:
+      name: "viewlastmodified"
+      type: "raw"
+  - name: "viewtype"
+    expression: "[This].viewtype"
+    datatype: "string"
+    parameter:
+      name: "viewtype"
+      type: "raw"
+- output_name: "FileJsonS3None"
+  output_source_name: "FileJsonS3None - Json"
+  output_source_columns:
+  - name: "approvals"
+    expression: "[This].approvals"
+    datatype: "array"
+    parameter:
+      name: "approvals"
+      type: "raw"
+  - name: "assettype"
+    expression: "[This].assettype"
+    datatype: "string"
+    parameter:
+      name: "assettype"
+      type: "raw"
+  - name: "attribution"
+    expression: "[This].attribution"
+    datatype: "string"
+    parameter:
+      name: "attribution"
+      type: "raw"
+  - name: "Auto_Cypress_Testing_FileJsonS3None"
+    expression: "[This].approvals"
+    datatype: "array"
+    parameter:
+      name: "approvals"
+      type: "raw"
+  - name: "averagerating"
+    expression: "[This].averagerating"
+    datatype: "long"
+    parameter:
+      name: "averagerating"
+      type: "raw"
+  - name: "category"
+    expression: "[This].category"
+    datatype: "string"
+    parameter:
+      name: "category"
+      type: "raw"
+  - name: "clientcontext"
+    expression: "[This].clientcontext"
+    datatype: "struct"
+    parameter:
+      name: "clientcontext"
+      type: "raw"
+  - name: "columns"
+    expression: "[This].columns"
+    datatype: "array"
+    parameter:
+      name: "columns"
+      type: "raw"
+  - name: "createdat"
+    expression: "[This].createdat"
+    datatype: "long"
+    parameter:
+      name: "createdat"
+      type: "raw"
+  - name: "description"
+    expression: "[This].description"
+    datatype: "string"
+    parameter:
+      name: "description"
+      type: "raw"
+  - name: "displaytype"
+    expression: "[This].displaytype"
+    datatype: "string"
+    parameter:
+      name: "displaytype"
+      type: "raw"
+  - name: "downloadcount"
+    expression: "[This].downloadcount"
+    datatype: "long"
+    parameter:
+      name: "downloadcount"
+      type: "raw"
+  - name: "flags"
+    expression: "[This].flags"
+    datatype: "array"
+    parameter:
+      name: "flags"
+      type: "raw"
+  - name: "grants"
+    expression: "[This].grants"
+    datatype: "array"
+    parameter:
+      name: "grants"
+      type: "raw"
+  - name: "hidefromcatalog"
+    expression: "[This].hidefromcatalog"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromcatalog"
+      type: "raw"
+  - name: "hidefromdatajson"
+    expression: "[This].hidefromdatajson"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromdatajson"
+      type: "raw"
+  - name: "id"
+    expression: "[This].id"
+    datatype: "string"
+    parameter:
+      name: "id"
+      type: "raw"
+  - name: "josn_concat_rule"
+    expression: "[This].josn_concat_rule"
+    datatype: "string"
+    parameter:
+      name: "josn_concat_rule"
+      type: "enrichment"
+  - name: "json_rule_long"
+    expression: "[This].json_rule_long"
+    datatype: "long"
+    parameter:
+      name: "json_rule_long"
+      type: "enrichment"
+  - name: "json_struct_rule1"
+    expression: "[This].json_struct_rule1"
+    datatype: "struct"
+    parameter:
+      name: "json_struct_rule1"
+      type: "enrichment"
+  - name: "license"
+    expression: "[This].license"
+    datatype: "struct"
+    parameter:
+      name: "license"
+      type: "raw"
+  - name: "licenseid"
+    expression: "[This].licenseid"
+    datatype: "string"
+    parameter:
+      name: "licenseid"
+      type: "raw"
+  - name: "locked"
+    expression: "[This].locked"
+    datatype: "boolean"
+    parameter:
+      name: "locked"
+      type: "raw"
+  - name: "meta"
+    expression: "[This].meta"
+    datatype: "struct"
+    parameter:
+      name: "meta"
+      type: "raw"
+  - name: "name"
+    expression: "[This].name"
+    datatype: "string"
+    parameter:
+      name: "name"
+      type: "raw"
+  - name: "newbackend"
+    expression: "[This].newbackend"
+    datatype: "boolean"
+    parameter:
+      name: "newbackend"
+      type: "raw"
+  - name: "numberofcomments"
+    expression: "[This].numberofcomments"
+    datatype: "long"
+    parameter:
+      name: "numberofcomments"
+      type: "raw"
+  - name: "oid"
+    expression: "[This].oid"
+    datatype: "long"
+    parameter:
+      name: "oid"
+      type: "raw"
+  - name: "owner"
+    expression: "[This].owner"
+    datatype: "struct"
+    parameter:
+      name: "owner"
+      type: "raw"
+  - name: "provenance"
+    expression: "[This].provenance"
+    datatype: "string"
+    parameter:
+      name: "provenance"
+      type: "raw"
+  - name: "publicationappendenabled"
+    expression: "[This].publicationappendenabled"
+    datatype: "boolean"
+    parameter:
+      name: "publicationappendenabled"
+      type: "raw"
+  - name: "publicationdate"
+    expression: "[This].publicationdate"
+    datatype: "long"
+    parameter:
+      name: "publicationdate"
+      type: "raw"
+  - name: "publicationgroup"
+    expression: "[This].publicationgroup"
+    datatype: "long"
+    parameter:
+      name: "publicationgroup"
+      type: "raw"
+  - name: "publicationstage"
+    expression: "[This].publicationstage"
+    datatype: "string"
+    parameter:
+      name: "publicationstage"
+      type: "raw"
+  - name: "rights"
+    expression: "[This].rights"
+    datatype: "array"
+    parameter:
+      name: "rights"
+      type: "raw"
+  - name: "rowsupdatedat"
+    expression: "[This].rowsupdatedat"
+    datatype: "long"
+    parameter:
+      name: "rowsupdatedat"
+      type: "raw"
+  - name: "rowsupdatedby"
+    expression: "[This].rowsupdatedby"
+    datatype: "string"
+    parameter:
+      name: "rowsupdatedby"
+      type: "raw"
+  - name: "tableauthor"
+    expression: "[This].tableauthor"
+    datatype: "struct"
+    parameter:
+      name: "tableauthor"
+      type: "raw"
+  - name: "tableid"
+    expression: "[This].tableid"
+    datatype: "long"
+    parameter:
+      name: "tableid"
+      type: "raw"
+  - name: "tags"
+    expression: "[This].tags"
+    datatype: "array"
+    parameter:
+      name: "tags"
+      type: "raw"
+  - name: "totaltimesrated"
+    expression: "[This].totaltimesrated"
+    datatype: "long"
+    parameter:
+      name: "totaltimesrated"
+      type: "raw"
+  - name: "view"
+    expression: "[This].view"
+    datatype: "struct"
+    parameter:
+      name: "view"
+      type: "raw"
+  - name: "viewcount"
+    expression: "[This].viewcount"
+    datatype: "long"
+    parameter:
+      name: "viewcount"
+      type: "raw"
+  - name: "viewlastmodified"
+    expression: "[This].viewlastmodified"
+    datatype: "long"
+    parameter:
+      name: "viewlastmodified"
+      type: "raw"
+  - name: "viewtype"
+    expression: "[This].viewtype"
+    datatype: "string"
+    parameter:
+      name: "viewtype"
+      type: "raw"
+- output_name: "FileParquetS3None"
+  output_source_name: "FileParquetS3None - Json"
+  output_source_columns:
+  - name: "approvals"
+    expression: "[This].approvals"
+    datatype: "array"
+    parameter:
+      name: "approvals"
+      type: "raw"
+  - name: "assettype"
+    expression: "[This].assettype"
+    datatype: "string"
+    parameter:
+      name: "assettype"
+      type: "raw"
+  - name: "attribution"
+    expression: "[This].attribution"
+    datatype: "string"
+    parameter:
+      name: "attribution"
+      type: "raw"
+  - name: "Auto_Cypress_Testing_FileParquetS3None"
+    expression: "[This].assettype"
+    datatype: "string"
+    parameter:
+      name: "assettype"
+      type: "raw"
+  - name: "averagerating"
+    expression: "[This].averagerating"
+    datatype: "long"
+    parameter:
+      name: "averagerating"
+      type: "raw"
+  - name: "category"
+    expression: "[This].category"
+    datatype: "string"
+    parameter:
+      name: "category"
+      type: "raw"
+  - name: "clientcontext"
+    expression: "[This].clientcontext"
+    datatype: "struct"
+    parameter:
+      name: "clientcontext"
+      type: "raw"
+  - name: "columns"
+    expression: "[This].columns"
+    datatype: "array"
+    parameter:
+      name: "columns"
+      type: "raw"
+  - name: "createdat"
+    expression: "[This].createdat"
+    datatype: "long"
+    parameter:
+      name: "createdat"
+      type: "raw"
+  - name: "description"
+    expression: "[This].description"
+    datatype: "string"
+    parameter:
+      name: "description"
+      type: "raw"
+  - name: "displaytype"
+    expression: "[This].displaytype"
+    datatype: "string"
+    parameter:
+      name: "displaytype"
+      type: "raw"
+  - name: "downloadcount"
+    expression: "[This].downloadcount"
+    datatype: "long"
+    parameter:
+      name: "downloadcount"
+      type: "raw"
+  - name: "flags"
+    expression: "[This].flags"
+    datatype: "array"
+    parameter:
+      name: "flags"
+      type: "raw"
+  - name: "grants"
+    expression: "[This].grants"
+    datatype: "array"
+    parameter:
+      name: "grants"
+      type: "raw"
+  - name: "hidefromcatalog"
+    expression: "[This].hidefromcatalog"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromcatalog"
+      type: "raw"
+  - name: "hidefromdatajson"
+    expression: "[This].hidefromdatajson"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromdatajson"
+      type: "raw"
+  - name: "id"
+    expression: "[This].id"
+    datatype: "string"
+    parameter:
+      name: "id"
+      type: "raw"
+  - name: "josn_concat_rule"
+    expression: "[This].josn_concat_rule"
+    datatype: "string"
+    parameter:
+      name: "josn_concat_rule"
+      type: "enrichment"
+  - name: "json_rule_long"
+    expression: "[This].json_rule_long"
+    datatype: "long"
+    parameter:
+      name: "json_rule_long"
+      type: "enrichment"
+  - name: "json_struct_rule1"
+    expression: "[This].json_struct_rule1"
+    datatype: "struct"
+    parameter:
+      name: "json_struct_rule1"
+      type: "enrichment"
+  - name: "license"
+    expression: "[This].license"
+    datatype: "struct"
+    parameter:
+      name: "license"
+      type: "raw"
+  - name: "licenseid"
+    expression: "[This].licenseid"
+    datatype: "string"
+    parameter:
+      name: "licenseid"
+      type: "raw"
+  - name: "locked"
+    expression: "[This].locked"
+    datatype: "boolean"
+    parameter:
+      name: "locked"
+      type: "raw"
+  - name: "meta"
+    expression: "[This].meta"
+    datatype: "struct"
+    parameter:
+      name: "meta"
+      type: "raw"
+  - name: "name"
+    expression: "[This].name"
+    datatype: "string"
+    parameter:
+      name: "name"
+      type: "raw"
+  - name: "newbackend"
+    expression: "[This].newbackend"
+    datatype: "boolean"
+    parameter:
+      name: "newbackend"
+      type: "raw"
+  - name: "numberofcomments"
+    expression: "[This].numberofcomments"
+    datatype: "long"
+    parameter:
+      name: "numberofcomments"
+      type: "raw"
+  - name: "oid"
+    expression: "[This].oid"
+    datatype: "long"
+    parameter:
+      name: "oid"
+      type: "raw"
+  - name: "owner"
+    expression: "[This].owner"
+    datatype: "struct"
+    parameter:
+      name: "owner"
+      type: "raw"
+  - name: "provenance"
+    expression: "[This].provenance"
+    datatype: "string"
+    parameter:
+      name: "provenance"
+      type: "raw"
+  - name: "publicationappendenabled"
+    expression: "[This].publicationappendenabled"
+    datatype: "boolean"
+    parameter:
+      name: "publicationappendenabled"
+      type: "raw"
+  - name: "publicationdate"
+    expression: "[This].publicationdate"
+    datatype: "long"
+    parameter:
+      name: "publicationdate"
+      type: "raw"
+  - name: "publicationgroup"
+    expression: "[This].publicationgroup"
+    datatype: "long"
+    parameter:
+      name: "publicationgroup"
+      type: "raw"
+  - name: "publicationstage"
+    expression: "[This].publicationstage"
+    datatype: "string"
+    parameter:
+      name: "publicationstage"
+      type: "raw"
+  - name: "rights"
+    expression: "[This].rights"
+    datatype: "array"
+    parameter:
+      name: "rights"
+      type: "raw"
+  - name: "rowsupdatedat"
+    expression: "[This].rowsupdatedat"
+    datatype: "long"
+    parameter:
+      name: "rowsupdatedat"
+      type: "raw"
+  - name: "rowsupdatedby"
+    expression: "[This].rowsupdatedby"
+    datatype: "string"
+    parameter:
+      name: "rowsupdatedby"
+      type: "raw"
+  - name: "tableauthor"
+    expression: "[This].tableauthor"
+    datatype: "struct"
+    parameter:
+      name: "tableauthor"
+      type: "raw"
+  - name: "tableid"
+    expression: "[This].tableid"
+    datatype: "long"
+    parameter:
+      name: "tableid"
+      type: "raw"
+  - name: "tags"
+    expression: "[This].tags"
+    datatype: "array"
+    parameter:
+      name: "tags"
+      type: "raw"
+  - name: "totaltimesrated"
+    expression: "[This].totaltimesrated"
+    datatype: "long"
+    parameter:
+      name: "totaltimesrated"
+      type: "raw"
+  - name: "view"
+    expression: "[This].view"
+    datatype: "struct"
+    parameter:
+      name: "view"
+      type: "raw"
+  - name: "viewcount"
+    expression: "[This].viewcount"
+    datatype: "long"
+    parameter:
+      name: "viewcount"
+      type: "raw"
+  - name: "viewlastmodified"
+    expression: "[This].viewlastmodified"
+    datatype: "long"
+    parameter:
+      name: "viewlastmodified"
+      type: "raw"
+  - name: "viewtype"
+    expression: "[This].viewtype"
+    datatype: "string"
+    parameter:
+      name: "viewtype"
+      type: "raw"
+- output_name: "MappingExpressionValidation"
+  output_source_name: "MappingExpressionValidation"
+- output_name: "MappingExpressionValidation"
+  output_source_name: "MappingExpressionValidationBoolean"
+  output_source_columns:
+  - name: "approvals"
+    expression: "[This].approvals"
+    datatype: "array"
+    parameter:
+      name: "approvals"
+      type: "raw"
+  - name: "assettype"
+    expression: "[This].assettype"
+    datatype: "string"
+    parameter:
+      name: "assettype"
+      type: "raw"
+  - name: "attribution"
+    expression: "[This].attribution"
+    datatype: "string"
+    parameter:
+      name: "attribution"
+      type: "raw"
+  - name: "averagerating"
+    expression: "[This].averagerating"
+    datatype: "long"
+    parameter:
+      name: "averagerating"
+      type: "raw"
+  - name: "category"
+    expression: "[This].category"
+    datatype: "string"
+    parameter:
+      name: "category"
+      type: "raw"
+  - name: "clientcontext"
+    expression: "[This].clientcontext"
+    datatype: "struct"
+    parameter:
+      name: "clientcontext"
+      type: "raw"
+  - name: "columns"
+    expression: "[This].columns"
+    datatype: "array"
+    parameter:
+      name: "columns"
+      type: "raw"
+  - name: "createdat"
+    expression: "[This].createdat"
+    datatype: "long"
+    parameter:
+      name: "createdat"
+      type: "raw"
+  - name: "description"
+    expression: "[This].description"
+    datatype: "string"
+    parameter:
+      name: "description"
+      type: "raw"
+  - name: "displaytype"
+    expression: "[This].displaytype"
+    datatype: "string"
+    parameter:
+      name: "displaytype"
+      type: "raw"
+  - name: "downloadcount"
+    expression: "[This].downloadcount"
+    datatype: "long"
+    parameter:
+      name: "downloadcount"
+      type: "raw"
+  - name: "flags"
+    expression: "[This].flags"
+    datatype: "array"
+    parameter:
+      name: "flags"
+      type: "raw"
+  - name: "grants"
+    expression: "[This].grants"
+    datatype: "array"
+    parameter:
+      name: "grants"
+      type: "raw"
+  - name: "hidefromcatalog"
+    expression: "[This].hidefromcatalog"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromcatalog"
+      type: "raw"
+  - name: "hidefromdatajson"
+    expression: "[This].hidefromdatajson"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromdatajson"
+      type: "raw"
+  - name: "id"
+    expression: "[This].id"
+    datatype: "string"
+    parameter:
+      name: "id"
+      type: "raw"
+  - name: "josn_concat_rule"
+    expression: "[This].josn_concat_rule"
+    datatype: "string"
+    parameter:
+      name: "josn_concat_rule"
+      type: "enrichment"
+  - name: "json_rule_long"
+    expression: "[This].json_rule_long"
+    datatype: "long"
+    parameter:
+      name: "json_rule_long"
+      type: "enrichment"
+  - name: "json_struct_rule1"
+    expression: "[This].json_struct_rule1"
+    datatype: "struct"
+    parameter:
+      name: "json_struct_rule1"
+      type: "enrichment"
+  - name: "license"
+    expression: "[This].license"
+    datatype: "struct"
+    parameter:
+      name: "license"
+      type: "raw"
+  - name: "licenseid"
+    expression: "[This].licenseid"
+    datatype: "string"
+    parameter:
+      name: "licenseid"
+      type: "raw"
+  - name: "locked"
+    expression: "[This].locked"
+    datatype: "boolean"
+    parameter:
+      name: "locked"
+      type: "raw"
+  - name: "meta"
+    expression: "[This].meta"
+    datatype: "struct"
+    parameter:
+      name: "meta"
+      type: "raw"
+  - name: "name"
+    expression: "[This].name"
+    datatype: "string"
+    parameter:
+      name: "name"
+      type: "raw"
+  - name: "newbackend"
+    expression: "[This].newbackend"
+    datatype: "boolean"
+    parameter:
+      name: "newbackend"
+      type: "raw"
+  - name: "numberofcomments"
+    expression: "[This].numberofcomments"
+    datatype: "long"
+    parameter:
+      name: "numberofcomments"
+      type: "raw"
+  - name: "oid"
+    expression: "[This].oid"
+    datatype: "long"
+    parameter:
+      name: "oid"
+      type: "raw"
+  - name: "owner"
+    expression: "[This].owner"
+    datatype: "struct"
+    parameter:
+      name: "owner"
+      type: "raw"
+  - name: "provenance"
+    expression: "[This].provenance"
+    datatype: "string"
+    parameter:
+      name: "provenance"
+      type: "raw"
+  - name: "publicationappendenabled"
+    expression: "[This].publicationappendenabled"
+    datatype: "boolean"
+    parameter:
+      name: "publicationappendenabled"
+      type: "raw"
+  - name: "publicationdate"
+    expression: "[This].publicationdate"
+    datatype: "long"
+    parameter:
+      name: "publicationdate"
+      type: "raw"
+  - name: "publicationgroup"
+    expression: "[This].publicationgroup"
+    datatype: "long"
+    parameter:
+      name: "publicationgroup"
+      type: "raw"
+  - name: "publicationstage"
+    expression: "[This].publicationstage"
+    datatype: "string"
+    parameter:
+      name: "publicationstage"
+      type: "raw"
+  - name: "rights"
+    expression: "[This].rights"
+    datatype: "array"
+    parameter:
+      name: "rights"
+      type: "raw"
+  - name: "rowsupdatedat"
+    expression: "[This].rowsupdatedat"
+    datatype: "long"
+    parameter:
+      name: "rowsupdatedat"
+      type: "raw"
+  - name: "rowsupdatedby"
+    expression: "[This].rowsupdatedby"
+    datatype: "string"
+    parameter:
+      name: "rowsupdatedby"
+      type: "raw"
+  - name: "tableauthor"
+    expression: "[This].tableauthor"
+    datatype: "struct"
+    parameter:
+      name: "tableauthor"
+      type: "raw"
+  - name: "tableid"
+    expression: "[This].tableid"
+    datatype: "long"
+    parameter:
+      name: "tableid"
+      type: "raw"
+  - name: "tags"
+    expression: "[This].tags"
+    datatype: "array"
+    parameter:
+      name: "tags"
+      type: "raw"
+  - name: "totaltimesrated"
+    expression: "[This].totaltimesrated"
+    datatype: "long"
+    parameter:
+      name: "totaltimesrated"
+      type: "raw"
+  - name: "view"
+    expression: "[This].view"
+    datatype: "struct"
+    parameter:
+      name: "view"
+      type: "raw"
+  - name: "viewcount"
+    expression: "[This].viewcount"
+    datatype: "long"
+    parameter:
+      name: "viewcount"
+      type: "raw"
+  - name: "viewlastmodified"
+    expression: "[This].viewlastmodified"
+    datatype: "long"
+    parameter:
+      name: "viewlastmodified"
+      type: "raw"
+  - name: "viewtype"
+    expression: "[This].viewtype"
+    datatype: "string"
+    parameter:
+      name: "viewtype"
+      type: "raw"
+- output_name: "Streaming_TableDeltaLake"
+  output_source_name: "Streaming_TableDeltaLake"
+- output_name: "Streaming_UnityDeltaLake"
+  output_source_name: "Streaming_UnityDeltaLake"
+- output_name: "TableDeltaLakeCustomDbNone"
+  output_source_name: "TableDeltaLakeCustomDbNone"
+- output_name: "TableDeltaLakeDefaultDbNone"
+  output_source_name: "TableDeltaLakeDefaultDbNone"
+  output_source_columns:
+  - name: "approvals"
+    expression: "[This].approvals"
+    datatype: "array"
+    parameter:
+      name: "approvals"
+      type: "raw"
+  - name: "assettype"
+    expression: "[This].assettype"
+    datatype: "string"
+    parameter:
+      name: "assettype"
+      type: "raw"
+  - name: "attribution"
+    expression: "[This].attribution"
+    datatype: "string"
+    parameter:
+      name: "attribution"
+      type: "raw"
+  - name: "Auto_Cypress_Testing_TableDeltaLakeDefaultDbNone"
+    expression: "[This].s_row_id"
+    datatype: "long"
+    parameter:
+      name: "s_row_id"
+      type: "system"
+  - name: "averagerating"
+    expression: "[This].averagerating"
+    datatype: "long"
+    parameter:
+      name: "averagerating"
+      type: "raw"
+  - name: "category"
+    expression: "[This].category"
+    datatype: "string"
+    parameter:
+      name: "category"
+      type: "raw"
+  - name: "clientcontext"
+    expression: "[This].clientcontext"
+    datatype: "struct"
+    parameter:
+      name: "clientcontext"
+      type: "raw"
+  - name: "columns"
+    expression: "[This].columns"
+    datatype: "array"
+    parameter:
+      name: "columns"
+      type: "raw"
+  - name: "createdat"
+    expression: "[This].createdat"
+    datatype: "long"
+    parameter:
+      name: "createdat"
+      type: "raw"
+  - name: "description"
+    expression: "[This].description"
+    datatype: "string"
+    parameter:
+      name: "description"
+      type: "raw"
+  - name: "displaytype"
+    expression: "[This].displaytype"
+    datatype: "string"
+    parameter:
+      name: "displaytype"
+      type: "raw"
+  - name: "downloadcount"
+    expression: "[This].downloadcount"
+    datatype: "long"
+    parameter:
+      name: "downloadcount"
+      type: "raw"
+  - name: "flags"
+    expression: "[This].flags"
+    datatype: "array"
+    parameter:
+      name: "flags"
+      type: "raw"
+  - name: "grants"
+    expression: "[This].grants"
+    datatype: "array"
+    parameter:
+      name: "grants"
+      type: "raw"
+  - name: "hidefromcatalog"
+    expression: "[This].hidefromcatalog"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromcatalog"
+      type: "raw"
+  - name: "hidefromdatajson"
+    expression: "[This].hidefromdatajson"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromdatajson"
+      type: "raw"
+  - name: "id"
+    expression: "[This].id"
+    datatype: "string"
+    parameter:
+      name: "id"
+      type: "raw"
+  - name: "josn_concat_rule"
+    expression: "[This].josn_concat_rule"
+    datatype: "string"
+    parameter:
+      name: "josn_concat_rule"
+      type: "enrichment"
+  - name: "json_rule_long"
+    expression: "[This].json_rule_long"
+    datatype: "long"
+    parameter:
+      name: "json_rule_long"
+      type: "enrichment"
+  - name: "json_struct_rule1"
+    expression: "[This].json_struct_rule1"
+    datatype: "struct"
+    parameter:
+      name: "json_struct_rule1"
+      type: "enrichment"
+  - name: "license"
+    expression: "[This].license"
+    datatype: "struct"
+    parameter:
+      name: "license"
+      type: "raw"
+  - name: "licenseid"
+    expression: "[This].licenseid"
+    datatype: "string"
+    parameter:
+      name: "licenseid"
+      type: "raw"
+  - name: "locked"
+    expression: "[This].locked"
+    datatype: "boolean"
+    parameter:
+      name: "locked"
+      type: "raw"
+  - name: "meta"
+    expression: "[This].meta"
+    datatype: "struct"
+    parameter:
+      name: "meta"
+      type: "raw"
+  - name: "name"
+    expression: "[This].name"
+    datatype: "string"
+    parameter:
+      name: "name"
+      type: "raw"
+  - name: "newbackend"
+    expression: "[This].newbackend"
+    datatype: "boolean"
+    parameter:
+      name: "newbackend"
+      type: "raw"
+  - name: "numberofcomments"
+    expression: "[This].numberofcomments"
+    datatype: "long"
+    parameter:
+      name: "numberofcomments"
+      type: "raw"
+  - name: "oid"
+    expression: "[This].oid"
+    datatype: "long"
+    parameter:
+      name: "oid"
+      type: "raw"
+  - name: "owner"
+    expression: "[This].owner"
+    datatype: "struct"
+    parameter:
+      name: "owner"
+      type: "raw"
+  - name: "provenance"
+    expression: "[This].provenance"
+    datatype: "string"
+    parameter:
+      name: "provenance"
+      type: "raw"
+  - name: "publicationappendenabled"
+    expression: "[This].publicationappendenabled"
+    datatype: "boolean"
+    parameter:
+      name: "publicationappendenabled"
+      type: "raw"
+  - name: "publicationdate"
+    expression: "[This].publicationdate"
+    datatype: "long"
+    parameter:
+      name: "publicationdate"
+      type: "raw"
+  - name: "publicationgroup"
+    expression: "[This].publicationgroup"
+    datatype: "long"
+    parameter:
+      name: "publicationgroup"
+      type: "raw"
+  - name: "publicationstage"
+    expression: "[This].publicationstage"
+    datatype: "string"
+    parameter:
+      name: "publicationstage"
+      type: "raw"
+  - name: "rights"
+    expression: "[This].rights"
+    datatype: "array"
+    parameter:
+      name: "rights"
+      type: "raw"
+  - name: "rowsupdatedat"
+    expression: "[This].rowsupdatedat"
+    datatype: "long"
+    parameter:
+      name: "rowsupdatedat"
+      type: "raw"
+  - name: "rowsupdatedby"
+    expression: "[This].rowsupdatedby"
+    datatype: "string"
+    parameter:
+      name: "rowsupdatedby"
+      type: "raw"
+  - name: "tableauthor"
+    expression: "[This].tableauthor"
+    datatype: "struct"
+    parameter:
+      name: "tableauthor"
+      type: "raw"
+  - name: "tableid"
+    expression: "[This].tableid"
+    datatype: "long"
+    parameter:
+      name: "tableid"
+      type: "raw"
+  - name: "tags"
+    expression: "[This].tags"
+    datatype: "array"
+    parameter:
+      name: "tags"
+      type: "raw"
+  - name: "totaltimesrated"
+    expression: "[This].totaltimesrated"
+    datatype: "long"
+    parameter:
+      name: "totaltimesrated"
+      type: "raw"
+  - name: "view"
+    expression: "[This].view"
+    datatype: "struct"
+    parameter:
+      name: "view"
+      type: "raw"
+  - name: "viewcount"
+    expression: "[This].viewcount"
+    datatype: "long"
+    parameter:
+      name: "viewcount"
+      type: "raw"
+  - name: "viewlastmodified"
+    expression: "[This].viewlastmodified"
+    datatype: "long"
+    parameter:
+      name: "viewlastmodified"
+      type: "raw"
+  - name: "viewtype"
+    expression: "[This].viewtype"
+    datatype: "string"
+    parameter:
+      name: "viewtype"
+      type: "raw"
+- output_name: "VirtualNone"
+  output_source_name: "VirtualNone - Json"
+  output_source_columns:
+  - name: "approvals"
+    expression: "[This].approvals"
+    datatype: "array"
+    parameter:
+      name: "approvals"
+      type: "raw"
+  - name: "assettype"
+    expression: "[This].assettype"
+    datatype: "string"
+    parameter:
+      name: "assettype"
+      type: "raw"
+  - name: "attribution"
+    expression: "[This].attribution"
+    datatype: "string"
+    parameter:
+      name: "attribution"
+      type: "raw"
+  - name: "Auto_Cypress_Testing_VirtualNone"
+    expression: "[This].clientcontext"
+    datatype: "struct"
+    parameter:
+      name: "clientcontext"
+      type: "raw"
+  - name: "averagerating"
+    expression: "[This].averagerating"
+    datatype: "long"
+    parameter:
+      name: "averagerating"
+      type: "raw"
+  - name: "category"
+    expression: "[This].category"
+    datatype: "string"
+    parameter:
+      name: "category"
+      type: "raw"
+  - name: "clientcontext"
+    expression: "[This].clientcontext"
+    datatype: "struct"
+    parameter:
+      name: "clientcontext"
+      type: "raw"
+  - name: "columns"
+    expression: "[This].columns"
+    datatype: "array"
+    parameter:
+      name: "columns"
+      type: "raw"
+  - name: "createdat"
+    expression: "[This].createdat"
+    datatype: "long"
+    parameter:
+      name: "createdat"
+      type: "raw"
+  - name: "description"
+    expression: "[This].description"
+    datatype: "string"
+    parameter:
+      name: "description"
+      type: "raw"
+  - name: "displaytype"
+    expression: "[This].displaytype"
+    datatype: "string"
+    parameter:
+      name: "displaytype"
+      type: "raw"
+  - name: "downloadcount"
+    expression: "[This].downloadcount"
+    datatype: "long"
+    parameter:
+      name: "downloadcount"
+      type: "raw"
+  - name: "flags"
+    expression: "[This].flags"
+    datatype: "array"
+    parameter:
+      name: "flags"
+      type: "raw"
+  - name: "grants"
+    expression: "[This].grants"
+    datatype: "array"
+    parameter:
+      name: "grants"
+      type: "raw"
+  - name: "hidefromcatalog"
+    expression: "[This].hidefromcatalog"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromcatalog"
+      type: "raw"
+  - name: "hidefromdatajson"
+    expression: "[This].hidefromdatajson"
+    datatype: "boolean"
+    parameter:
+      name: "hidefromdatajson"
+      type: "raw"
+  - name: "id"
+    expression: "[This].id"
+    datatype: "string"
+    parameter:
+      name: "id"
+      type: "raw"
+  - name: "josn_concat_rule"
+    expression: "[This].josn_concat_rule"
+    datatype: "string"
+    parameter:
+      name: "josn_concat_rule"
+      type: "enrichment"
+  - name: "json_rule_long"
+    expression: "[This].json_rule_long"
+    datatype: "long"
+    parameter:
+      name: "json_rule_long"
+      type: "enrichment"
+  - name: "json_struct_rule1"
+    expression: "[This].json_struct_rule1"
+    datatype: "struct"
+    parameter:
+      name: "json_struct_rule1"
+      type: "enrichment"
+  - name: "license"
+    expression: "[This].license"
+    datatype: "struct"
+    parameter:
+      name: "license"
+      type: "raw"
+  - name: "licenseid"
+    expression: "[This].licenseid"
+    datatype: "string"
+    parameter:
+      name: "licenseid"
+      type: "raw"
+  - name: "locked"
+    expression: "[This].locked"
+    datatype: "boolean"
+    parameter:
+      name: "locked"
+      type: "raw"
+  - name: "meta"
+    expression: "[This].meta"
+    datatype: "struct"
+    parameter:
+      name: "meta"
+      type: "raw"
+  - name: "name"
+    expression: "[This].name"
+    datatype: "string"
+    parameter:
+      name: "name"
+      type: "raw"
+  - name: "newbackend"
+    expression: "[This].newbackend"
+    datatype: "boolean"
+    parameter:
+      name: "newbackend"
+      type: "raw"
+  - name: "numberofcomments"
+    expression: "[This].numberofcomments"
+    datatype: "long"
+    parameter:
+      name: "numberofcomments"
+      type: "raw"
+  - name: "oid"
+    expression: "[This].oid"
+    datatype: "long"
+    parameter:
+      name: "oid"
+      type: "raw"
+  - name: "owner"
+    expression: "[This].owner"
+    datatype: "struct"
+    parameter:
+      name: "owner"
+      type: "raw"
+  - name: "provenance"
+    expression: "[This].provenance"
+    datatype: "string"
+    parameter:
+      name: "provenance"
+      type: "raw"
+  - name: "publicationappendenabled"
+    expression: "[This].publicationappendenabled"
+    datatype: "boolean"
+    parameter:
+      name: "publicationappendenabled"
+      type: "raw"
+  - name: "publicationdate"
+    expression: "[This].publicationdate"
+    datatype: "long"
+    parameter:
+      name: "publicationdate"
+      type: "raw"
+  - name: "publicationgroup"
+    expression: "[This].publicationgroup"
+    datatype: "long"
+    parameter:
+      name: "publicationgroup"
+      type: "raw"
+  - name: "publicationstage"
+    expression: "[This].publicationstage"
+    datatype: "string"
+    parameter:
+      name: "publicationstage"
+      type: "raw"
+  - name: "rights"
+    expression: "[This].rights"
+    datatype: "array"
+    parameter:
+      name: "rights"
+      type: "raw"
+  - name: "rowsupdatedat"
+    expression: "[This].rowsupdatedat"
+    datatype: "long"
+    parameter:
+      name: "rowsupdatedat"
+      type: "raw"
+  - name: "rowsupdatedby"
+    expression: "[This].rowsupdatedby"
+    datatype: "string"
+    parameter:
+      name: "rowsupdatedby"
+      type: "raw"
+  - name: "tableauthor"
+    expression: "[This].tableauthor"
+    datatype: "struct"
+    parameter:
+      name: "tableauthor"
+      type: "raw"
+  - name: "tableid"
+    expression: "[This].tableid"
+    datatype: "long"
+    parameter:
+      name: "tableid"
+      type: "raw"
+  - name: "tags"
+    expression: "[This].tags"
+    datatype: "array"
+    parameter:
+      name: "tags"
+      type: "raw"
+  - name: "totaltimesrated"
+    expression: "[This].totaltimesrated"
+    datatype: "long"
+    parameter:
+      name: "totaltimesrated"
+      type: "raw"
+  - name: "view"
+    expression: "[This].view"
+    datatype: "struct"
+    parameter:
+      name: "view"
+      type: "raw"
+  - name: "viewcount"
+    expression: "[This].viewcount"
+    datatype: "long"
+    parameter:
+      name: "viewcount"
+      type: "raw"
+  - name: "viewlastmodified"
+    expression: "[This].viewlastmodified"
+    datatype: "long"
+    parameter:
+      name: "viewlastmodified"
+      type: "raw"
+  - name: "viewtype"
+    expression: "[This].viewtype"
+    datatype: "string"
+    parameter:
+      name: "viewtype"
+      type: "raw"

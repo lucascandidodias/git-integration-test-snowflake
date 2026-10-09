@@ -1,0 +1,31 @@
+---
+source_name: "TableSqlServerNoneScheduleCustomDataRefreshNone"
+source_description: "Testing - TableSqlServerNoneScheduleCustomDataRefreshNone"
+ingestion_parameters:
+  source_query: "SELECT * FROM Sales.SalesOrderDetail"
+cdc_refresh_parameters:
+  delete_query: "false"
+refresh_type: "custom_refresh"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "orderqty"
+  raw_metadata:
+    scale: 0
+    precision: 5
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "salesorderid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "unitprice"
+  raw_metadata:
+    scale: 4
+    precision: 19
+    nullable_flag: false
+  data_type: "decimal"
+dependencies:
+- source_name: "Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1"

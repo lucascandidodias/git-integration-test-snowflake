@@ -1,0 +1,9 @@
+---
+source_name: "SourceTableSqlServer - dbo.TableSqlServerNone"
+source_description: "Auto-created from connection metadata"
+ingestion_parameters:
+  source_query: "select * from dbo.TableSqlServerNone"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Upcast"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"

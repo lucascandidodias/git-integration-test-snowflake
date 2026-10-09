@@ -1,0 +1,12 @@
+---
+name: "Rules_Template_ACT_replace_rule"
+datatype: "string"
+cast_datatype: "string"
+attribute_name: "rules_template_act_replace_rule"
+expression: "REPLACE(REPLACE([This].carriertrackingnumber, '$', ''), ',', '')"
+expression_parsed: "REPLACE(REPLACE(P<1>, '$', ''), ',', '')"
+test_source_name: "Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1"
+parameters:
+- id: 1
+  attribute_name: "carriertrackingnumber"
+  datatype: "string"

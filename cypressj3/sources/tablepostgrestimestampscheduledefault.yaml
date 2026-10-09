@@ -1,0 +1,11 @@
+---
+source_name: "TablePostgresTimestampScheduleDefault"
+source_description: "Testing - TablePostgresTimestampScheduleDefault"
+ingestion_parameters:
+  source_query: "SELECT * FROM testing.RTE_AW_SalesOrderDetail"
+cdc_refresh_parameters:
+  date_column:
+  - "ModifiedDate"
+refresh_type: "timestamp"
+connection_name: "SourceTablePostgres"
+schedule_name: "Default"

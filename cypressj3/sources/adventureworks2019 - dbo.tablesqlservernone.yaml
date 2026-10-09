@@ -1,0 +1,9 @@
+---
+source_name: "AdventureWorks2019 - dbo.TableSqlServerNone"
+source_description: "Auto-created from connection metadata"
+ingestion_parameters:
+  source_query: "select * from dbo.TableSqlServerNone"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Upcast"
+connection_name: "AdventureWorks2019"
+schedule_name: "Default"

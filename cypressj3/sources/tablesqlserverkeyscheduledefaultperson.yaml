@@ -1,0 +1,247 @@
+---
+source_name: "TableSqlServerKeyScheduleDefaultPerson"
+source_description: "Testing - TableSqlServerKeyScheduleDefaultPerson"
+ingestion_parameters:
+  source_query: "select * from Person.Person"
+cdc_refresh_parameters:
+  key_columns:
+  - "BusinessEntityID"
+refresh_type: "key"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "additionalcontactinfo"
+  raw_metadata:
+    scale: 0
+    precision: 1073741823
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "businessentityid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+  unique_flag: true
+- raw_attribute_name: "demographics"
+  raw_metadata:
+    scale: 0
+    precision: 1073741823
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "emailpromotion"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "firstname"
+  raw_metadata:
+    scale: 0
+    precision: 50
+    nullable_flag: false
+  data_type: "string"
+- raw_attribute_name: "lastname"
+  raw_metadata:
+    scale: 0
+    precision: 50
+    nullable_flag: false
+  data_type: "string"
+- raw_attribute_name: "middlename"
+  raw_metadata:
+    scale: 0
+    precision: 50
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "modifieddate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: false
+  data_type: "timestamp"
+- raw_attribute_name: "namestyle"
+  raw_metadata:
+    scale: 0
+    precision: 1
+    nullable_flag: false
+  data_type: "boolean"
+- raw_attribute_name: "persontype"
+  raw_metadata:
+    scale: 0
+    precision: 2
+    nullable_flag: false
+  data_type: "string"
+- raw_attribute_name: "rowguid"
+  raw_metadata:
+    scale: 0
+    precision: 36
+    nullable_flag: false
+  data_type: "string"
+- raw_attribute_name: "suffix"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "title"
+  raw_metadata:
+    scale: 0
+    precision: 8
+    nullable_flag: true
+  data_type: "string"
+dependencies:
+- source_name: "TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2"
+rules:
+- attribute_name: "act_enrichment_for_person_source"
+  name: "ACT_enrichment_for_person_source"
+  description: "ACT_enrichment_for_person_source"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType: "boolean"
+    containsNull: false
+  expression: "array_agg([TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2].onlineorderflag)\n"
+  expression_parsed: "A<1>\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "onlineorderflag"
+    source_name: "TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2"
+    relations:
+    - "[TableSqlServerKeyScheduleDefaultPerson]-Relation_person-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2]"
+    aggregation_id: 1
+  aggregations:
+  - id: 1
+    expression: "array_agg(P<1>)"
+    function: "array_agg"
+    relations:
+    - "[TableSqlServerKeyScheduleDefaultPerson]-Relation_person-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2]"
+- attribute_name: "act_sub_source_tablesqlserverkey"
+  name: "ACT_Sub_Source_TableSqlServerKey"
+  description: "ACT_Sub_Source_TableSqlServerKey"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "suffix"
+        type: "string"
+        metadata: {}
+        nullable: false
+      - name: "emailpromotion"
+        type: "integer"
+        metadata: {}
+        nullable: false
+      - name: "demographics"
+        type: "string"
+        metadata: {}
+        nullable: false
+    containsNull: false
+  expression: "array(struct([This].suffix, [This].emailpromotion, [This].demographics))\n"
+  expression_parsed: "array(struct(P<1>, P<2>, P<3>))\n"
+  rule_type_code: "S"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "suffix"
+  - id: 2
+    type: "raw"
+    name: "emailpromotion"
+  - id: 3
+    type: "raw"
+    name: "demographics"
+channels:
+- output_name: "TableSqlServerSubSource"
+  output_source_name: "TableSqlServerSubSource - Person"
+  output_source_columns:
+  - name: "act_enrichment_for_person_source"
+    expression: "[This].act_enrichment_for_person_source"
+    datatype: "array"
+    parameter:
+      name: "act_enrichment_for_person_source"
+      type: "enrichment"
+  - name: "act_sub_source_tablesqlserverkey"
+    expression: "[This].act_sub_source_tablesqlserverkey"
+    datatype: "array"
+    parameter:
+      name: "act_sub_source_tablesqlserverkey"
+      type: "enrichment"
+  - name: "additionalcontactinfo"
+    expression: "[This].additionalcontactinfo"
+    datatype: "string"
+    parameter:
+      name: "additionalcontactinfo"
+      type: "raw"
+  - name: "businessentityid"
+    expression: "[This].businessentityid"
+    datatype: "int"
+    parameter:
+      name: "businessentityid"
+      type: "raw"
+  - name: "demographics"
+    expression: "[This].demographics"
+    datatype: "string"
+    parameter:
+      name: "demographics"
+      type: "raw"
+  - name: "emailpromotion"
+    expression: "[This].emailpromotion"
+    datatype: "int"
+    parameter:
+      name: "emailpromotion"
+      type: "raw"
+  - name: "firstname"
+    expression: "[This].firstname"
+    datatype: "string"
+    parameter:
+      name: "firstname"
+      type: "raw"
+  - name: "lastname"
+    expression: "[This].lastname"
+    datatype: "string"
+    parameter:
+      name: "lastname"
+      type: "raw"
+  - name: "middlename"
+    expression: "[This].middlename"
+    datatype: "string"
+    parameter:
+      name: "middlename"
+      type: "raw"
+  - name: "modifieddate"
+    expression: "[This].modifieddate"
+    datatype: "timestamp"
+    parameter:
+      name: "modifieddate"
+      type: "raw"
+  - name: "namestyle"
+    expression: "[This].namestyle"
+    datatype: "boolean"
+    parameter:
+      name: "namestyle"
+      type: "raw"
+  - name: "persontype"
+    expression: "[This].persontype"
+    datatype: "string"
+    parameter:
+      name: "persontype"
+      type: "raw"
+  - name: "rowguid"
+    expression: "[This].rowguid"
+    datatype: "string"
+    parameter:
+      name: "rowguid"
+      type: "raw"
+  - name: "suffix"
+    expression: "[This].suffix"
+    datatype: "string"
+    parameter:
+      name: "suffix"
+      type: "raw"
+  - name: "title"
+    expression: "[This].title"
+    datatype: "string"
+    parameter:
+      name: "title"
+      type: "raw"

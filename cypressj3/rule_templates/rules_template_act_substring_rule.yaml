@@ -1,0 +1,12 @@
+---
+name: "Rules_Template_ACT_substring_rule"
+datatype: "string"
+cast_datatype: "string"
+attribute_name: "rules_template_act_substring_rule"
+expression: "substr([This].carriertrackingnumber, 6, 2)"
+expression_parsed: "substr(P<1>, 6, 2)"
+test_source_name: "Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1"
+parameters:
+- id: 1
+  attribute_name: "carriertrackingnumber"
+  datatype: "string"

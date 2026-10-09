@@ -1,0 +1,75 @@
+---
+source_name: "TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_1"
+source_description: "Created from sub-source rule [TableSqlServerFullScheduleMixedCustomer].act_cypress_sub_source_1"
+ingestion_parameters:
+  select_list:
+  - "*"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Clone"
+connection_type: "sub_source"
+sub_source_rule:
+  source_name: "TableSqlServerFullScheduleMixedCustomer"
+  attribute_name: "act_cypress_sub_source_1"
+raw_attributes:
+- raw_attribute_name: "status"
+  data_type: "int"
+rules:
+- attribute_name: "act_enrichment_1_for_sub_source_1"
+  name: "ACT_enrichment_1_for_sub_source_1"
+  description: "ACT_enrichment_1_for_sub_source_1"
+  datatype: "int"
+  expression: "[This].status + 10\n"
+  expression_parsed: "P<1> + 10\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "status"
+- attribute_name: "act_enrichment_2_for_sub_source_1"
+  name: "ACT_enrichment_2_for_sub_source_1"
+  description: "ACT_enrichment_2_for_sub_source_1"
+  datatype: "array"
+  datatype_schema:
+    type: "array"
+    elementType: "string"
+    containsNull: false
+  expression: "array_agg(concat(([TableSqlServerKeyScheduleCustomHeader].comment),\
+    \ ' cypress'))\n"
+  expression_parsed: "A<1>\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "comment"
+    source_name: "TableSqlServerKeyScheduleCustomHeader"
+    relations:
+    - "[TableSqlServerFullScheduleMixedCustomer]-Implicit-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_1]"
+    - "[TableSqlServerFullScheduleMixedCustomer]-Relation_sales_order_header-[TableSqlServerKeyScheduleCustomHeader]"
+    aggregation_id: 1
+  aggregations:
+  - id: 1
+    expression: "array_agg(concat((P<1>), ' cypress'))"
+    function: "array_agg"
+    relations:
+    - "[TableSqlServerFullScheduleMixedCustomer]-Implicit-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_1]"
+    - "[TableSqlServerFullScheduleMixedCustomer]-Relation_sales_order_header-[TableSqlServerKeyScheduleCustomHeader]"
+channels:
+- output_name: "TableSqlServerSubSource"
+  output_source_name: "TableSqlServerSubSource - Sub1"
+  output_source_columns:
+  - name: "act_enrichment_1_for_sub_source_1"
+    expression: "[This].act_enrichment_1_for_sub_source_1"
+    datatype: "int"
+    parameter:
+      name: "act_enrichment_1_for_sub_source_1"
+      type: "enrichment"
+  - name: "act_enrichment_2_for_sub_source_1"
+    expression: "[This].act_enrichment_2_for_sub_source_1"
+    datatype: "array"
+    parameter:
+      name: "act_enrichment_2_for_sub_source_1"
+      type: "enrichment"
+  - name: "status"
+    expression: "[This].status"
+    datatype: "int"
+    parameter:
+      name: "status"
+      type: "raw"

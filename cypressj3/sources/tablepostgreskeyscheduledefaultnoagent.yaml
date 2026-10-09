@@ -1,0 +1,15 @@
+---
+source_name: "TablePostgresKeyScheduleDefaultNoAgent"
+source_description: "Testing - TablePostgresKeyScheduleDefaultNoAgent"
+ingestion_parameters:
+  source_query: "SELECT * FROM testing.RTE_AW_SalesOrderHeader"
+cdc_refresh_parameters:
+  key_columns:
+  - "SalesOrderId"
+refresh_type: "key"
+connection_name: "SourceTablePostgresUsesAgentNo"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "salesorderid"
+  data_type: "int"
+  unique_flag: true

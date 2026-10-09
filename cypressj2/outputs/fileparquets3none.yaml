@@ -1,0 +1,1937 @@
+---
+output_name: "FileParquetS3None"
+output_type: "file"
+output_package_parameters:
+  file_name: "FileParquetS3None"
+output_description: " Testing - FileParquetS3None"
+output_sub_type: "parquet"
+connection_name: "OutputFileAmazonS3NoKeys"
+columns:
+- name: "approvals"
+  datatype: "LIST"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "reviewedAt"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "reviewedAutomatically"
+        type: "boolean"
+        metadata: {}
+        nullable: true
+      - name: "state"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "submissionDetails"
+        type:
+          type: "struct"
+          fields:
+          - name: "permissionType"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "submissionId"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "submissionObject"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "submissionOutcome"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "submissionOutcomeApplication"
+        type:
+          type: "struct"
+          fields:
+          - name: "failureCount"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "status"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "submittedAt"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "submitter"
+        type:
+          type: "struct"
+          fields:
+          - name: "displayName"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "id"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "targetAudience"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "workflowId"
+        type: "long"
+        metadata: {}
+        nullable: true
+    containsNull: true
+  complex_flag: true
+- name: "assettype"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "attribution"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "averagerating"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "category"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "clientcontext"
+  datatype: "JSON"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "clientContextVariables"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "columns"
+  datatype: "LIST"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "computationStrategy"
+        type:
+          type: "struct"
+          fields:
+          - name: "parameters"
+            type:
+              type: "struct"
+              fields:
+              - name: "primary_key"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "region"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "source_columns"
+            type:
+              type: "array"
+              elementType: "string"
+              containsNull: true
+            metadata: {}
+            nullable: true
+          - name: "type"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "dataTypeName"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "description"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "fieldName"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "flags"
+        type:
+          type: "array"
+          elementType: "string"
+          containsNull: true
+        metadata: {}
+        nullable: true
+      - name: "format"
+        type:
+          type: "struct"
+          fields:
+          - name: "align"
+            type: "string"
+            metadata: {}
+            nullable: true
+        metadata: {}
+        nullable: true
+      - name: "id"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "name"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "position"
+        type: "long"
+        metadata: {}
+        nullable: true
+      - name: "renderTypeName"
+        type: "string"
+        metadata: {}
+        nullable: true
+      - name: "tableColumnId"
+        type: "long"
+        metadata: {}
+        nullable: true
+    containsNull: true
+  complex_flag: true
+- name: "createdat"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "description"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "displaytype"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "downloadcount"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "flags"
+  datatype: "LIST"
+  datatype_schema:
+    type: "array"
+    elementType: "string"
+    containsNull: true
+  complex_flag: true
+- name: "grants"
+  datatype: "LIST"
+  datatype_schema:
+    type: "array"
+    elementType:
+      type: "struct"
+      fields:
+      - name: "flags"
+        type:
+          type: "array"
+          elementType: "string"
+          containsNull: true
+        metadata: {}
+        nullable: true
+      - name: "inherited"
+        type: "boolean"
+        metadata: {}
+        nullable: true
+      - name: "type"
+        type: "string"
+        metadata: {}
+        nullable: true
+    containsNull: true
+  complex_flag: true
+- name: "hidefromcatalog"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "hidefromdatajson"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "id"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "josn_concat_rule"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "json_rule_long"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "json_struct_rule1"
+  datatype: "JSON"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "columns"
+      type:
+        type: "array"
+        elementType:
+          type: "struct"
+          fields:
+          - name: "computationStrategy"
+            type:
+              type: "struct"
+              fields:
+              - name: "parameters"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "primary_key"
+                    type: "string"
+                    metadata: {}
+                    nullable: false
+                  - name: "region"
+                    type: "string"
+                    metadata: {}
+                    nullable: false
+                metadata: {}
+                nullable: false
+              - name: "source_columns"
+                type:
+                  type: "array"
+                  elementType: "string"
+                  containsNull: false
+                metadata: {}
+                nullable: false
+              - name: "type"
+                type: "string"
+                metadata: {}
+                nullable: false
+            metadata: {}
+            nullable: false
+          - name: "dataTypeName"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "description"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "fieldName"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "flags"
+            type:
+              type: "array"
+              elementType: "string"
+              containsNull: false
+            metadata: {}
+            nullable: false
+          - name: "format"
+            type:
+              type: "struct"
+              fields:
+              - name: "align"
+                type: "string"
+                metadata: {}
+                nullable: false
+            metadata: {}
+            nullable: false
+          - name: "id"
+            type: "long"
+            metadata: {}
+            nullable: false
+          - name: "name"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "position"
+            type: "long"
+            metadata: {}
+            nullable: false
+          - name: "renderTypeName"
+            type: "string"
+            metadata: {}
+            nullable: false
+          - name: "tableColumnId"
+            type: "long"
+            metadata: {}
+            nullable: false
+        containsNull: false
+      metadata: {}
+      nullable: false
+    - name: "flags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: false
+      metadata: {}
+      nullable: false
+    - name: "description"
+      type: "string"
+      metadata: {}
+      nullable: false
+  complex_flag: true
+- name: "license"
+  datatype: "JSON"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "name"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "termsLink"
+      type: "string"
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "licenseid"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "locked"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "meta"
+  datatype: "JSON"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "view"
+      type:
+        type: "struct"
+        fields:
+        - name: "approvals"
+          type:
+            type: "array"
+            elementType:
+              type: "struct"
+              fields:
+              - name: "reviewedAt"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "reviewedAutomatically"
+                type: "boolean"
+                metadata: {}
+                nullable: true
+              - name: "state"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "submissionDetails"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "permissionType"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "submissionId"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "submissionObject"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "submissionOutcome"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "submissionOutcomeApplication"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "failureCount"
+                    type: "long"
+                    metadata: {}
+                    nullable: true
+                  - name: "status"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "submittedAt"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "submitter"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "displayName"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                  - name: "id"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "targetAudience"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "workflowId"
+                type: "long"
+                metadata: {}
+                nullable: true
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "assetType"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "attribution"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "averageRating"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "category"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "clientContext"
+          type:
+            type: "struct"
+            fields:
+            - name: "clientContextVariables"
+              type:
+                type: "array"
+                elementType: "string"
+                containsNull: true
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "columns"
+          type:
+            type: "array"
+            elementType:
+              type: "struct"
+              fields:
+              - name: "computationStrategy"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "parameters"
+                    type:
+                      type: "struct"
+                      fields:
+                      - name: "primary_key"
+                        type: "string"
+                        metadata: {}
+                        nullable: true
+                      - name: "region"
+                        type: "string"
+                        metadata: {}
+                        nullable: true
+                    metadata: {}
+                    nullable: true
+                  - name: "source_columns"
+                    type:
+                      type: "array"
+                      elementType: "string"
+                      containsNull: true
+                    metadata: {}
+                    nullable: true
+                  - name: "type"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "dataTypeName"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "description"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "fieldName"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "flags"
+                type:
+                  type: "array"
+                  elementType: "string"
+                  containsNull: true
+                metadata: {}
+                nullable: true
+              - name: "format"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "align"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "id"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "name"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "position"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "renderTypeName"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "tableColumnId"
+                type: "long"
+                metadata: {}
+                nullable: true
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "createdAt"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "description"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "displayType"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "downloadCount"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "flags"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "grants"
+          type:
+            type: "array"
+            elementType:
+              type: "struct"
+              fields:
+              - name: "flags"
+                type:
+                  type: "array"
+                  elementType: "string"
+                  containsNull: true
+                metadata: {}
+                nullable: true
+              - name: "inherited"
+                type: "boolean"
+                metadata: {}
+                nullable: true
+              - name: "type"
+                type: "string"
+                metadata: {}
+                nullable: true
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "hideFromCatalog"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "hideFromDataJson"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "id"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "license"
+          type:
+            type: "struct"
+            fields:
+            - name: "name"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "termsLink"
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "licenseId"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "locked"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "name"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "newBackend"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "numberOfComments"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "oid"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "owner"
+          type:
+            type: "struct"
+            fields:
+            - name: "displayName"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "flags"
+              type:
+                type: "array"
+                elementType: "string"
+                containsNull: true
+              metadata: {}
+              nullable: true
+            - name: "id"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlLarge"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlMedium"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlSmall"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "screenName"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "type"
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "provenance"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "publicationAppendEnabled"
+          type: "boolean"
+          metadata: {}
+          nullable: true
+        - name: "publicationDate"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "publicationGroup"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "publicationStage"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "rights"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "rowsUpdatedAt"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "rowsUpdatedBy"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "tableAuthor"
+          type:
+            type: "struct"
+            fields:
+            - name: "displayName"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "flags"
+              type:
+                type: "array"
+                elementType: "string"
+                containsNull: true
+              metadata: {}
+              nullable: true
+            - name: "id"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlLarge"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlMedium"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "profileImageUrlSmall"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "screenName"
+              type: "string"
+              metadata: {}
+              nullable: true
+            - name: "type"
+              type: "string"
+              metadata: {}
+              nullable: true
+          metadata: {}
+          nullable: true
+        - name: "tableId"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "tags"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "totalTimesRated"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "viewCount"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "viewLastModified"
+          type: "long"
+          metadata: {}
+          nullable: true
+        - name: "viewType"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "name"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "newbackend"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "numberofcomments"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "oid"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "owner"
+  datatype: "JSON"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "displayName"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "flags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "id"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlLarge"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlMedium"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlSmall"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "screenName"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "type"
+      type: "string"
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "provenance"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "publicationappendenabled"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "publicationdate"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "publicationgroup"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "publicationstage"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "rights"
+  datatype: "LIST"
+  datatype_schema:
+    type: "array"
+    elementType: "string"
+    containsNull: true
+  complex_flag: true
+- name: "rowsupdatedat"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "rowsupdatedby"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "tableauthor"
+  datatype: "JSON"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "displayName"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "flags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "id"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlLarge"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlMedium"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "profileImageUrlSmall"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "screenName"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "type"
+      type: "string"
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "tableid"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "tags"
+  datatype: "LIST"
+  datatype_schema:
+    type: "array"
+    elementType: "string"
+    containsNull: true
+  complex_flag: true
+- name: "totaltimesrated"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "view"
+  datatype: "JSON"
+  datatype_schema:
+    type: "struct"
+    fields:
+    - name: "approvals"
+      type:
+        type: "array"
+        elementType:
+          type: "struct"
+          fields:
+          - name: "reviewedAt"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "reviewedAutomatically"
+            type: "boolean"
+            metadata: {}
+            nullable: true
+          - name: "state"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "submissionDetails"
+            type:
+              type: "struct"
+              fields:
+              - name: "permissionType"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "submissionId"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "submissionObject"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "submissionOutcome"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "submissionOutcomeApplication"
+            type:
+              type: "struct"
+              fields:
+              - name: "failureCount"
+                type: "long"
+                metadata: {}
+                nullable: true
+              - name: "status"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "submittedAt"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "submitter"
+            type:
+              type: "struct"
+              fields:
+              - name: "displayName"
+                type: "string"
+                metadata: {}
+                nullable: true
+              - name: "id"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "targetAudience"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "workflowId"
+            type: "long"
+            metadata: {}
+            nullable: true
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "assetType"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "attribution"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "averageRating"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "category"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "clientContext"
+      type:
+        type: "struct"
+        fields:
+        - name: "clientContextVariables"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "columns"
+      type:
+        type: "array"
+        elementType:
+          type: "struct"
+          fields:
+          - name: "computationStrategy"
+            type:
+              type: "struct"
+              fields:
+              - name: "parameters"
+                type:
+                  type: "struct"
+                  fields:
+                  - name: "primary_key"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                  - name: "region"
+                    type: "string"
+                    metadata: {}
+                    nullable: true
+                metadata: {}
+                nullable: true
+              - name: "source_columns"
+                type:
+                  type: "array"
+                  elementType: "string"
+                  containsNull: true
+                metadata: {}
+                nullable: true
+              - name: "type"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "dataTypeName"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "description"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "fieldName"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "flags"
+            type:
+              type: "array"
+              elementType: "string"
+              containsNull: true
+            metadata: {}
+            nullable: true
+          - name: "format"
+            type:
+              type: "struct"
+              fields:
+              - name: "align"
+                type: "string"
+                metadata: {}
+                nullable: true
+            metadata: {}
+            nullable: true
+          - name: "id"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "name"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "position"
+            type: "long"
+            metadata: {}
+            nullable: true
+          - name: "renderTypeName"
+            type: "string"
+            metadata: {}
+            nullable: true
+          - name: "tableColumnId"
+            type: "long"
+            metadata: {}
+            nullable: true
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "createdAt"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "description"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "displayType"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "downloadCount"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "flags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "grants"
+      type:
+        type: "array"
+        elementType:
+          type: "struct"
+          fields:
+          - name: "flags"
+            type:
+              type: "array"
+              elementType: "string"
+              containsNull: true
+            metadata: {}
+            nullable: true
+          - name: "inherited"
+            type: "boolean"
+            metadata: {}
+            nullable: true
+          - name: "type"
+            type: "string"
+            metadata: {}
+            nullable: true
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "hideFromCatalog"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "hideFromDataJson"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "id"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "license"
+      type:
+        type: "struct"
+        fields:
+        - name: "name"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "termsLink"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "licenseId"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "locked"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "name"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "newBackend"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "numberOfComments"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "oid"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "owner"
+      type:
+        type: "struct"
+        fields:
+        - name: "displayName"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "flags"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "id"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlLarge"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlMedium"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlSmall"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "screenName"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "type"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "provenance"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "publicationAppendEnabled"
+      type: "boolean"
+      metadata: {}
+      nullable: true
+    - name: "publicationDate"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "publicationGroup"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "publicationStage"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "rights"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "rowsUpdatedAt"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "rowsUpdatedBy"
+      type: "string"
+      metadata: {}
+      nullable: true
+    - name: "tableAuthor"
+      type:
+        type: "struct"
+        fields:
+        - name: "displayName"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "flags"
+          type:
+            type: "array"
+            elementType: "string"
+            containsNull: true
+          metadata: {}
+          nullable: true
+        - name: "id"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlLarge"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlMedium"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "profileImageUrlSmall"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "screenName"
+          type: "string"
+          metadata: {}
+          nullable: true
+        - name: "type"
+          type: "string"
+          metadata: {}
+          nullable: true
+      metadata: {}
+      nullable: true
+    - name: "tableId"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "tags"
+      type:
+        type: "array"
+        elementType: "string"
+        containsNull: true
+      metadata: {}
+      nullable: true
+    - name: "totalTimesRated"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "viewCount"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "viewLastModified"
+      type: "long"
+      metadata: {}
+      nullable: true
+    - name: "viewType"
+      type: "string"
+      metadata: {}
+      nullable: true
+  complex_flag: true
+- name: "viewcount"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "viewlastmodified"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "viewtype"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "accountnumber"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "act_date_add_rule"
+  datatype: "DATE"
+  datatype_schema: "date"
+  complex_flag: false
+- name: "act_date_sub_rule"
+  datatype: "DATE"
+  datatype_schema: "date"
+  complex_flag: false
+- name: "act_hash_times_dup"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "act_testrule1_spanshot"
+  datatype: "DECIMAL"
+  datatype_schema: "decimal(38,12)"
+  complex_flag: false
+- name: "act_testrule2_keep_current"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "act_testrule3_data_type"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "act_testrule4_calculation"
+  datatype: "DOUBLE"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "act_testrule5_window_function"
+  datatype: "FLOAT"
+  datatype_schema: "float"
+  complex_flag: false
+- name: "act_testrule6_window_function"
+  datatype: "FLOAT"
+  datatype_schema: "float"
+  complex_flag: false
+- name: "billtoaddressid"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "comment"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "creditcardapprovalcode"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "creditcardid"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "currencyrateid"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "customerid"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "duedate"
+  datatype: "TIMESTAMP"
+  datatype_schema: "timestamp"
+  complex_flag: false
+- name: "freight"
+  datatype: "DECIMAL"
+  datatype_schema: "decimal(38,12)"
+  complex_flag: false
+- name: "modifieddate"
+  datatype: "TIMESTAMP"
+  datatype_schema: "timestamp"
+  complex_flag: false
+- name: "onlineorderflag"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "orderdate"
+  datatype: "TIMESTAMP"
+  datatype_schema: "timestamp"
+  complex_flag: false
+- name: "purchaseordernumber"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "revisionnumber"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "rowguid"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "salesorderid"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "salesordernumber"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "salespersonid"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "shipdate"
+  datatype: "TIMESTAMP"
+  datatype_schema: "timestamp"
+  complex_flag: false
+- name: "shipmethodid"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "shiptoaddressid"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "status"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "subtotal"
+  datatype: "DECIMAL"
+  datatype_schema: "decimal(38,12)"
+  complex_flag: false
+- name: "taxamt"
+  datatype: "DECIMAL"
+  datatype_schema: "decimal(38,12)"
+  complex_flag: false
+- name: "territoryid"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "totaldue"
+  datatype: "DECIMAL"
+  datatype_schema: "decimal(38,12)"
+  complex_flag: false
+- name: "carriertrackingnumber"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "linetotal"
+  datatype: "DECIMAL"
+  datatype_schema: "decimal(38,12)"
+  complex_flag: false
+- name: "orderqty"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "productid"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "salesorderdetailid"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "specialofferid"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "unitprice"
+  datatype: "DECIMAL"
+  datatype_schema: "decimal(38,12)"
+  complex_flag: false
+- name: "unitpricediscount"
+  datatype: "DECIMAL"
+  datatype_schema: "decimal(38,12)"
+  complex_flag: false
+- name: "act_substring_rule"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "row_num"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "act_case_when_substring"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "act_concat_ws_rule"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "act_dense_rank_rule"
+  datatype: "DOUBLE"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "act_if_instr"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "act_now_timestamp"
+  datatype: "TIMESTAMP"
+  datatype_schema: "timestamp"
+  complex_flag: false
+- name: "act_nullif_rule"
+  datatype: "DOUBLE"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "act_onetomanyrelation_rule"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "act_onetoonerelation_rule"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "act_percentile_rule"
+  datatype: "FLOAT"
+  datatype_schema: "float"
+  complex_flag: false
+- name: "act_regexp_extract"
+  datatype: "TIMESTAMP"
+  datatype_schema: "timestamp"
+  complex_flag: false
+- name: "act_replace_rule"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "act_testrule8_boolean"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "act_testrule_keep_current_unique"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "act_testrule_keep_current_unique_uv_flag"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "act_trim_rule"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "case_when_then_end_related_one_on_one_source"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "case_when_then_end_related_one_on_one_source_to_related_source"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "case_when_then_end_related_source_agg"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "case_when_then_end_rule"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "case_when_then_end_rule_multiple_reference"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "case_when_then_end_rule_single_reference"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "coalesce_rule"
+  datatype: "DECIMAL"
+  datatype_schema: "decimal(38,12)"
+  complex_flag: false
+- name: "coalesce_rule_double"
+  datatype: "DOUBLE"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "rules_template_act_if_instr"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "rules_template_act_nullif_rule"
+  datatype: "DOUBLE"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "rules_template_act_trim_rule"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "rules_template_case_when_then_end_rule"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "rules_template_case_when_then_end_rule_multiple_reference"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "rules_template_case_when_then_end_rule_single_reference"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "rules_template_coalesce_rule_double"
+  datatype: "DOUBLE"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "rules_template_enrichment_keepcurrent_test"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "rules_template_enrichment_snapshot_test"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "rules_template_enrichment_snapshot_test_uv_flag"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "rules_template_validation_keepcurrent_test"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "rules_template_validation_snapshot_test"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "rules_template_validation_snapshot_test_uv_flag"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "unmanaged_external_rule"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "act_aggregate_expressions1"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "act_aggregate_expressions2"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "act_aggregate_expressions3"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "act_aggregate_expressions4"
+  datatype: "DOUBLE"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "act_multiply_decimal_int"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "act_multiply_decimal_long"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "act_multiply_int_decimal"
+  datatype: "DECIMAL"
+  datatype_schema: "decimal(38,12)"
+  complex_flag: false
+- name: "rules_template_act_dense_rank"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "rules_template_act_percentile_rule"
+  datatype: "DOUBLE"
+  datatype_schema: "double"
+  complex_flag: false
+- name: "rules_template_act_replace_rule"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "rules_template_act_substring_rule"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "rules_template_int_default"
+  datatype: "INT32"
+  datatype_schema: "integer"
+  complex_flag: false
+- name: "rules_template_int_double"
+  datatype: "FLOAT"
+  datatype_schema: "float"
+  complex_flag: false
+- name: "rules_template_int_float"
+  datatype: "FLOAT"
+  datatype_schema: "float"
+  complex_flag: false
+- name: "rules_template_int_long"
+  datatype: "INT64"
+  datatype_schema: "long"
+  complex_flag: false
+- name: "rules_template_int_string"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "rules_template_timestamp_data_add"
+  datatype: "DATE"
+  datatype_schema: "date"
+  complex_flag: false
+- name: "rules_template_timestamp_data_sub"
+  datatype: "DATE"
+  datatype_schema: "date"
+  complex_flag: false
+- name: "__address"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "data_value"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "geo_join_id"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "geo_place_name"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "geo_type_name"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "__id"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "indicator_id"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "measure"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "measure_info"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "__position"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "start_date"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "time_period"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "unique_id"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "__uuid"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "xml_location_name"
+  datatype: "BOOLEAN"
+  datatype_schema: "boolean"
+  complex_flag: false
+- name: "xml_relation_measure"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+- name: "Auto_Cypress_Testing_FileParquetS3None"
+  datatype: "STRING"
+  datatype_schema: "string"
+  complex_flag: false
+  description: "FileParquetS3None Auto_Cypress_Testing_FileParquetS3None  Thu Jan\
+    \ 02 2025 18:08:33 GMT+0000 (Coordinated Universal Time)"

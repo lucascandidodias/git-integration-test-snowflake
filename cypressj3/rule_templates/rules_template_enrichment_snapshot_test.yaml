@@ -1,0 +1,12 @@
+---
+name: "Rules_Template_Enrichment_Snapshot_Test"
+datatype: "string"
+attribute_name: "rules_template_enrichment_snapshot_test"
+expression: "CONCAT([This].carriertrackingnumber, '_blue')"
+expression_parsed: "CONCAT(P<1>, '_blue')"
+unique_flag: true
+test_source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+parameters:
+- id: 1
+  attribute_name: "carriertrackingnumber"
+  datatype: "string"

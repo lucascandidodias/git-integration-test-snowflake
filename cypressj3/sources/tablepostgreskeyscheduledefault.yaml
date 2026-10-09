@@ -1,0 +1,19 @@
+---
+source_name: "TablePostgresKeyScheduleDefault"
+source_description: "Testing - TablePostgresKeyScheduleDefault"
+ingestion_parameters:
+  source_query: "SELECT * FROM testing.RTE_AW_SalesOrderHeader"
+cdc_refresh_parameters:
+  key_columns:
+  - "SalesOrderId"
+refresh_type: "key"
+connection_name: "SourceTablePostgres"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "salesorderid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: true
+  data_type: "int"
+  unique_flag: true

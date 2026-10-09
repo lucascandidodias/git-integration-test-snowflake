@@ -1,0 +1,14 @@
+---
+name: "Rules_Template_Validation_KeepCurrent_Test"
+datatype: "boolean"
+attribute_name: "rules_template_validation_keepcurrent_test"
+expression: "[This].orderqty > 10"
+expression_parsed: "P<1> > 10"
+rule_type_code: "V"
+validation_action_code: "W"
+keep_current_flag: true
+test_source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+parameters:
+- id: 1
+  attribute_name: "orderqty"
+  datatype: "int"

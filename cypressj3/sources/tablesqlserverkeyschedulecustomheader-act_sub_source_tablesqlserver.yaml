@@ -1,0 +1,41 @@
+---
+source_name: "TableSqlServerKeyScheduleCustomHeader-ACT_Sub_Source_TableSqlServer"
+source_description: "Created from sub-source rule [TableSqlServerKeyScheduleCustomHeader].act_sub_source_tablesqlserver"
+ingestion_parameters:
+  select_list:
+  - "*"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Clone"
+connection_type: "sub_source"
+sub_source_rule:
+  source_name: "TableSqlServerKeyScheduleCustomHeader"
+  attribute_name: "act_sub_source_tablesqlserver"
+raw_attributes:
+- raw_attribute_name: "creditcardid"
+  data_type: "int"
+- raw_attribute_name: "duedate"
+  data_type: "timestamp"
+- raw_attribute_name: "shipmethodid"
+  data_type: "int"
+channels:
+- output_name: "TableSqlServerSubSource"
+  output_source_name: "TableSqlServerSubSource - SubTableSqlServer"
+  output_source_columns:
+  - name: "creditcardid"
+    expression: "[This].creditcardid"
+    datatype: "int"
+    parameter:
+      name: "creditcardid"
+      type: "raw"
+  - name: "duedate"
+    expression: "[This].duedate"
+    datatype: "timestamp"
+    parameter:
+      name: "duedate"
+      type: "raw"
+  - name: "shipmethodid"
+    expression: "[This].shipmethodid"
+    datatype: "int"
+    parameter:
+      name: "shipmethodid"
+      type: "raw"

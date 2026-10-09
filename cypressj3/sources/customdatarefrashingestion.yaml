@@ -1,0 +1,131 @@
+---
+source_name: "CustomDataRefrashIngestion"
+source_description: "CustomDataRefrashIngestion"
+ingestion_parameters:
+  source_query: "SELECT  top 100 * FROM sales.salesorderheader"
+cdc_refresh_parameters:
+  delete_query: "[This].salesorderid >= (SELECT max(salesorderid) from [Input])"
+refresh_type: "custom_refresh"
+connection_name: "SourceTableSqlServer"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "accountnumber"
+  raw_metadata:
+    scale: 0
+    precision: 15
+    nullable_flag: true
+  data_type: "string"
+- raw_attribute_name: "customerid"
+  raw_metadata:
+    scale: 0
+    precision: 10
+    nullable_flag: false
+  data_type: "int"
+- raw_attribute_name: "modifieddate"
+  raw_metadata:
+    scale: 3
+    precision: 23
+    nullable_flag: false
+  data_type: "timestamp"
+- raw_attribute_name: "onlineorderflag"
+  raw_metadata:
+    scale: 0
+    precision: 1
+    nullable_flag: false
+  data_type: "boolean"
+rules:
+- attribute_name: "act_custom_boolean_to_long"
+  name: "ACT_Custom_boolean_to_long"
+  description: "ACT_Custom_boolean_to_long"
+  datatype: "long"
+  cast_datatype: "long"
+  expression: "[This].onlineorderflag"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "onlineorderflag"
+- attribute_name: "act_custom_boolean_to_string"
+  name: "ACT_Custom_boolean_to_string"
+  description: "ACT_Custom_boolean_to_string"
+  datatype: "string"
+  cast_datatype: "string"
+  expression: "[This].onlineorderflag"
+  expression_parsed: "P<1>"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "onlineorderflag"
+- attribute_name: "act_custom_string_to_boolean"
+  name: "ACT_Custom_string_to_boolean"
+  description: "ACT_Custom_string_to_boolean"
+  datatype: "boolean"
+  cast_datatype: "boolean"
+  expression: "[This].act_custom_boolean_to_string"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "act_custom_boolean_to_string"
+- attribute_name: "act_custom_window_function"
+  name: "ACT_Custom_window_function"
+  description: "ACT_Custom_window_function"
+  datatype: "int"
+  expression: "MAX([This].customerid)OVER (PARTITION BY [This].accountnumber)\n"
+  expression_parsed: "MAX(P<1>)OVER (PARTITION BY P<2>)\n"
+  keep_current_flag: true
+  window_function_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "customerid"
+  - id: 2
+    type: "raw"
+    name: "accountnumber"
+- attribute_name: "act_date_add_rule"
+  name: "ACT_date_add_rule"
+  description: "ACT_date_add_rule"
+  datatype: "date"
+  cast_datatype: "date"
+  expression: "date_add([This].modifieddate, -1)\n"
+  expression_parsed: "date_add(P<1>, -1)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "modifieddate"
+- attribute_name: "act_date_sub_rule"
+  name: "ACT_date_sub_rule"
+  description: "ACT_date_sub_rule"
+  datatype: "date"
+  cast_datatype: "date"
+  expression: "date_add([This].modifieddate, 1)\n"
+  expression_parsed: "date_add(P<1>, 1)\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "modifieddate"
+- attribute_name: "rules_template_boolean_long"
+  rule_template_name: "Rules_Template_boolean_long"
+  name: "Rules_Template_boolean_long"
+  datatype: "long"
+  cast_datatype: "long"
+  expression: "[This].onlineorderflag"
+  expression_parsed: "P<1>"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "onlineorderflag"
+- attribute_name: "rules_template_boolean_string"
+  rule_template_name: "Rules_Template_boolean_string"
+  name: "Rules_Template_boolean_string"
+  datatype: "string"
+  cast_datatype: "string"
+  expression: "[This].onlineorderflag"
+  expression_parsed: "P<1>"
+  keep_current_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "onlineorderflag"

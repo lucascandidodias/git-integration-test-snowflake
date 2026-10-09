@@ -1,0 +1,223 @@
+---
+- name: "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-ManyToManyRelation-[TablePostgresFullScheduleMixed]"
+  primary_flag: false
+  description: "Many To Many Relation"
+  expression: "[This].salesorderid=[Related].salesorderid\n"
+  cardinality: "1-M"
+  expression_parsed: "P<1>=P<2>\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+    source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+  - id: 2
+    type: "raw"
+    name: "salesorderid"
+    source_name: "TablePostgresFullScheduleMixed"
+- name: "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToManyRelation-[TableSqlServerFullScheduleDefault]"
+  description: "One To Many Relation"
+  expression: "[This].salesorderid=[Related].salesorderid\n"
+  cardinality: "1-M"
+  expression_parsed: "P<1>=P<2>\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+    source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+  - id: 2
+    type: "raw"
+    name: "salesorderid"
+    source_name: "TableSqlServerFullScheduleDefault"
+- name: "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-OneToOneRelation-[TableSqlServerKeyScheduleDefault]"
+  description: "One To One Relation"
+  expression: "[This].salesorderid=[Related].salesorderid\n"
+  cardinality: "1-1"
+  expression_parsed: "P<1>=P<2>\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+    source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+  - id: 2
+    type: "raw"
+    name: "salesorderid"
+    source_name: "TableSqlServerKeyScheduleDefault"
+- name: "[1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed]-UnmanagedExternalRelation-[Automation_Unmanaged_External_Source]"
+  description: "Unmanaged External Relation "
+  expression: "[This].s_input_id=[Related].input_id\n"
+  cardinality: "M-M"
+  expression_parsed: "P<1>=P<2>\n"
+  parameters:
+  - id: 1
+    type: "system"
+    name: "s_input_id"
+    source_name: "1Automation_Rule_Relation_Templates_TableSqlServerFullScheduleMixed"
+  - id: 2
+    type: "raw"
+    name: "input_id"
+    source_name: "Automation_Unmanaged_External_Source"
+- name: "[Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1]-ACT_Aggregate_expressions-[TableSqlServerNoneScheduleCustomDataRefreshNone]"
+  description: "ACT_Aggregate_expressions"
+  expression: "[This].salesorderid=[Related].salesorderid\n"
+  cardinality: "M-M"
+  expression_parsed: "P<1>=P<2>\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+    source_name: "Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1"
+  - id: 2
+    type: "raw"
+    name: "salesorderid"
+    source_name: "TableSqlServerNoneScheduleCustomDataRefreshNone"
+- name: "[Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1]-Implicit-[Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1-subRule]"
+  description: "Implicit relation to sub-source"
+  expression: "implicit"
+  cardinality: "1-M"
+  expression_parsed: "implicit"
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "subrule"
+    source_name: "Automation_Aggregate_Expressions_TableSqlServerFullScheduleMixed1"
+- name: "[AutomationDeltaSchemaEvolutionRulesValidation]-Schema_Evolution_Relation-[AutomationDeltaSchemaEvolution]"
+  description: "Schema_Evolution_Relation"
+  expression: "[This].id=[Related].arr[0].col_a and [This].str.col_d"
+  cardinality: "M-M"
+  expression_parsed: "P<1>=P<3>[0].col_a and P<2>.col_d"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "id"
+    source_name: "AutomationDeltaSchemaEvolutionRulesValidation"
+  - id: 2
+    type: "raw"
+    name: "str"
+    source_name: "AutomationDeltaSchemaEvolutionRulesValidation"
+  - id: 3
+    type: "raw"
+    name: "arr"
+    source_name: "AutomationDeltaSchemaEvolution"
+- name: "[FileXMLKeySparkScheduled]-XML_Relation-[FileXMLTimestampSparkScheduled]"
+  description: "XML_Relation"
+  expression: "[Related].unique_id=[This].unique_id"
+  cardinality: "1-M"
+  expression_parsed: "P<2>=P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "unique_id"
+    source_name: "FileXMLKeySparkScheduled"
+  - id: 2
+    type: "raw"
+    name: "unique_id"
+    source_name: "FileXMLTimestampSparkScheduled"
+- name: "[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2]-Implicit-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2-ACT_Sub_Source_for_sub_source_2]"
+  description: "Implicit relation to sub-source"
+  expression: "implicit"
+  cardinality: "1-M"
+  expression_parsed: "implicit"
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "act_sub_source_for_sub_source_2"
+    source_name: "TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2"
+- name: "[TableSqlServerFullScheduleMixedCustomer]-Implicit-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_1]"
+  description: "Implicit relation to sub-source"
+  expression: "implicit"
+  cardinality: "1-M"
+  expression_parsed: "implicit"
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "act_cypress_sub_source_1"
+    source_name: "TableSqlServerFullScheduleMixedCustomer"
+- name: "[TableSqlServerFullScheduleMixedCustomer]-Implicit-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2]"
+  description: "Implicit relation to sub-source"
+  expression: "implicit"
+  cardinality: "1-M"
+  expression_parsed: "implicit"
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "act_cypress_sub_source_2"
+    source_name: "TableSqlServerFullScheduleMixedCustomer"
+- name: "[TableSqlServerFullScheduleMixedCustomer]-Relation_sales_order_header-[TableSqlServerKeyScheduleCustomHeader]"
+  description: "cypress_relation_sales_order_header"
+  expression: "[Related].customerid=[This].customerid"
+  cardinality: "M-M"
+  expression_parsed: "P<2>=P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "customerid"
+    source_name: "TableSqlServerFullScheduleMixedCustomer"
+  - id: 2
+    type: "raw"
+    name: "customerid"
+    source_name: "TableSqlServerKeyScheduleCustomHeader"
+- name: "[TableSqlServerKeyScheduleCustomHeader]-Implicit-[TableSqlServerKeyScheduleCustomHeader-ACT_Sub_Source_TableSqlServer]"
+  description: "Implicit relation to sub-source"
+  expression: "implicit"
+  cardinality: "1-M"
+  expression_parsed: "implicit"
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "act_sub_source_tablesqlserver"
+    source_name: "TableSqlServerKeyScheduleCustomHeader"
+- name: "[TableSqlServerKeyScheduleDefaultPerson]-Implicit-[TableSqlServerKeyScheduleDefaultPerson-ACT_Sub_Source_TableSqlServerKey]"
+  description: "Implicit relation to sub-source"
+  expression: "implicit"
+  cardinality: "1-M"
+  expression_parsed: "implicit"
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "act_sub_source_tablesqlserverkey"
+    source_name: "TableSqlServerKeyScheduleDefaultPerson"
+- name: "[TableSqlServerKeyScheduleDefaultPerson]-Relation_person-[TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2]"
+  description: "cypress_relation_person"
+  expression: "[This].businessentityid=[Related].customerid\n"
+  cardinality: "1-M"
+  expression_parsed: "P<1>=P<2>\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "businessentityid"
+    source_name: "TableSqlServerKeyScheduleDefaultPerson"
+  - id: 2
+    type: "raw"
+    name: "customerid"
+    source_name: "TableSqlServerFullScheduleMixedCustomer-ACT_cypress_sub_source_2"
+- name: "[TableSqlServerKeyScheduleDefault]-TestOneToOneRelation-[TableSqlServerKeyScheduleMixed]"
+  description: "One To One Relation"
+  expression: "[This].salesorderid=[Related].salesorderid\n"
+  cardinality: "1-1"
+  expression_parsed: "P<1>=P<2>\n"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+    source_name: "TableSqlServerKeyScheduleDefault"
+  - id: 2
+    type: "raw"
+    name: "salesorderid"
+    source_name: "TableSqlServerKeyScheduleMixed"
+- name: "[TableSqlServerKeyScheduleMixed]-SelfRelation-[TableSqlServerKeyScheduleMixed]"
+  primary_flag: false
+  description: "Self-Relation"
+  expression: "[This].salesorderid=[Related].salesorderid"
+  cardinality: "1-1"
+  expression_parsed: "P<1>=P<2>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "salesorderid"
+    self_relation_container: "This"
+    source_name: "TableSqlServerKeyScheduleMixed"
+  - id: 2
+    type: "raw"
+    name: "salesorderid"
+    self_relation_container: "Related"
+    source_name: "TableSqlServerKeyScheduleMixed"

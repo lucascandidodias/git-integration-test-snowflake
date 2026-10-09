@@ -1,0 +1,17 @@
+---
+source_name: "SourceTablePostgres - pg_catalog.pg_cast"
+source_description: "Auto-created from connection metadata"
+ingestion_parameters:
+  source_query: "select * from pg_catalog.pg_cast"
+parsing_parameters:
+  schema_evolution: "Add, Remove, Upcast"
+cdc_refresh_parameters:
+  key_columns:
+  - "oid"
+refresh_type: "key"
+connection_name: "SourceTablePostgres"
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "oid"
+  data_type: "long"
+  unique_flag: true
