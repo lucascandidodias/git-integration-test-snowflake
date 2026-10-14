@@ -1,0 +1,65 @@
+---
+source_name: "smoke_sod"
+source_description: "MCP smoke: RTE_AW_SalesOrderDetail (key)"
+ingestion_parameters:
+  source_query: "SELECT * FROM RTE_RAP.PUBLIC.\"RTE_AW_SalesOrderDetail\""
+cdc_refresh_parameters:
+  key_columns:
+  - "SALESORDERDETAILID"
+refresh_type: "key"
+connection_name: "SourceTableSnowflakeUsesAgentNo"
+cost_parameters:
+  max_retries: 0
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "ORDERQTY"
+  data_type: "INTEGER"
+- raw_attribute_name: "SALESORDERDETAILID"
+  data_type: "INTEGER"
+  unique_flag: true
+- raw_attribute_name: "SALESORDERID"
+  data_type: "INTEGER"
+- raw_attribute_name: "UNITPRICE"
+  data_type: "DECIMAL"
+dependencies:
+- source_name: "smoke_soh"
+rules:
+- attribute_name: "CUSTOMER_ID"
+  name: "customer_id"
+  description: "Customer from related header"
+  datatype: "INTEGER"
+  expression: "[smoke_soh].CUSTOMERID"
+  expression_parsed: "P<1>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "CUSTOMERID"
+    source_name: "smoke_soh"
+    relations:
+    - "[smoke_sod]-auto-[smoke_soh]"
+- attribute_name: "GROSS_LINE"
+  name: "gross_line"
+  description: "Unit price times quantity"
+  datatype: "DECIMAL"
+  expression: "[This].UNITPRICE * [This].ORDERQTY"
+  expression_parsed: "P<1> * P<2>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "UNITPRICE"
+  - id: 2
+    type: "raw"
+    name: "ORDERQTY"
+- attribute_name: "QTY_POSITIVE"
+  name: "qty_positive"
+  description: "Order qty must be positive"
+  datatype: "BOOLEAN"
+  expression: "[This].ORDERQTY > 0"
+  expression_parsed: "P<1> > 0"
+  rule_type_code: "V"
+  validation_action_code: "W"
+  validation_type_code: "W"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "ORDERQTY"

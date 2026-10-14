@@ -1,0 +1,15 @@
+---
+- name: "[smoke_sod]-auto-[smoke_soh]"
+  description: "Created by Talos"
+  expression: "[This].SALESORDERID = [Related].SOH_UID"
+  cardinality: "M-1"
+  expression_parsed: "P<1> = P<2>"
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "SALESORDERID"
+    source_name: "smoke_sod"
+  - id: 2
+    type: "enrichment"
+    name: "SOH_UID"
+    source_name: "smoke_soh"

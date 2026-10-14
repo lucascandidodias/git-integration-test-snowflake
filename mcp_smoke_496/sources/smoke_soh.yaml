@@ -1,0 +1,44 @@
+---
+source_name: "smoke_soh"
+source_description: "MCP smoke: RTE_AW_SalesOrderHeader (full)"
+ingestion_parameters:
+  source_query: "SELECT * FROM RTE_RAP.PUBLIC.\"RTE_AW_SalesOrderHeader\""
+connection_name: "SourceTableSnowflakeUsesAgentNo"
+cost_parameters:
+  max_retries: 0
+schedule_name: "Default"
+raw_attributes:
+- raw_attribute_name: "CUSTOMERID"
+  data_type: "INTEGER"
+- raw_attribute_name: "SALESORDERID"
+  data_type: "INTEGER"
+dependencies:
+- source_name: "smoke_sod"
+rules:
+- attribute_name: "SOH_UID"
+  name: "soh_uid"
+  description: "Unique SalesOrderID for M:1 lookup"
+  datatype: "INTEGER"
+  expression: "[This].SALESORDERID"
+  expression_parsed: "P<1>"
+  unique_flag: true
+  parameters:
+  - id: 1
+    type: "raw"
+    name: "SALESORDERID"
+- attribute_name: "SOH_UID_UV_FLAG"
+  name: "soh_uid uniqueness validation"
+  parent_attribute_name: "SOH_UID"
+  description: "Auto-generated rule to validate uniqueness of SOH_UID"
+  datatype: "BOOLEAN"
+  expression: "COUNT(1) OVER (PARTITION BY [This].SOH_UID) = 1"
+  expression_parsed: "COUNT(1) OVER (PARTITION BY P<1>) = 1"
+  rule_type_code: "V"
+  validation_action_code: "F"
+  validation_type_code: "U"
+  keep_current_flag: true
+  window_function_flag: true
+  parameters:
+  - id: 1
+    type: "enrichment"
+    name: "SOH_UID"
